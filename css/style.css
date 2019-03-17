@@ -1,0 +1,25 @@
+
+/* reseteos generales */
+a{
+ text-decoration: none;
+ color: #fff;
+}
+li{
+ list-style-type: none;
+}
+ol,ul{
+ padding: 0;
+}
+/* encabezado */
+header {
+  background-color: #f2dcce;
+}
+header ul li a {
+  color: white;
+}
+.btn-outline-primary {
+  background-color: #f2dcce;
+  text-transform: uppercase;
+  color: #fff;
+  border-color: #fff;
+}
