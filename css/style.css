@@ -1,25 +1,116 @@
+/* colores sugeridos
+#bfd0ce #f0e9f0 #f2dcce #e8cab0 #cc5955  */
+/* colores custom Gonza
+#e6d8b6 #d07f7c #dfbb80 #ba8551 */
+/* RESETEOS GENERALES--------------------------------------------- */
+li {
+  list-style-type: none;
+}
 
-/* reseteos generales */
-a{
- text-decoration: none;
- color: #fff;
+ul, ol {
+  padding: 0;
 }
-li{
- list-style-type: none;
-}
-ol,ul{
- padding: 0;
-}
-/* encabezado */
-header {
-  background-color: #f2dcce;
-}
-header ul li a {
-  color: white;
-}
+
+/* FORM DE REGISTRO--------------------------------------------- */
 .btn-outline-primary {
   background-color: #f2dcce;
   text-transform: uppercase;
   color: #fff;
   border-color: #fff;
+}
+
+/* HEADER BUSQUEDA/LOGO/AUTENTICACION ----------------------------*/
+header {
+  background-color: #e6d8b6;
+}
+
+.navbar {
+  padding: 10px;
+}
+
+/* COLUMNA DE BUSQUEDA ----------------------------------------- */
+.formBuscar {
+  position: relative;
+  width: 100%;
+}
+
+.formBuscar a {
+  position: absolute;
+  right: 2px;
+  color: #666;
+  padding-right: 1rem;
+}
+
+.inputBuscar {
+  width: 100%;
+  padding-right: 1.5rem;
+}
+
+/* COLUMNA LOGO -------------------------------------------------*/
+.logo {
+  width: 70%;
+}
+
+/* COLUMNA CARRITO Y AUTENTICACION-------------------------------- */
+.carrito {
+  background-color: #d07f7c;
+  padding: 5px;
+  color: #fff;
+  line-height: 1;
+}
+
+.autenticacion a {
+  font-family: "Open Sans", sans-serif;
+  font-size: .75rem;
+  text-transform: uppercase;
+  color: #cc5955;
+}
+
+/* NAVBAR DE MENUS --------------------------------------------- */
+nav {
+  background-color: #ba8551;
+}
+
+nav a.nav-link {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.menu {
+  padding: 0 0.75rem;
+}
+
+nav li {
+  padding: 0 1rem;
+}
+
+nav a:hover {
+  background-color: #cc5955;
+  color: #fff;
+}
+
+/* FOOTER--------------------------------------------------------- */
+footer {
+  background-color: #ba8551;
+}
+
+footer a {
+  color: #fff;
+  font-size: .9rem;
+  font-weight: bold;
+}
+
+footer a:hover {
+  background-color: #cc5955;
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-title {
+  text-transform: uppercase;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
