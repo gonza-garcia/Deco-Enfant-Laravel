@@ -1,8 +1,10 @@
 /* colores sugeridos
-#bfd0ce #f0e9f0 #f2dcce #e8cab0 #cc5955  */
-/* colores custom Gonza
-#e6d8b6 #d07f7c #dfbb80 #ba8551 */
-/* RESETEOS GENERALES--------------------------------------------- */
+#bfd0ce #f0e9f0 #f2dcce #e8cab0 #cc5955
+colores custom Gonza
+#e6d8b6 #d07f7c #dfbb80 #ba8551
+
+
+RESETEOS GENERALES-------------------------------------------------------------------------------------------------------- */
 li {
   list-style-type: none;
 }
@@ -11,7 +13,123 @@ ul, ol {
   padding: 0;
 }
 
-/* FORM DE REGISTRO--------------------------------------------- */
+body {
+  font-family: 'Ubuntu Condensed', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.container {
+  max-width: 1200px;
+  /* padding: 20px; */
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+/* First message ------------------------------------------------------------------------------------------------------------*/
+.first-msg {
+  background-color: #bfd0ce;
+  margin: 20px;
+  font-family: 'Sacramento', cursive;
+}
+
+.msg-text {
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+}
+
+/* Landing------------------------------------------------------------------------------------------------------------- */
+.landing-carousel {
+  width: 75%;
+  position: relative;
+  padding-right: 10px;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 100%;
+}
+
+.landing-carousel h2 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 3vw;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 3%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 40%;
+  left: 50%;
+}
+
+.landing-features {
+  width: 25%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.feature-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.feature-one, .feature-two {
+  position: relative;
+}
+
+.landing-features h3 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  text-align: center
+}
+
+.feature-img-one {
+  padding-bottom: 5px;
+}
+
+.feature-img-two {
+  padding-top: 5px;
+}
+
+/* Destacados--------------------------------------------------------------------------------------------------------------- */
+.destacados-titulos {
+  width: 100%;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.dest-item-descrip {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding-top: 10px;
+}
+
+.descrip-item {
+  width: 65%;
+}
+
+.btn-destacados {
+  text-transform: uppercase;
+  width: 35%;
+  color: #cc5955;
+  background-color: #bfd0ce;
+  height: 45px;
+}
+
+/* FORM DE REGISTRO--------------------------------------------------------------------------------------------------- */
 .btn-outline-primary {
   background-color: #f2dcce;
   text-transform: uppercase;
@@ -19,7 +137,7 @@ ul, ol {
   border-color: #fff;
 }
 
-/* HEADER BUSQUEDA/LOGO/AUTENTICACION ----------------------------*/
+/* HEADER BUSQUEDA/LOGO/AUTENTICACION ---------------------------------------------------------------------------------*/
 header {
   background-color: #e6d8b6;
 }
@@ -91,7 +209,7 @@ nav a:hover {
   color: #fff;
 }
 
-/* FOOTER--------------------------------------------------------- */
+/* FOOTER----------------------------------------------------------------------------------------------------------------------- */
 footer {
   background-color: #ba8551;
 }
@@ -113,4 +231,65 @@ footer a:hover {
   color: white;
   font-size: 1.1rem;
   font-weight: bold;
+}
+
+/*
+MEDIA QUERY PARA 992PX - LO QUE EN BOOSTRAP ES LG (LARGE DEVICES) */
+@media (max-width: 992px) {
+  .container {
+    max-width: 992px;
+    padding: 20px;
+    margin: 0 auto;
+  }
+
+  .msg-text {
+    font-size: 3vw;
+  }
+
+  .landing-carousel {
+    width: 100%;
+    position: relative;
+    padding-right: 0px;
+  }
+
+  .landing-features {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .feature-one, .feature-two {
+    position: relative;
+    width: 49%;
+  }
+
+  .feature-img-one {
+    padding-bottom: 0px;
+  }
+
+  .feature-img-two {
+    padding-top: 0px;
+  }
+
+  .dest-item-descrip {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding-top: 10px;
+  }
+
+  .descrip-item {
+    width: 100%;
+  }
+
+  .btn-destacados {
+    margin-top: 10px;
+    text-transform: uppercase;
+    color: #cc5955;
+    background-color: #bfd0ce;
+    width: 100%;
+  }
 }
