@@ -15,12 +15,12 @@ ul, ol {
 
 body {
   font-family: 'Ubuntu Condensed', sans-serif;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
 }
 
 .container {
   max-width: 1200px;
-  /* padding: 20px; */
+  padding: 10px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -28,13 +28,13 @@ body {
 }
 
 /* First message ------------------------------------------------------------------------------------------------------------*/
-.first-msg {
+#first-msg {
   background-color: #bfd0ce;
-  margin: 20px;
+  margin: 0 auto;
   font-family: 'Sacramento', cursive;
 }
 
-.msg-text {
+#msg-text {
   width: 100%;
   color: #fff;
   text-align: center;
@@ -92,7 +92,7 @@ body {
   text-transform: uppercase;
   font-weight: 700;
   color: #fff;
-  text-align: center
+  text-align: center;
 }
 
 .feature-img-one {
@@ -147,57 +147,56 @@ header {
 }
 
 /* COLUMNA DE BUSQUEDA ----------------------------------------- */
-.formBuscar {
+#formBuscar {
   position: relative;
   width: 100%;
 }
 
-.formBuscar a {
+#formBuscar a {
   position: absolute;
-  right: 2px;
+  right: .2rem;
   color: #666;
-  padding-right: 1rem;
 }
 
-.inputBuscar {
-  width: 100%;
-  padding-right: 1.5rem;
+#inputBuscar {
+  width: 100%!important;
 }
 
 /* COLUMNA LOGO -------------------------------------------------*/
-.logo {
-  width: 70%;
+#coluLogo img{
+  width:90%;
 }
 
 /* COLUMNA CARRITO Y AUTENTICACION-------------------------------- */
-.carrito {
+#carrito {
   background-color: #d07f7c;
   padding: 5px;
   color: #fff;
   line-height: 1;
 }
 
-.autenticacion a {
-  font-family: "Open Sans", sans-serif;
-  font-size: .75rem;
+#autenticacion a {
+  /* font-family: "Open Sans", sans-serif; */
+  font-size: .9rem;
   text-transform: uppercase;
   color: #cc5955;
+  border-color: #fff!important;
 }
+#autenticacion a:hover {
+  color: #8c3330;
+}
+
 
 /* NAVBAR DE MENUS --------------------------------------------- */
 nav {
-  background-color: #ba8551;
+  background-color: #d07f7c;
 }
 
 nav a.nav-link {
   text-transform: uppercase;
   font-weight: bold;
   color: #fff;
-  font-size: 1.1rem;
-}
-
-.menu {
-  padding: 0 0.75rem;
+  font-size: 1.5rem;
 }
 
 nav li {
@@ -205,13 +204,13 @@ nav li {
 }
 
 nav a:hover {
-  background-color: #cc5955;
+  background-color: #8c3330;
   color: #fff;
 }
 
 /* FOOTER----------------------------------------------------------------------------------------------------------------------- */
 footer {
-  background-color: #ba8551;
+  background-color: #d07f7c;
 }
 
 footer a {
@@ -221,7 +220,7 @@ footer a {
 }
 
 footer a:hover {
-  background-color: #cc5955;
+  background-color: #8c3330;
   color: #fff;
   text-decoration: none;
 }
@@ -234,15 +233,9 @@ footer a:hover {
 }
 
 /*
-MEDIA QUERY PARA 992PX - LO QUE EN BOOSTRAP ES LG (LARGE DEVICES) */
+MEDIA QUERY HASTA 992PX (LG) */
 @media (max-width: 992px) {
-  .container {
-    max-width: 992px;
-    padding: 20px;
-    margin: 0 auto;
-  }
-
-  .msg-text {
+  #msg-text {
     font-size: 3vw;
   }
 
@@ -292,4 +285,31 @@ MEDIA QUERY PARA 992PX - LO QUE EN BOOSTRAP ES LG (LARGE DEVICES) */
     background-color: #bfd0ce;
     width: 100%;
   }
+}
+
+/* MEDIA QUERY DESDE 576px  ------------------------------------*/
+@media (min-width: 450px) {
+  #liNovedades {
+    display: block!important;
+  }
+}
+
+/* MEDIA QUERY DESDE 576px (XS) --------------------------------*/
+@media (min-width: 576px) {
+
+}
+/* MEDIA QUERY DESDE 768px (MD) --------------------------------*/
+@media (min-width: 768px) {
+  #coluLogo img {
+    width: 70%;
+  }
+}
+/* MEDIA QUERY DESDE 992px (LG) --------------------------------*/
+@media (min-width: 992px) {
+
+}
+
+/* MEDIA QUERY DESDE 1280px  -----------------------------------*/
+@media (min-width: 1280px) {
+
 }
