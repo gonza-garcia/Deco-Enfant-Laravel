@@ -1,3 +1,32 @@
+<?php
+  $arrayMenu = [
+    "inicio" => [
+                  "parametros" => "class='nav-item'",
+                  "href" => "./index.php",
+    ],
+    "productos" => [
+                  "parametros" => "class='nav-item'",
+                  "href" => "#productos",
+    ],
+    "novedades" => [
+                  "parametros" => "id='liNovedades' class='nav-item d-none'",
+                  "href" => "#novedades",
+    ],
+    "contacto" => [
+                  "parametros" => "class='nav-item d-none d-md-block'",
+                  "href" => "#contacto",
+    ],
+    "<i class='fas fa-bars'></i>" => [
+                  "parametros" => "class='nav-item d-lg-none'",
+                  "href" => "#menu",
+    ],
+
+
+  ];
+
+ ?>
+
+<!DOCTYPE html>
 <!-- HEADER Busqueda, Logo y Autenticacion -------------------------------------------------------------------->
 <header class="navbar navbar-expand-md py-4">
   <div class='container p-0'>
@@ -12,7 +41,7 @@
       <!-- Columna Logo --------------------------------------->
       <div id="coluLogo" class="col-lg-6 col-md-6 text-center my-3 my-md-0 p-0">
         <a href="./index.php">
-          <img class="img-fluid" src="./img/Logos/Logo_on_transparent_background/logoCustomGonza.png" alt="logo">
+          <img class="img-fluid" src="./img/Logos/Logo_on_transparent_background/logoCustomGonza-gris.png" alt="logo">
         </a>
       </div>
 
@@ -38,11 +67,18 @@
 <nav id='menu' class="navbar navbar-expand-md mb-4">
   <div class="container justify-content-center">
     <ul class="navbar-nav d-flex flex-row">
-      <li class="nav-item"><a class="nav-link" href="./index.php">inicio</a></li>
+      <!-- <li class="nav-item"><a class="nav-link" href="./index.php">inicio</a></li>
       <li class="nav-item"><a class="nav-link" href="#about">productos</a></li>
       <li id="liNovedades" class="nav-item d-none"><a class="nav-link" href="#novedades">novedades</a></li>
       <li class="nav-item d-none d-md-block"><a class="nav-link" href="#contacto">contacto</a></li>
-      <li class="nav-item d-lg-none"><a class="nav-link" href="#contacto"><i class="fas fa-bars"></i></a></li>
+      <li class="nav-item d-lg-none"><a class="nav-link" href="#menu"><i class="fas fa-bars"></i></a></li> -->
+
+      <?php foreach ($arrayMenu as $key => $value): ?>
+        <li <?=$value["parametros"];?>>
+            <a class="nav-link" href=<?=$value["href"];?>><?=$key;?></a>
+        </li>
+      <?php endforeach; ?>
+
     </ul>
   </div>
 </nav>
