@@ -60,7 +60,7 @@
           </div>
           <div class="feature-title">
             <!-- <h3>sale <br>25&#37 off</h3> -->
-            <h3>sale <br>25&37 off</h3>
+            <h3>sale <br>25&#37 off</h3>
           </div>
         </div>
       </div>
