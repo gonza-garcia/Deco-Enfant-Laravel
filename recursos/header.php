@@ -1,4 +1,9 @@
 <?php
+  // debo crear la sesion
+  if (!isset($_SESSION)) {
+    session_start();
+  }
+
   $arrayMenu = [
     "inicio" => [
                   "parametros" => "class='nav-item'",
@@ -54,8 +59,13 @@
         </a>
         <!-- AUTENTICACION-------------------->
         <div id='autenticacion' class='justify-content-center d-inline-flex d-md-flex pt-1'>
-          <a class="login pr-1 border-right border-white text-right" href="./login.php">Iniciar Sesión</a>
-          <a class="pl-1 border-left border-white text-left" href="./registro.php">Crear Cuenta</a>
+          <?php if (isset($_SESSION["nombre"])) : ?>
+            <a class="login pr-1 border-right border-white text-right" href="#"><?=$_SESSION["nombre"]?></a>
+            <a class="pl-1 border-left border-white text-left" href="./logout.php">Salir</a>
+          <?php else : ?>
+            <a class="login pr-1 border-right border-white text-right" href="./login.php">Iniciar Sesión</a>
+            <a class="pl-1 border-left border-white text-left" href="./registro.php">Crear Cuenta</a>
+          <?php endif; ?>
         </div>
 
       </div>

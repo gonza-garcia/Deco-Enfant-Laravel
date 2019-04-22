@@ -4,7 +4,7 @@ function validarRegistro($datos){
     $errores = [];
     $datosFinales = []; //NO VEO QUE SE USE EN OTRO LADO.
 
-    //TRIMEO - me parece que al final no se usa porque se trimea todo adento de la funcion armarUsuario(). O quizás no lo entiendo bien. Pero lo comento y anda todo. 
+    //TRIMEO - me parece que al final no se usa porque se trimea todo adento de la funcion armarUsuario(). O quizás no lo entiendo bien. Pero lo comento y anda todo.
 
     // foreach ($datos as $posicion => $valor) {
     //     $datosFinales[$posicion] = trim($valor);
@@ -62,16 +62,16 @@ function validarRegistro($datos){
 function lastId(){
     $json = file_get_contents("recursos/db.json");
     $array = json_decode($json, true);
-  
+
       if($json==""){
         return $lastId=0;
       }
     $ultimoElemento = array_pop($array["usuarios"]);
-  
+
     $lastId = $ultimoElemento["id"] + 1;
     return $lastId;
   }
-  
+
 
 // Armar array de usuario
 function armarUsuario()
@@ -85,7 +85,7 @@ function armarUsuario()
     ];
 }
 
-//Guardar usuario nuevo en archivo JSON 
+//Guardar usuario nuevo en archivo JSON
 function guardarUsuario($user)
 {
     $json = file_get_contents("recursos/db.json");
@@ -111,13 +111,19 @@ function buscarPorEmail($email){
     }
 
     $array = json_decode($usuarios, true);
+    // var_dump($array["usuarios"]);
+    // var_dump($usuarios);
 
     foreach ($array["usuarios"] as $usuario) {
-        if ($email === $usuario["email"]) { 
+
+        // var_dump($usuario);
+        // var_dump($email);
+        if ($email === $usuario["email"]) {
+            // var_dump($usuario);
             return $usuario;
-        } // aca iría un else?
-        return null;
+        }
     }
+    return null;
 }
 
 function existeUsuario($email){
