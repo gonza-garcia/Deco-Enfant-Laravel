@@ -1,9 +1,11 @@
 <?php
 
+  require_once("recursos/funciones.php");
+  
   // debo crear la sesion
   session_start();
 
-  require_once("recursos/funciones.php");
+
   $error = "";
   $recordarOk = false;
 
@@ -47,26 +49,10 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>eCommerce</title>
-
-  <!-- Fuentes Custom---------------------------------------------->
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Sacramento&amp;subset=latin-ext" rel="stylesheet">
-
-
-  <!-- REVISARRR ESTE ICONO -->
-  <a href="https://icons8.com/icon/80664/paper-plane"></a>
-
-  <!-- Bootstrap CDN, Google Fonts, Font Awesome------------------->
-  <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-  <!-- Hojas de Estilo-------------------------------------------->
-  <link rel="stylesheet" href="css/style.css">
+  <?php include("recursos/head.php") ?>
 </head>
+
 
 <body>
   <!-- HEADER y NAVBAR DE MENUS---------------------------->
@@ -109,10 +95,10 @@
 <?php include("recursos/footer.php") ?>
 
 
-  <!-- SCRIPTS DE JAVA DE BOOTSTRAP--------------------------------------------------------------------------------------->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- SCRIPTS DE JAVA DE BOOTSTRAP---------------------------------->
+<?php include("recursos/scriptsJava.php") ?>
+
+
 </body>
 
 </html>

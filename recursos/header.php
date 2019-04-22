@@ -4,32 +4,11 @@
     session_start();
   }
 
-  $arrayMenu = [
-    "inicio" => [
-                  "parametros" => "class='nav-item'",
-                  "href" => "./index.php",
-    ],
-    "productos" => [
-                  "parametros" => "class='nav-item'",
-                  "href" => "#productos",
-    ],
-    "novedades" => [
-                  "parametros" => "id='liNovedades' class='nav-item d-none'",
-                  "href" => "#novedades",
-    ],
-    "contacto" => [
-                  "parametros" => "class='nav-item d-none d-md-block'",
-                  "href" => "#contacto",
-    ],
-    "<i class='fas fa-bars'></i>" => [
-                  "parametros" => "class='nav-item d-lg-none'",
-                  "href" => "#menu",
-    ],
+  $headerMenu = buscarObjeto("recursos/db.json","headerMenu");
 
 
-  ];
+?>
 
- ?>
 
 <!DOCTYPE html>
 <!-- HEADER Busqueda, Logo y Autenticacion -------------------------------------------------------------------->
@@ -83,7 +62,7 @@
       <li class="nav-item d-none d-md-block"><a class="nav-link" href="#contacto">contacto</a></li>
       <li class="nav-item d-lg-none"><a class="nav-link" href="#menu"><i class="fas fa-bars"></i></a></li> -->
 
-      <?php foreach ($arrayMenu as $key => $value): ?>
+      <?php foreach ($headerMenu as $key => $value): ?>
         <li <?=$value["parametros"];?>>
             <a class="nav-link" href=<?=$value["href"];?>><?=$key;?></a>
         </li>
