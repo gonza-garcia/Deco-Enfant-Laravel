@@ -9,6 +9,7 @@ function formatearTexto($texto)
 
   $texto = mb_strtolower ($texto);  //pasa todo a minúscula
   $texto = str_replace($array1, $array2 ,$texto);
+    //TRIMEO - me parece que al final no se usa porque se trimea todo adento de la funcion armarUsuario(). O quizás no lo entiendo bien. Pero lo comento y anda todo.
 
   return $texto;
 }
@@ -110,6 +111,21 @@ function validarRegistro($datos){
     $errores["nombre"] = "Campo obligatorio";
   }
 
+// funcion para que retorne e ingrese en armarUsuarrio() el ultimo id+1
+function lastId(){
+    $json = file_get_contents("recursos/db.json");
+    $array = json_decode($json, true);
+
+      if($json==""){
+        return $lastId=0;
+      }
+    $ultimoElemento = array_pop($array["usuarios"]);
+
+    $lastId = $ultimoElemento["id"] + 1;
+    return $lastId;
+  }
+
+
   //TELEFONO - ver
   //campo vacio
   if (strlen($datos["telefono"]) == 0) {
@@ -119,7 +135,6 @@ function validarRegistro($datos){
   elseif (is_numeric($datos["telefono"]) == false) {
     $errores["telefono"] = "El campo solo acepta numeros";
   }
-
 
       // EMAIL
       // campo vacio
@@ -167,6 +182,38 @@ function validarRegistro($datos){
     }
 
 
+    //Guardar usuario nuevo en archivo JSON
+    function guardarUsuario($user)
+    {
+        $json = file_get_contents("recursos/db.json");
+        $array = json_decode($json, true);
+    $array = json_decode($usuarios, true);
+    // var_dump($array["usuarios"]);
+    // var_dump($usuarios);
+
+    foreach ($array["usuarios"] as $usuario) {
+
+        // var_dump($usuario);
+        // var_dump($email);
+        if ($email === $usuario["email"]) {
+            // var_dump($usuario);
+            return $usuario;
+        }
+    }
+    return null;
+}
+//Guardar usuario nuevo en archivo JSON
+function guardarUsuario2($user)
+{
+    $json = file_get_contents("recursos/db.json");
+    $array = json_decode($json, true);
+
+    $array["usuarios"][] = $user;
+    $array = json_encode($array, JSON_PRETTY_PRINT);
+
+    file_put_contents("recursos/db.json", $array);
+}
+
   // Armar array de usuario
   function armarUsuario()
   {
@@ -179,17 +226,7 @@ function validarRegistro($datos){
       ];
   }
 
-  //Guardar usuario nuevo en archivo JSON
-  function guardarUsuario($user)
-  {
-      $json = file_get_contents("recursos/db.json");
-      $array = json_decode($json, true);
 
-      $array["usuarios"][] = $user;
-      $array = json_encode($array, JSON_PRETTY_PRINT);
-
-      file_put_contents("recursos/db.json", $array);
-  }
 
   //buscar por email para comprobar que el usuario no este ya registrado
   function buscarPorEmail($email){

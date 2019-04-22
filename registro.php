@@ -8,6 +8,17 @@ $nameOk = "";
 $emailOk = "";
 $telOk = "";
 
+if (isset($_COOKIE["user"])) {
+  $emailOk = $_COOKIE["user"];
+} else {
+  $emailOk = "";
+}
+if (isset($_COOKIE["nombre"])) {
+  $nameOk = $_COOKIE["nombre"];
+} else {
+  $nameOk = "";
+}
+
 if ($_POST) {
   //validar los campos y devolver errores.
 
@@ -21,15 +32,20 @@ if ($_POST) {
   $telOk = trim($_POST["telefono"]);
 
 
-  if (empty($errores)) { 
+  if (empty($errores)) {
     // Si no hay errores
       //Crear usuario
       if(!existeUsuario($_POST["email"])){
         $usuario = armarUsuario();
-        //Guardar usuario      
+        //Guardar usuario
         guardarUsuario($usuario);
+
         //redireccionar el usuario a la pagina de exito.
-        header("Location:registradoExito.php"); //nombre de archivo inventado. no existe todavia.  
+        // header("Location: registradoExito.php"); //nombre de archivo inventado. no existe todavia.
+
+        //redireccionar el usuario a la pagina de login.
+        setcookie("user",$emailOk, time() + 3 );
+        header("Location: login.php");
         exit;
       }
 
@@ -128,10 +144,10 @@ if ($_POST) {
       <label for="pass2">Confirmar Contraseña</label>
       <input class="form-control " id="pass2" type="password" name="pass2" value="" placeholder="Repita su Contraseña aqui...">
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="avatar">Imagen de Perfil
         <input class="form-contro" id="avatar" type="file" id="avatar" name="avatar" value="" placeholder="">
-    </div>
+    </div> -->
     <div class="form-group">
       <button type="btn submit" class="btn btn-outline-primary" name="Registrarme" value="Registrarme">Registrarme</button>
       <button type="btn reset" class="btn btn-outline-primary" name="Limpiar" value="Limpiar">Limpiar</button>
