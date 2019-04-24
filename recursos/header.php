@@ -1,11 +1,6 @@
 <?php
-  // debo crear la sesion
-  if (!isset($_SESSION)) {
-    session_start();
-  }
 
   $headerMenu = buscarObjeto("recursos/db.json","headerMenu");
-
 
 ?>
 
@@ -38,8 +33,8 @@
         </a>
         <!-- AUTENTICACION-------------------->
         <div id='autenticacion' class='justify-content-center d-inline-flex d-md-flex pt-1'>
-          <?php if (isset($_SESSION["nombre"])) : ?>
-            <a class="login pr-1 border-right border-white text-right" href="#"><?=$_SESSION["nombre"]?></a>
+          <?php if (isset($_SESSION["email"])) : ?>
+            <a class="login pr-1 border-right border-white text-right" href="#">Hola <?=$_SESSION["nombre"]?></a>
             <a class="pl-1 border-left border-white text-left" href="./logout.php">Salir</a>
           <?php else : ?>
             <a class="login pr-1 border-right border-white text-right" href="./login.php">Iniciar Sesión</a>

@@ -1,4 +1,5 @@
 <?php
+
   require_once("recursos/funciones.php");
 
   $articulos = buscarObjeto("recursos/db.json","articulos");
@@ -14,7 +15,7 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <title>eCommerce</title>
+  <title>Deco Enfant</title>
   <?php include("recursos/head.php") ?>
 </head>
 

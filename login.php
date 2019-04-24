@@ -1,13 +1,15 @@
 <?php
 
   require_once("recursos/funciones.php");
-  
-  // debo crear la sesion
-  session_start();
 
+  if(usuarioLogueado()){
+    header("Location:index.php");
+    exit;
+  }
 
   $error = "";
   $recordarOk = false;
+
 
   if (isset($_COOKIE["user"])) {
     $emailOk = $_COOKIE["user"];
@@ -23,15 +25,13 @@
     $usuario = buscarPorEmail($_POST["email"]);
     $recordarOk = (isset($_POST["recordar"]));
 
-    // var_dump($_POST);
-
     if ($recordarOk) {
       setcookie("user",$emailOk);
     } else {
       setcookie("user", null, time() -1);
     }
 
-    if ($emailOk !== null && password_verify($_POST["pass"], $usuario["password"])) {
+    if ($emailOk !== null && password_verify($_POST["pass"], $usuario["pass"])) {
       $_SESSION["email"] = $usuario["email"];
       $_SESSION["nombre"] = $usuario["nombre"];
 
@@ -49,7 +49,7 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <title>eCommerce</title>
+  <title>Deco Enfant</title>
   <?php include("recursos/head.php") ?>
 </head>
 

@@ -2,6 +2,11 @@
 
 require_once("recursos/funciones.php");
 
+if(usuarioLogueado()){
+  header("Location:index.php");
+  exit;
+}
+
 $formRegistro = buscarObjeto("recursos/db.json","formRegistro");
 
 if ($_POST)
@@ -15,7 +20,7 @@ if ($_POST)
 
     if ($guardarOk === true)
     {
-      header("Location: registradoExito.php");
+      header("Location: login.php");
       exit;
     }
     else
@@ -110,7 +115,6 @@ if ($_POST)
 </head>
 
 
-
 <body>
 
   <!-- HEADER y NAVBAR DE MENUS---------------------------->
@@ -122,6 +126,7 @@ if ($_POST)
 
                     <!-- Generar Campos -->
     <?php foreach ($formRegistro as $key => $elem): ?>
+      <!-- <?php var_dump($formRegistro[$key]); ?> -->
       <div class="form-group">
         <label for=<?=$key;?>><?=$elem["label"];?></label>
         <input <?=$elem["class"];?> <?=$elem["parametros"];?> value=<?=$elem["value"];?>>

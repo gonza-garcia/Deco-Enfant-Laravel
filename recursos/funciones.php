@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+// var_dump($_SESSION);
+
 //recibe un string y lo devuelve en minúsculas sin
 //espacios ni tildes ni eñes
 function formatearTexto($texto)
@@ -31,8 +34,8 @@ function existeEnArray($palabra, $array)
 //un array asociativo de errores.
 function validarDatos($arrayDatos)
 {
-  $key_name = "name";            //completar estas variables segun los
-  $key_lastName = "lastName";    //nombres usados como 'keys' en
+  $key_name = "nombre";            //completar estas variables segun los
+  $key_lastName = "apellido";    //nombres usados como 'keys' en
   $key_email = "email";          //$arrayDatos pasado como parámetro
   $key_pass = "pass";
   $key_rePass = "pass2";
@@ -365,6 +368,24 @@ function buscarPorEmail($email)
 
 function existeUsuario($email){
   return buscarPorEmail($email) !== null;
+}
+
+function usuarioLogueado(){
+  return isset($_SESSION["email"]);
+}
+
+function listaDeUsuarios(){
+  $json = file_get_contents("recursos/db.json");
+  $array = json_decode($json, true);
+
+  return $array;
+}
+
+function traerUsuarioLogueado(){
+  if(isset($_SESSION["email"])){
+  return buscarPorEmail($_SESSION["email"]);
+  }
+  return false;
 }
 
 ?>

@@ -19,20 +19,24 @@
         "<i class='fas fa-bars'><\/i>": {
             "parametros": "class='nav-item d-lg-none'",
             "href": "#menu"
+        },
+        "<i class='fas fa-bars'><\/i>": {
+            "parametros": "class='nav-item d-lg-none'",
+            "href": ".\/listado.php"
         }
     },
     "formRegistro": {
-        "name": {
+        "nombre": {
             "label": "Nombre",
             "class": "class='form-control'",
-            "parametros": "id='name' type='text' name='name'",
+            "parametros": "id='nombre' type='text' name='nombre'",
             "value": "",
             "error": ""
         },
-        "lastName": {
+        "apellido": {
             "label": "Apellido",
             "class": "class='form-control'",
-            "parametros": "id='lastName' type='text' name='lastName'",
+            "parametros": "id='apellido' type='text' name='apellido'",
             "value": "",
             "error": ""
         },
@@ -65,50 +69,6 @@
             "error": ""
         }
     },
-    "usuarios": [
-        {
-            "id": "user_001",
-            "nombre": "Soledad",
-            "apellido": "Bazzana",
-            "edad": 32,
-            "sexo": "F",
-            "email": "solbazzana@hotmail.com",
-            "imagen": ".\/img\/users\/user_001.jpg",
-            "fechaIngreso": "13\/02\/2019",
-            "compras": [
-                "almo_003",
-                "banq_002"
-            ]
-        },
-        {
-            "id": "user_002",
-            "nombre": "Victoria",
-            "apellido": "Arnoldi",
-            "edad": 32,
-            "sexo": "F",
-            "email": "victoriaarnoldi@gmail.com",
-            "imagen": ".\/img\/users\/user_002.jpg",
-            "fechaIngreso": "17\/03\/2019",
-            "compras": [
-                "alfo_002",
-                "banq_001",
-                "puff_001"
-            ]
-        },
-        {
-            "id": "user_003",
-            "nombre": "Gonzalo",
-            "apellido": "Garc\u00eda Costoya",
-            "edad": 32,
-            "sexo": "M",
-            "email": "gcostoya02@gmail.com",
-            "imagen": ".\/img\/users\/user_003.jpg",
-            "fechaIngreso": "22\/04\/2019",
-            "compras": [
-                "bols_001"
-            ]
-        }
-    ],
     "articulos": [
         {
             "id": "almo_001",
@@ -259,6 +219,15 @@
             "cuotas": 10,
             "descuento": 14,
             "vendidos": 1
+        }
+    ],
+    "usuarios": [
+        {
+            "nombre": "Sol",
+            "apellido": "Bazzana",
+            "email": "solbazzana@hotmail.com",
+            "phone": "64",
+            "pass": "$2y$10$iSaM7V\/dVcWt8sFiBSzlSepTdrdNBoyNIiocB9uSi.cYV0MYyLJMC"
         }
     ]
 }
