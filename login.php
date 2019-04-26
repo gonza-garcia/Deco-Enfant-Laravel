@@ -10,6 +10,8 @@
   $error = "";
   $recordarOk = false;
 
+  // var_dump($_COOKIE);
+  // var_dump($_POST);
 
   if (isset($_COOKIE["user"])) {
     $emailOk = $_COOKIE["user"];
@@ -24,6 +26,8 @@
     $emailOk = $_POST["email"];
     $usuario = buscarPorEmail($_POST["email"]);
     $recordarOk = (isset($_POST["recordar"]));
+
+    // var_dump($usuario);
 
     if ($recordarOk) {
       setcookie("user",$emailOk);

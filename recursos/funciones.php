@@ -119,12 +119,24 @@ function nuevoId($categoria, $db)
   $json = file_get_contents($db);
   $array = json_decode($json, true);
 
-  $ultimoObjeto = array_pop($array[$categoria]);
-  $nuevoId = $ultimoObjeto["id"];
+  if (isset($array[$categoria])) {
+    $ultimoObjeto = array_pop($array[$categoria]);
+  }
 
-  if ($nuevoId!==0)
+  if (isset($ultimoObjeto["id"])) {
+    $nuevoId = $ultimoObjeto["id"];
     $nuevoId++;
+  }
+  else {
+    $nuevoId = 0;
+  }
 
+  // if ($nuevoId!==0){
+  //   $nuevoId++;
+  // }
+  // else {
+  //   $nuevoId = 0;
+  // }
   return $nuevoId;
 }
 
@@ -133,6 +145,10 @@ function nuevoId($categoria, $db)
 function armarObjeto($datos, $categoria, $db)
 {
   $objeto = [];
+
+  if (!isset($objeto["id"])){
+    $objeto["id"] = nuevoId($categoria,$db);
+  }
 
   foreach ($datos as $key => $dato)
   {
@@ -147,9 +163,14 @@ function armarObjeto($datos, $categoria, $db)
     $objeto[$key] = $dato;
   }
 
-  if (!$objeto)
-    $objeto["id"] = nuevoId($categoria,$db);
+  // var_dump($objeto);
+  //
+  // if (!isset($objeto["id"])){
+  //   $objeto["id"] = nuevoId($categoria,$db);
+  //   var_dump($objeto);
+  // }
 
+  // var_dump($objeto["id"]);
   return $objeto;
 }
 
@@ -352,10 +373,14 @@ function buscarPorEmail($email)
   else
     $usuarios = file_get_contents("recursos/db.json");
 
-  if($usuarios == "")
-    return null;
-
   $array = json_decode($usuarios, true);
+
+
+  if(!isset($array["usuarios"])){
+    return null;
+  }
+
+  // $array = json_decode($usuarios, true);
 
   foreach ($array["usuarios"] as $usuario)
   {
@@ -378,6 +403,8 @@ function listaDeUsuarios(){
   $json = file_get_contents("recursos/db.json");
   $array = json_decode($json, true);
 
+  // var_dump($array);
+
   return $array;
 }
 
@@ -386,6 +413,24 @@ function traerUsuarioLogueado(){
   return buscarPorEmail($_SESSION["email"]);
   }
   return false;
+}
+
+function buscarPorID($id){
+  $json = file_get_contents("recursos/db.json");
+  $array = json_decode($json, true);
+
+  // TODO:
+  // var_dump($array["usuarios"][1]["nombre"]);
+  // exit;
+  // var_dump($array["usuarios"]);
+
+  foreach ($array["usuarios"] as $usuario => $datos) {
+
+    if($id == $datos["id"]){
+      return $usuario;
+    }
+    return null;
+  }
 }
 
 ?>

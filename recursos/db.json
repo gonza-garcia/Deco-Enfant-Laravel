@@ -20,8 +20,8 @@
             "parametros": "class='nav-item d-lg-none'",
             "href": "#menu"
         },
-        "<i class='fas fa-bars'><\/i>": {
-            "parametros": "class='nav-item d-lg-none'",
+        "usuarios": {
+            "parametros": "class='nav-item'",
             "href": ".\/listado.php"
         }
     },
@@ -223,11 +223,20 @@
     ],
     "usuarios": [
         {
+            "id": 0,
             "nombre": "Sol",
             "apellido": "Bazzana",
             "email": "solbazzana@hotmail.com",
             "phone": "64",
-            "pass": "$2y$10$iSaM7V\/dVcWt8sFiBSzlSepTdrdNBoyNIiocB9uSi.cYV0MYyLJMC"
+            "pass": "$2y$10$sgGhIFEwzrRGeLXPf2ENeO4IdajkOd9CkB4UP6zT1YBSlOwFyJohm"
+        },
+        {
+            "id": 1,
+            "nombre": "eee",
+            "apellido": "Bazzana",
+            "email": "ef@adfs.com",
+            "phone": "6433",
+            "pass": "$2y$10$oNIIAVpZdIsKwDqbQRChRe6fMMXePFkfFW3TXMhzl8.EiW\/SkS9wS"
         }
     ]
 }

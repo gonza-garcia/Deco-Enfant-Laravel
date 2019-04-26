@@ -1,6 +1,6 @@
 <?php
 
-require_once("recursos/funciones.php");
+require_once "recursos/funciones.php";
 
 if(usuarioLogueado()){
   header("Location:index.php");
@@ -8,6 +8,25 @@ if(usuarioLogueado()){
 }
 
 $formRegistro = buscarObjeto("recursos/db.json","formRegistro");
+
+
+$errores = [];
+
+$nameOk = "";
+// $emailOk = "";
+$telOk = "";
+
+if (isset($_COOKIE["user"])) {
+  $formRegistro["email"]["value"]=$_COOKIE["user"];
+} else {
+  $formRegistro["email"]["value"] = "";
+}
+if (isset($_COOKIE["nombre"])) {
+  $nameOk = $_COOKIE["nombre"];
+} else {
+  $nameOk = "";
+}
+
 
 if ($_POST)
 {
@@ -20,6 +39,8 @@ if ($_POST)
 
     if ($guardarOk === true)
     {
+      var_dump($usuario["email"]);
+      setcookie("user",$usuario["email"], time() + 3 );
       header("Location: login.php");
       exit;
     }
