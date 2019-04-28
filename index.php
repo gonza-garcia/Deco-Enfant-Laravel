@@ -15,7 +15,7 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <title>Deco Enfant</title>
+  <title>Dèco Enfant</title>
   <?php include("recursos/head.php") ?>
 </head>
 
@@ -24,70 +24,71 @@
   <!-- HEADER y NAVBAR DE MENUS---------------------------->
   <?php include("recursos/header.php") ?>
 
+  <!--SECCION LANDING---------------------------------------------------------------------------------------------------------->
 
-  <!-- FIRST MESSAGE ---------------------------------------------------------------------------------------------------------->
-  <div id="first-msg" class="container px-3">
-      <h2 id="msg-text">¡ Comprá online y recibí tu producto donde quieras ! <i class="fas fa-truck"></i></h2>
-  </div>
+  <section class="container">
 
-  <!-- LANDING------------------------------------------------------------------------------------------------------------------>
-  <div class="home-landing">
-    <div class="container">
-      <div class="landing-carousel">
-        <img src="https://scontent.faep8-2.fna.fbcdn.net/v/t1.0-9/53517189_2345018265510441_2876957437766664192_o.jpg?_nc_cat=100&_nc_ht=scontent.faep8-2.fna&oh=a975c64c095eda2a3c7d7afdcef00285&oe=5D0B89BF" alt="banderines" class="carousel-img">
-        <h2>llegaron los banderines</h2>
-      </div>
-      <div class="landing-features">
-        <div class="feature-one">
-          <div class="feature-img">
-            <img src="./img/general_04.jpg" alt="novedades" class="feature-img-one">
-          </div>
-          <div class="feature-title">
-            <h3>novedades</h3>
-          </div>
-        </div>
-        <div class="feature-two">
-          <div class="feature-img">
-            <img src="./img/general_03.jpg" alt="sale" class="feature-img-two">
-          </div>
-          <div class="feature-title">
-            <h3>sale <br>25 & 37 off</h3>
-          </div>
-        </div>
+    <!-- FIRST MESSAGE --------------------------------------->
+    <div class="row p-3">
+      <div id="first-msg" class="d-flex col-12">
+        <h2 class="px-0 py-3 m-0 mx-auto text-center">¡ Comprá online y recibí tu producto donde quieras ! <i class="fas fa-truck"></i></h2>
       </div>
     </div>
-  </div>
 
-  <!--SECCION DESTACADOS----------------------------------------------------------------------------------------------------------->
-  <section class="destacados">
-    <div class="container">
+    <!-- LANDING------------------------------------------------>
+    <div id="row-landing" class="row">
 
-      <div class="destacados-titulos">
-        <h2 class="titulos"><img src="https://img.icons8.com/doodle/48/000000/paper-plane.png">destacados</h2>
-        <hr>
+      <div id="landing-carousel" class="col-lg-9">
+        <img class="img-fluid" src="./img/landing-carousel-01.jpg" alt="banderines">
+        <h2 class="p-4 text-center">llegaron los banderines</h2>
       </div>
 
-      <div class="row">
-        <!--- Generar Articulos ------>
-        <?php foreach ($articulos as $key => $articulo): ?>
-          <article class="col-md-3 col-sm-6 descatados-item">
-            <img class="img-fluid descatados-img" src=<?= $articulo["imagen"]?> alt=<?= $articulo["titulo"]?>>
-            <div class="dest-item-descrip">
-              <div class="descrip-item pr-1"><?= $articulo["titulo"]?></div>
-              <button class="btn btn-destacados btn-block">ver más</button>
+      <div id="landing-features" class="col-lg-3 pl-lg-0 mt-3 mt-lg-0 d-flex flex-lg-column justify-content-between">
+
+        <div id="feature-one">
+            <img class="img-fluid pr-2 pr-lg-0 pb-lg-1" src="./img/landing-feature-01.jpg" alt="novedades">
+            <h2 class="p-0 text-center">novedades</h2>
+        </div>
+
+        <div id="feature-two">
+          <img class="img-fluid pl-2 pl-lg-0 pt-lg-1" src="./img/landing-feature-02.jpg" alt="sale">
+          <h2 class="p-0 m-0 text-center">sale<br>25 & 37 off</h2>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!--SECCION DESTACADOS---------------------------------------------------------------------------------------------------------->
+  <section class="container">
+    <div class="text-center pt-4">
+      <h2 class="my-0 mx-auto w-100 text-uppercase"><img src="./img/icon-paper-plane.png">destacados</h2>
+      <hr>
+    </div>
+
+    <div class="row px-2">
+      <?php foreach ($articulos as $key => $articulo): ?>
+      <!--- Generar Articulos ------------->
+        <article class="col-6 col-md-4 col-lg-3 p-1">
+          <img class="img-fluid img-thumbnail destacados-img"
+          src=<?=$articulo["imagen"]?> alt=<?= $articulo["titulo"]?>>
+
+          <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2"><?= $articulo["titulo"]?></div>
+            <div class="col-12 col-lg-4 p-1">
+              <button id="btn-destacados" class="btn text-uppercase p-0 w-100 py-2">ver más
+              </button>
             </div>
-            <hr>
-          </article>
-        <?php
-            $counter++;
-            if ($counter===8){    //Corta a los 8 artículos
-              $counter = 0;
-              break;
-            }?>
-        <?php endforeach; ?>
+          </div>
+          <hr class="m-3">
+        </article>
+      <!-- Corta a los 8 artículos y resetea el contador -->
+      <?php $counter++;
+            if ($counter===8){ $counter = 0; break; }?>
+      <?php endforeach; ?>
       </div>
 
-    </div>
   </section>
 
 

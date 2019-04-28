@@ -1,7 +1,7 @@
 /* colores sugeridos
 #bfd0ce #f0e9f0 #f2dcce #e8cab0 #cc5955
-colores custom Gonza
-#e6d8b6 #d07f7c #dfbb80 #ba8551
+colores custom
+#e6d8b6 #d07f7c #dfbb80 #ba8551 #505050
 
 
 RESETEOS GENERALES-------------------------------------------------------------------------------------------------------- */
@@ -15,118 +15,78 @@ ul, ol {
 
 body {
   font-family: 'Ubuntu Condensed', sans-serif;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+  position: relative;
+  min-height: 800px;
+}
+
+body::after {
+  /*para hacer la imagen del body transparente */
+  background-image: url("../img/fondo1.jpg");
+  background-repeat: repeat;
+  opacity: 0.09;
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
 }
 
 .container {
   max-width: 1200px;
-  padding: 10px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+}
+
+section {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 /* First message ------------------------------------------------------------------------------------------------------------*/
 #first-msg {
-  background-color: #bfd0ce;
-  margin: 0 auto;
+  background-color: rgba(112, 96, 205, 0.3);
   font-family: 'Sacramento', cursive;
-}
-
-#msg-text {
-  width: 100%;
   color: #fff;
-  text-align: center;
-  margin: 0;
 }
 
-/* Landing------------------------------------------------------------------------------------------------------------- */
-.landing-carousel {
-  width: 75%;
+#first-msg h2 {
+  font-size: 2.45rem;
+}
+
+/* Landing----------------------------0--------------------------------------------------------------------------------- */
+#landing-carousel, #feature-one, #feature-two {
   position: relative;
-  padding-right: 10px;
 }
 
-.carousel-img {
-  width: 100%;
-  height: 100%;
-}
-
-.landing-carousel h2 {
+#row-landing h2 {
   text-transform: uppercase;
-  text-align: center;
-  font-size: 3vw;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 1.67rem;
   color: #fff;
-  border: 2px solid #fff;
-  padding: 3%;
   position: absolute;
-  transform: translate(-50%, -50%);
-  top: 40%;
-  left: 50%;
-}
-
-.landing-features {
-  width: 25%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.feature-img img {
-  width: 100%;
-  height: 100%;
-}
-
-.feature-one, .feature-two {
-  position: relative;
-}
-
-.landing-features h3 {
-  position: absolute;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -60%);
   top: 50%;
   left: 50%;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #fff;
-  text-align: center;
 }
 
-.feature-img-one {
-  padding-bottom: 5px;
-}
-
-.feature-img-two {
-  padding-top: 5px;
+#landing-carousel h2 {
+  font-size: 2.8rem;
+  border: 2px solid #fff;
 }
 
 /* Destacados--------------------------------------------------------------------------------------------------------------- */
-.destacados-titulos {
-  width: 100%;
-  text-transform: uppercase;
-  text-align: center;
+#descrip-item {
+  height: 56px;
 }
 
-.dest-item-descrip {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  padding-top: 10px;
+#btn-destacados {
+  background-color: rgb(195, 185, 255);
+  color: #c45678;
+  border-radius: .35rem !important;
 }
 
-.descrip-item {
-  width: 65%;
-}
-
-.btn-destacados {
-  text-transform: uppercase;
-  width: 35%;
-  color: #cc5955;
-  background-color: #bfd0ce;
-  height: 45px;
+#btn-destacados:hover {
+  background-color: #c45678;
+  color: #fff;
 }
 
 /* FORM DE REGISTRO--------------------------------------------------------------------------------------------------- */
@@ -137,59 +97,45 @@ body {
   border-color: #fff;
 }
 
-/* HEADER BUSQUEDA/LOGO/AUTENTICACION ---------------------------------------------------------------------------------*/
-header {
-  background-color: #e6d8b6;
-}
-
-.navbar {
-  padding: 10px;
-}
-
+/* HEADER -----------------------------------------------------------*/
 /* COLUMNA DE BUSQUEDA ----------------------------------------- */
 #formBuscar {
   position: relative;
-  width: 100%;
 }
 
 #formBuscar a {
   position: absolute;
-  right: .2rem;
+  right: .3rem;
   color: #666;
-}
-
-#inputBuscar {
-  width: 100%!important;
-}
-
-/* COLUMNA LOGO -------------------------------------------------*/
-#coluLogo img{
-  width:90%;
 }
 
 /* COLUMNA CARRITO Y AUTENTICACION-------------------------------- */
 #carrito {
-  background-color: #d07f7c;
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 5px;
   color: #fff;
   line-height: 1;
 }
 
-#autenticacion a {
-  /* font-family: "Open Sans", sans-serif; */
-  font-size: .9rem;
-  text-transform: uppercase;
-  color: #cc5955;
-  border-color: #fff!important;
-}
-#autenticacion a:hover {
-  color: #8c3330;
+#carrito:hover {
+  background-color: #c45678;
 }
 
+#autenticacion a {
+  font-size: .87rem;
+  text-transform: uppercase;
+  color: #000;
+  border-color: #fff !important;
+}
+
+#autenticacion a:hover {
+  color: #c45678;
+}
 
 /* NAVBAR DE MENUS --------------------------------------------- */
 nav {
-  background-color: #d07f7c;
+  background-color: rgba(0, 0, 0, 0.65);
+  height: 5rem;
 }
 
 nav a.nav-link {
@@ -204,112 +150,65 @@ nav li {
 }
 
 nav a:hover {
-  background-color: #8c3330;
-  color: #fff;
+  background-color: #c45678;
+  font-size: 1.8rem;
+  border-bottom-style: outset;
+  border-bottom-color: #fff;
 }
 
 /* FOOTER----------------------------------------------------------------------------------------------------------------------- */
 footer {
-  background-color: #d07f7c;
+  background-color: rgba(0, 0, 0, 0.65);
 }
 
 footer a {
+  display: inline-block;
   color: #fff;
-  font-size: .9rem;
+  width: 100%;
+  font-size: 1rem;
   font-weight: bold;
 }
 
 footer a:hover {
-  background-color: #8c3330;
+  display: inline-block;
+  background-color: #c45678;
   color: #fff;
   text-decoration: none;
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+footer li:hover {
+  width: 100%;
+  display: inline-block;
 }
 
 .footer-title {
   text-transform: uppercase;
-  color: white;
+  color: #fff;
   font-size: 1.1rem;
   font-weight: bold;
 }
 
-/*
-MEDIA QUERY HASTA 992PX (LG) */
-@media (max-width: 992px) {
-  #msg-text {
-    font-size: 3vw;
-  }
+/* MEDIA QUERY HASTA 992PX (LG) --------------------------------- */
+@media (max-width: 992px) {}
 
-  .landing-carousel {
-    width: 100%;
-    position: relative;
-    padding-right: 0px;
-  }
-
-  .landing-features {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-
-  .feature-one, .feature-two {
-    position: relative;
-    width: 49%;
-  }
-
-  .feature-img-one {
-    padding-bottom: 0px;
-  }
-
-  .feature-img-two {
-    padding-top: 0px;
-  }
-
-  .dest-item-descrip {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    padding-top: 10px;
-  }
-
-  .descrip-item {
-    width: 100%;
-  }
-
-  .btn-destacados {
-    margin-top: 10px;
-    text-transform: uppercase;
-    color: #cc5955;
-    background-color: #bfd0ce;
-    width: 100%;
-  }
-}
-
-/* MEDIA QUERY DESDE 576px  ------------------------------------*/
+/* MEDIA QUERY DESDE 450px  ------------------------------------*/
 @media (min-width: 450px) {
   #liNovedades {
-    display: block!important;
+    display: block !important;
   }
 }
 
 /* MEDIA QUERY DESDE 576px (XS) --------------------------------*/
-@media (min-width: 576px) {
+@media (min-width: 576px) {}
 
-}
 /* MEDIA QUERY DESDE 768px (MD) --------------------------------*/
-@media (min-width: 768px) {
-  #coluLogo img {
-    width: 70%;
-  }
-}
-/* MEDIA QUERY DESDE 992px (LG) --------------------------------*/
-@media (min-width: 992px) {
+@media (min-width: 768px) {}
 
-}
+/* MEDIA QUERY DESDE 992px (LG) --------------------------------*/
+@media (min-width: 992px) {}
 
 /* MEDIA QUERY DESDE 1280px  -----------------------------------*/
-@media (min-width: 1280px) {
-
-}
+@media (min-width: 1280px) {}

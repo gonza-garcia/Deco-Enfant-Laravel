@@ -53,7 +53,7 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <title>Deco Enfant</title>
+  <title>Dèco Enfant</title>
   <?php include("recursos/head.php") ?>
 </head>
 

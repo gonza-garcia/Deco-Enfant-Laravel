@@ -16,13 +16,13 @@
             "parametros": "class='nav-item d-none d-md-block'",
             "href": "#contacto"
         },
-        "<i class='fas fa-bars'><\/i>": {
-            "parametros": "class='nav-item d-lg-none'",
-            "href": "#menu"
-        },
         "usuarios": {
             "parametros": "class='nav-item'",
             "href": ".\/listado.php"
+        },
+        "<i class='fas fa-bars'><\/i>": {
+            "parametros": "class='nav-item d-lg-none'",
+            "href": "#menu"
         }
     },
     "formRegistro": {

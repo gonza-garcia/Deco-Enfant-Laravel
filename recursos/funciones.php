@@ -68,7 +68,8 @@ function validarDatos($arrayDatos)
           $errores[$key] = "Este campo sólo puede contener números.";
 
     //validar email
-      if ($key === $key_email){
+      if ($key === $key_email)
+      {
         if (!filter_var($dato, FILTER_VALIDATE_EMAIL))
           $errores[$key] = "El email debe ser del formato usuario@dominio.zzz.";
         elseif (existeObjeto("recursos/db.json","usuarios",$key,$dato))
@@ -102,7 +103,7 @@ function validarDatos($arrayDatos)
         else  //si $arra contiene letras o no tiene 3 campos
           $errores[$key] = "La fecha es inválida o no tiene el formato correcto dd/mm/yyyy.";
 
-        continue;
+          continue;
       }
 
     }  //end if
@@ -119,24 +120,12 @@ function nuevoId($categoria, $db)
   $json = file_get_contents($db);
   $array = json_decode($json, true);
 
-  if (isset($array[$categoria])) {
-    $ultimoObjeto = array_pop($array[$categoria]);
-  }
+  $ultimoObjeto = array_pop($array[$categoria]);
+  $nuevoId = $ultimoObjeto["id"];
 
-  if (isset($ultimoObjeto["id"])) {
-    $nuevoId = $ultimoObjeto["id"];
+  if ($nuevoId!==0)
     $nuevoId++;
-  }
-  else {
-    $nuevoId = 0;
-  }
 
-  // if ($nuevoId!==0){
-  //   $nuevoId++;
-  // }
-  // else {
-  //   $nuevoId = 0;
-  // }
   return $nuevoId;
 }
 
@@ -145,10 +134,6 @@ function nuevoId($categoria, $db)
 function armarObjeto($datos, $categoria, $db)
 {
   $objeto = [];
-
-  if (!isset($objeto["id"])){
-    $objeto["id"] = nuevoId($categoria,$db);
-  }
 
   foreach ($datos as $key => $dato)
   {
@@ -163,14 +148,9 @@ function armarObjeto($datos, $categoria, $db)
     $objeto[$key] = $dato;
   }
 
-  // var_dump($objeto);
-  //
-  // if (!isset($objeto["id"])){
-  //   $objeto["id"] = nuevoId($categoria,$db);
-  //   var_dump($objeto);
-  // }
+  if (!$objeto)
+    $objeto["id"] = nuevoId($categoria,$db);
 
-  // var_dump($objeto["id"]);
   return $objeto;
 }
 
