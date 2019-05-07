@@ -1,11 +1,10 @@
 /* colores sugeridos
 #bfd0ce #f0e9f0 #f2dcce #e8cab0 #cc5955
 colores custom
-#e6d8b6 #d07f7c #dfbb80 #ba8551 #505050
+#e6d8b6 #d07f7c #dfbb80 #ba8551 #505050 #f8e27a
 
 
-RESETEOS GENERALES-------------------------------------------------------------------------------------------------------- */
-li {
+RESETEOS GENERALES-------------------------------------------------------------------------------------------------------- */ li {
   list-style-type: none;
 }
 
@@ -132,10 +131,9 @@ section {
   color: #c45678;
 }
 
-/* NAVBAR DE MENUS --------------------------------------------- */
+/* NAVBAR DE MENUS -------------------------------------------- */
 nav {
   background-color: rgba(0, 0, 0, 0.65);
-  height: 5rem;
 }
 
 nav a.nav-link {
@@ -145,15 +143,27 @@ nav a.nav-link {
   font-size: 1.5rem;
 }
 
-nav li {
-  padding: 0 1rem;
+nav li.nav-item:hover a.nav-link {
+  background-color: #c45678;
 }
 
-nav a:hover {
+#dropCats, #dropSubCats {
+  border-top: solid 1.5px white;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+#dropCats a, #dropSubCats a {
+  color: #bbb;
+}
+
+#dropCats a:hover, #dropSubCats a:hover {
   background-color: #c45678;
-  font-size: 1.8rem;
-  border-bottom-style: outset;
-  border-bottom-color: #fff;
+  color: #fff;
+}
+
+#dropCats a:focus, #dropSubCats a:focus {
+  background-color: #c45678;
+  color: #fff;
 }
 
 /* FOOTER----------------------------------------------------------------------------------------------------------------------- */
@@ -195,11 +205,7 @@ footer li:hover {
 @media (max-width: 992px) {}
 
 /* MEDIA QUERY DESDE 450px  ------------------------------------*/
-@media (min-width: 450px) {
-  #liNovedades {
-    display: block !important;
-  }
-}
+@media (min-width: 450px) {}
 
 /* MEDIA QUERY DESDE 576px (XS) --------------------------------*/
 @media (min-width: 576px) {}

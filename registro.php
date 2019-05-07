@@ -10,17 +10,15 @@ if(usuarioLogueado()){
 $formRegistro = buscarObjeto("recursos/db.json","formRegistro");
 
 
-if (isset($_COOKIE["user"])) {
+if (isset($_COOKIE["user"]))
   $formRegistro["email"]["value"]=$_COOKIE["user"];
-} else {
+else
   $formRegistro["email"]["value"] = "";
-}
-if (isset($_COOKIE["nombre"])) {
-  $nameOk = $_COOKIE["nombre"];
-} else {
-  $nameOk = "";
-}
 
+if (isset($_COOKIE["nombre"]))
+  $nameOk = $_COOKIE["nombre"];
+else
+  $nameOk = "";
 
 if ($_POST)
 {
@@ -61,63 +59,6 @@ if ($_POST)
 }  //end if ($_POST)
 
 
-//
-// $errores = [];
-//
-// $nameOk = "";
-// $emailOk = "";
-// $telOk = "";
-//
-// if (isset($_COOKIE["user"])) {
-//   $emailOk = $_COOKIE["user"];
-// } else {
-//   $emailOk = "";
-// }
-// if (isset($_COOKIE["nombre"])) {
-//   $nameOk = $_COOKIE["nombre"];
-// } else {
-//   $nameOk = "";
-// }
-//
-// if ($_POST) {
-//   //validar los campos y devolver errores.
-//
-//   // var_dump(existeUsuario($_POST["email"]));
-//
-//   $errores = validarRegistro($_POST);
-//   // var_dump($errores);
-//
-//   $nameOk = trim($_POST["nombre"]);
-//   $emailOk = trim($_POST["email"]);
-//   $telOk = trim($_POST["telefono"]);
-//
-//
-//   if (empty($errores)) {
-//     // Si no hay errores
-//       //Crear usuario
-//       if(!existeUsuario($_POST["email"])){
-//         $usuario = armarUsuario();
-//         //Guardar usuario
-//         guardarUsuario($usuario);
-//
-//         //redireccionar el usuario a la pagina de exito.
-//         // header("Location: registradoExito.php"); //nombre de archivo inventado. no existe todavia.
-//
-//         //redireccionar el usuario a la pagina de login.
-//         setcookie("user",$emailOk, time() + 3 );
-//         header("Location: login.php");
-//         exit;
-//       }
-//
-//       else{
-//        return "el usuario ya existe";
-//       }
-//       //Guardar Imagen
-//   }
-// }
-//
-
-
 ?>
 
 
@@ -141,7 +82,6 @@ if ($_POST)
 
                     <!-- Generar Campos -->
     <?php foreach ($formRegistro as $key => $elem): ?>
-      <!-- <?php var_dump($formRegistro[$key]); ?> -->
       <div class="form-group">
         <label for=<?=$key;?>><?=$elem["label"];?></label>
         <input <?=$elem["class"];?> <?=$elem["parametros"];?> value=<?=$elem["value"];?>>
@@ -151,7 +91,7 @@ if ($_POST)
 
                     <!-- Botón Enviar -->
     <div class="form-group">
-      <button type="btn submit" class="btn btn-light" name="submit" value="Registrarme">Registrarme</button>
+      <button type="submit" class="btn btn-light" name="submit" value="Registrarme">Registrarme</button>
       <button type="btn reset" class="btn btn-outline-primary" name="Limpiar" value="Limpiar">Limpiar</button>
     </div>
   </form><!--  end form de registro -->

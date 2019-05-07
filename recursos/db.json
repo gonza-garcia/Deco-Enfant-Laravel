@@ -1,30 +1,4 @@
 {
-    "headerMenu": {
-        "inicio": {
-            "parametros": "class='nav-item'",
-            "href": ".\/index.php"
-        },
-        "productos": {
-            "parametros": "class='nav-item'",
-            "href": "#productos"
-        },
-        "novedades": {
-            "parametros": "id='liNovedades' class='nav-item d-none'",
-            "href": "#novedades"
-        },
-        "contacto": {
-            "parametros": "class='nav-item d-none d-md-block'",
-            "href": "#contacto"
-        },
-        "usuarios": {
-            "parametros": "class='nav-item'",
-            "href": ".\/listado.php"
-        },
-        "<i class='fas fa-bars'><\/i>": {
-            "parametros": "class='nav-item d-lg-none'",
-            "href": "#menu"
-        }
-    },
     "formRegistro": {
         "nombre": {
             "label": "Nombre",
@@ -47,10 +21,17 @@
             "value": "",
             "error": ""
         },
-        "phone": {
+        "telefono": {
             "label": "Tel\u00e9fono",
             "class": "class='form-control'",
-            "parametros": "id='phone' type='text' name='phone'",
+            "parametros": "id='telefono' type='text' name='telefono'",
+            "value": "",
+            "error": ""
+        },
+        "fechaNac": {
+            "label": "Fecha De Nacimiento",
+            "class": "class='form-control'",
+            "parametros": "id='fechaNac' type='text' name='fechaNac'",
             "value": "",
             "error": ""
         },
@@ -223,20 +204,28 @@
     ],
     "usuarios": [
         {
-            "id": 0,
-            "nombre": "Sol",
-            "apellido": "Bazzana",
-            "email": "solbazzana@hotmail.com",
-            "phone": "64",
-            "pass": "$2y$10$sgGhIFEwzrRGeLXPf2ENeO4IdajkOd9CkB4UP6zT1YBSlOwFyJohm"
+            "id": 3,
+            "nombre": "sdgsdf",
+            "apellido": "d",
+            "email": "g@g.com",
+            "fechaNac": "10\/02\/1986",
+            "fechaAlta": "2019\/05\/05 20:51:32 pm",
+            "domicilio": "",
+            "telefono": "234234",
+            "rol_id": 2,
+            "pass": "$2y$10$ivszV\/1a85E8wZD7Hc0bCO6\/ZBMwbNLr\/H6qF2qBVynO59cIRf8Nq"
         },
         {
-            "id": 1,
-            "nombre": "eee",
-            "apellido": "Bazzana",
-            "email": "ef@adfs.com",
-            "phone": "6433",
-            "pass": "$2y$10$oNIIAVpZdIsKwDqbQRChRe6fMMXePFkfFW3TXMhzl8.EiW\/SkS9wS"
+            "id": 4,
+            "nombre": "sdff",
+            "apellido": "sdfd",
+            "email": "gcostoya02@gmail.com",
+            "fechaNac": "12\/12\/1986",
+            "fechaAlta": "2019\/05\/05 21:49:18 pm",
+            "domicilio": "",
+            "telefono": "123",
+            "rol_id": 2,
+            "pass": "$2y$10$6xQP9cxyaGvQIyQcyX5a5.m8mkb4BFRUOpuq3BfwaNFsxtFU1VSR6"
         }
     ]
 }

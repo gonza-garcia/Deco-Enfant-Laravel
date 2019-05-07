@@ -9,66 +9,64 @@ if(!usuarioLogueado()){
 
 $nameOk = "";
 $emailOk = "";
-
+$usuario=[];
 // $usuario = buscarPorID($_GET["id"]);
-if ($_GET) {
-  $usuario = buscarObjeto("recursos/db.json","usuarios", buscarPorID($_GET["id"]));
-  $formRegistro = buscarObjeto("recursos/db.json","formRegistro");
+if ($_GET)
+{
+  // $usuario = buscarObjeto("recursos/db.json","usuarios", buscarPorID($_GET["id"]));
+  $usuario = buscarObjeto("recursos/db.json","usuarios", "id", $_GET["id"]);
+  //$formRegistro = buscarObjeto("recursos/db.json","formRegistro");
 
-  // var_dump($formRegistro);
-  // var_dump($usuario);
+  // // $formRegistro["nombre"]["value"]=$usuario["nombre"];
+  // foreach ($formRegistro as $key => $valor)
+  //   foreach ($usuario as $ukey => $uvalor)
+  //     if ($key == $ukey && $key !== "pass")
+  //       $formRegistro[$key]["value"] = $uvalor;
 
-  // $formRegistro["nombre"]["value"]=$usuario["nombre"];
-  foreach ($formRegistro as $key => $valor) {
-    foreach ($usuario as $ukey => $uvalor) {
-      if ($key == $ukey && $key !== "pass") {
-        $formRegistro[$key]["value"] = $uvalor;
-      }
-    }
-  }
+
+
   // var_dump($formRegistro);
 }
-
-$errores = [];
 
 // $nameOk = $usuario["nombre"];
 // $emailOk = $usuario["email"];
 
-if($_POST){
-  //Validar los campos y a devolver errroes.
-  //var_dump($_POST);
-  //exit;
-  //var_dump(existeElUsuario($_POST["email"]));
-  //exit;
+if ($_POST)
+{
+  $errores = validarDatos($_POST);
 
-  // $errores = validarRegistro($_POST);
-  //var_dump($errores);
-  //
-  // $nameOk = trim($_POST["name"]);
-  // $emailOk = trim($_POST["email"]);
+  if (empty($errores))   ///si NO hay errores
+  {
+    $usuario = armarObjeto($_POST, "usuarios", "recursos/db.json");
+    $guardarOk = guardarObjeto($usuario, "usuarios", "recursos/db.json");
 
-
-  if(empty($errores)){
-    //Si no hay $errores
-      // Crear usaurio
-      // if(!existeElUsuario($_POST["email"])){ //Esta validación se puede pasar tambien en los errores. En ese caso hay que chequear previamente que el archivo .json exista.
-      // $usuario = armarUsuario();
-      //var_dump($usuario);
-      // Guardar usuario.
-      // guardarUsuario($usuario);
-
-      // Guardar imagen
-      // $ext = pathinfo($_FILES["avatar"]["name"], PATHINFO_EXTENSION);
-      // move_uploaded_file($_FILES["avatar"]["tmp_name"], "img/" . $usuario["id"] . "." . $ext);
-
-      // loguearUsuario($_POST["email"]);
-
-      // Redirigir  a home logueado.
+    if ($guardarOk === true)
+    {
       header("Location:listado.php");
       exit;
-    // }
+    }
+    else
+      echo "Hubo un error al intentar guardar el usuario.";
+
   }
-}
+                   ///  si HAY errores
+
+  //   foreach ($usuario as $key => $elem)
+  //   {
+  //     //persistir datos
+  //     if ($key!=='pass' && $key!=='pass2')
+  //       $usuario[$key]["value"] = $_POST[$key];
+  //
+  //     //si hay error: mostrarlo y borde rojo
+  //     if (isset($errores[$key]))
+  //     {
+  //       $usuario[$key]["class"] = "class='form-control border border-danger'";
+  //       $usuario[$key]["error"] = $errores[$key];
+  //     }
+  //   }
+  // }                    ///end "si Hay errores"
+}  //end if ($_POST)
+
 
 ?>
 
@@ -94,15 +92,16 @@ if($_POST){
     <h5 class="col-md-6 offset-md-3"> <?=$emailOk?> </h5>
 
                     <!-- Generar Campos -->
-    <?php foreach ($formRegistro as $key => $elem): ?>
-      <!-- <?php var_dump($formRegistro[$key]); ?> -->
-      <?php if ($elem["label"] !== "E-mail") : ?>
-        <div class="form-group">
-          <label for=<?=$key;?>><?=$elem["label"];?></label>
-          <input <?=$elem["class"];?> <?=$elem["parametros"];?> value=<?=$elem["value"];?>>
-          <span class="small text-danger"><?=$elem["error"];?></span>
-        </div>
-      <?php endif; ?>
+
+    <?php foreach ($usuario as $key => $elem): ?>
+      <?php if ($key === "pass") continue; ?>
+      <div class="form-group">
+        <label for=<?=$key;?>><?=$key;?></label>
+        <input id=<?=$key;?> class="form-control" type="text" name=<?=$key;?> value=<?=$elem;?>>
+        <?php if (isset($errores[$key])) : ?>
+          <span class="small text-danger"><?=$errores[$key]?></span>
+        <?php endif; ?>
+      </div>
     <?php endforeach; ?>
 
                     <!-- Botón Enviar -->

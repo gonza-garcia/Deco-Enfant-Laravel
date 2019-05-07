@@ -4,7 +4,7 @@
 
   $articulos = buscarObjeto("recursos/db.json","articulos");
 
-  $articulos = ordenarArray('vendidos', SORT_DESC, SORT_NUMERIC, $articulos);
+  $articulos = ordenarArray('precio', SORT_DESC, SORT_NUMERIC, $articulos);
 
   $counter = 0;
 

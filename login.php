@@ -2,6 +2,11 @@
 
   require_once("recursos/funciones.php");
 
+  if (isset($_GET["url"]))
+  {
+    $ultima_url = $_GET["url"];
+  }
+
   if(usuarioLogueado()){
     header("Location:index.php");
     exit;
@@ -24,7 +29,7 @@
   if ($_POST) {
 
     $emailOk = $_POST["email"];
-    $usuario = buscarPorEmail($_POST["email"]);
+    $usuario = buscarObjeto("recursos/db.json", "usuarios","email",$_POST["email"]);
     $recordarOk = (isset($_POST["recordar"]));
 
     // var_dump($usuario);
@@ -64,7 +69,7 @@
 
 
   <!-- FORM DE LOGIN------------------------------------------------------------------------------------------------------->
-  <form class="col-sm-10 offset-sm-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4" action="login.php" method="post">
+  <form class="col-sm-10 offset-sm-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4" action="./login.php" method="POST">
     <div class="form-group no-gutters">
       <label for="email">Email</label>
       <input class="form-control" id="email" type="email" name="email" value="<?= $emailOk?>" placeholder="Ingrese su email aqui...">

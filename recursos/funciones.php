@@ -1,7 +1,21 @@
 <?php
 
 session_start();
-// var_dump($_SESSION);
+
+
+function usuarioLogueado()
+{
+  return isset($_SESSION["email"]);
+}
+
+function get_current_url()
+{
+  $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+
+  $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+  return $url;
+}
 
 //recibe un string y lo devuelve en minúsculas sin
 //espacios ni tildes ni eñes
@@ -34,19 +48,19 @@ function existeEnArray($palabra, $array)
 //un array asociativo de errores.
 function validarDatos($arrayDatos)
 {
-  $key_name = "nombre";            //completar estas variables segun los
-  $key_lastName = "apellido";    //nombres usados como 'keys' en
-  $key_email = "email";          //$arrayDatos pasado como parámetro
+  $key_name = "nombre";        //completar estas variables segun los
+  $key_lastName = "apellido";  //nombres usados como 'keys' en
+  $key_email = "email";        //$arrayDatos pasado como parámetro
   $key_pass = "pass";
   $key_rePass = "pass2";
-  $key_date = "date";
-  $key_phone = "phone";
+  $key_date = "fechaNac";
+  $key_phone = "telefono";
 
   $errores=[];
 
   foreach ($arrayDatos as $key => $dato)
   {
-    //validar campos requeridos (agregar al [...] según necesario)
+    //validar campos REQUERIDOS (agregar al [...] según necesario)
     if (existeEnArray($key, [$key_name,$key_lastName,$key_email,$key_date]))
     {
       if (!$dato)
@@ -55,7 +69,7 @@ function validarDatos($arrayDatos)
         $errores[$key] = "Este campo no puede contener espacios vacíos al principio o final.";
     }
 
-    if (!isset($errores[$key]))  //si todavía no hay errores...
+    if (!isset($errores[$key]))  //si todavía no hay errores en key...
     {
     //validar campos alfabéticos
       if (($key === $key_name) || ($key === $key_lastName))
@@ -115,12 +129,12 @@ function validarDatos($arrayDatos)
 
 
 // funcion para que retorne e ingrese en armarUsuarrio() el ultimo id+1
-function nuevoId($categoria, $db)
+function nuevoId($tabla, $db)
 {
   $json = file_get_contents($db);
   $array = json_decode($json, true);
 
-  $ultimoObjeto = array_pop($array[$categoria]);
+  $ultimoObjeto = array_pop($array[$tabla]);
   $nuevoId = $ultimoObjeto["id"];
 
   if ($nuevoId!==0)
@@ -129,42 +143,65 @@ function nuevoId($categoria, $db)
   return $nuevoId;
 }
 
-
-
-function armarObjeto($datos, $categoria, $db)
+//recibe array de $datos y devuelve un array modelado segun un usuario o un articulo. Luego SOLO los keys de $datos que coincidan con los keys del objeto modelado se van a pisar y a quedar con el valor de $datos.
+function armarObjeto($datos, $tabla, $db)
 {
   $objeto = [];
 
-  foreach ($datos as $key => $dato)
-  {
-    if ($key==="pass2" || $key==="submit")
-      continue;
+  if ($tabla === "usuarios"){ // si la $tabla es usuarios
+    $objeto = [               //modelo el $objeto como un usuario
+      "id" => nuevoId($tabla,$db),
+      "nombre" => "",
+      "apellido" => "",
+      "email" => "",
+      "fechaNac" => "",
+      "fechaAlta" => date('Y/m/d H:i:s a', time()),
+      "domicilio" => "",
+      "telefono" => "",
+      "rol_id" => 2, // 2 es 'usuario normal' en la db
+      "pass" => "",
+    ];
+  }
+  else if ($tabla === "articulos"){ //si la $tabla es articulos
+    $objeto = [               //modelo el $objeto como un artículo
+      "id" => nuevoId($tabla,$db),
+      "titulo" => "",
+      "descripcion" => "",
+      "medidas" => "",
+      "precio" => "",
+      "imagen" => "",
+      "fechaAlta" => date('Y/m/d H:i:s a', time()),
+      "cuotas" => "",
+      "descuento" => "",
+      "categoriaPadre_id" => 0, // 0 es 'sin padre' en la db
+    ];
+  }
 
-    if ($key==="pass"){
-      $objeto[$key] = password_hash($dato, PASSWORD_DEFAULT);
+  foreach ($objeto as $key => $value)
+  {
+    if (($key==="pass") && isset($datos["pass"]))
+    {
+      $objeto[$key] = password_hash($datos[$key], PASSWORD_DEFAULT);
       continue;
     }
 
-    $objeto[$key] = $dato;
-  }
-
-  if (!$objeto)
-    $objeto["id"] = nuevoId($categoria,$db);
+    if (isset($datos[$key]))         //solo se van a pisar los campos
+      $objeto[$key] = $datos[$key]; // si los keys coindicen, los que
+  }                              //no coincidan no se tienen en cuenta
 
   return $objeto;
 }
 
 
 
-
-function guardarObjeto($objeto, $categoria, $db)
+function guardarObjeto($objeto, $tabla, $db)
 {
   try
   {
     $json = file_get_contents($db);
     $array = json_decode($json, true);
 
-    $array[$categoria][] = $objeto;
+    $array[$tabla][] = $objeto;
     $array = json_encode($array, JSON_PRETTY_PRINT);
 
     file_put_contents($db, $array);
@@ -179,25 +216,25 @@ function guardarObjeto($objeto, $categoria, $db)
 
 
 //devuelve el objeto buscado si el datoBuscado coincide
-//si no se recibe un dato buscado, devuelve $db[$categoria][$posicion]
-//si no se recibe una posicion, devuelve $db[$categoria]
-function buscarObjeto($db, $categoria, $posicion="", $datoBuscado="")
+//si no se recibe un dato buscado, devuelve $db[$tabla][$columna]
+//si no se recibe una posicion, devuelve $db[$tabla]
+function buscarObjeto($db, $tabla, $columna="", $datoBuscado="")
 {
   if(file_exists($db))    //si existe la base de datos
   {
     $tempDB = file_get_contents($db);
     $arrayDB = json_decode($tempDB, true);
 
-    if (isset($arrayDB[$categoria])) //si existe la clave
+    if (isset($arrayDB[$tabla])) //si existe la clave
     {
-      if ($posicion === "")   //si $posicion vacia, devuelve $categoria
-        return $arrayDB[$categoria];
-      elseif ($datoBuscado === "")  //si dato vacio devuelve $posicion
-              return $arrayDB[$categoria][$posicion];
+      if ($columna === "")   //si $columna vacia, devuelve $tabla
+        return $arrayDB[$tabla];
+      elseif ($datoBuscado === "")  //si dato vacio devuelve $columna
+              return $arrayDB[$tabla][$columna];
       else
       {
-        foreach ($arrayDB[$categoria] as $array)
-          if ((isset($array[$posicion])) && ($datoBuscado === $array[$posicion]))
+        foreach ($arrayDB[$tabla] as $array)
+          if ((isset($array[$columna])) && ($datoBuscado == $array[$columna]))
             return $array;
       }
     }
@@ -207,9 +244,9 @@ function buscarObjeto($db, $categoria, $posicion="", $datoBuscado="")
 }
 
 
-function existeObjeto($db,$categoria,$posicion,$datoBuscado)
+function existeObjeto($db,$tabla,$columna,$datoBuscado)
 {
-  return buscarObjeto($db,$categoria,$posicion,$datoBuscado) !== null;
+  return buscarObjeto($db,$tabla,$columna,$datoBuscado) !== null;
 }
 
 
@@ -234,183 +271,5 @@ function ordenarArray(string $field1, $mod1,$mod2, $arrayToOrder)
   return $array;
 }
 
-
-
-
-
-
-function validarRegistro($datos)
-{
-  $errores = [];
-  $datosFinales = []; //NO VEO QUE SE USE EN OTRO LADO.
-
-  //TRIMEO - me parece que al final no se usa porque se trimea todo adento de la funcion armarUsuario(). O quizás no lo entiendo bien. Pero lo comento y anda todo.
-
-  // foreach ($datos as $posicion => $valor) {
-  //     $datosFinales[$posicion] = trim($valor);
-  // }
-
-
-  // NOMBRE
-  if (strlen($datos["nombre"]) == 0) {
-    $errores["nombre"] = "Campo obligatorio";
-  }
-
-  //TELEFONO - ver
-  //campo vacio
-  if (strlen($datos["telefono"]) == 0) {
-    $errores["telefono"] = "Campo obligatorio";
-  }
-  // ingresar solo numeros
-  elseif (is_numeric($datos["telefono"]) == false) {
-    $errores["telefono"] = "El campo solo acepta numeros";
-  }
-
-  // EMAIL
-  // campo vacio
-  if (strlen($datos["email"]) == 0) {
-    $errores["email"] = "Campo obligatorio";
-  }
-  // formato email valido
-  elseif (filter_var($datos["email"], FILTER_VALIDATE_EMAIL) == false)
-  {
-          $errores["email"] = "Ingrese un email válido";
-  }
-  // email ya registrado
-  elseif(existeUsuario($datos["email"])){
-    $errores["email"] = "El email ingresado ya se encuentra registrado";
-  }
-
-  //PASSWORD
-  //campo vacio
-  if (strlen($datos["pass"]) == 0) {
-    $errores["pass"] = "Campo obligatorio";
-  }
-  //campo vacio de reescribir contraseña
-  elseif (strlen($datos["pass2"]) == 0) {
-    $errores["pass"] = "Por favor repita la contraseña";
-  }
-  //coincidencia en las dos contraseñas
-  elseif ($datos["pass"] !== $datos["pass2"]) {
-    $errores["pass"] = "Las contraseñas no coinciden";
-  }
-
-  return $errores;
-}
-
-
-
-
-// funcion para que retorne e ingrese en armarUsuarrio() el ultimo id+1
-function lastId()
-{
-  $json = file_get_contents("recursos/db.json");
-  $array = json_decode($json, true);
-
-  if($json==""){
-    return $lastId=0;
-  }
-
-  $ultimoElemento = array_pop($array["usuarios"]);
-
-  $lastId = $ultimoElemento["id"] + 1;
-  return $lastId;
-}
-
-
-
-//Guardar usuario nuevo en archivo JSON
-function guardarUsuario($user)
-{
-  $json = file_get_contents("recursos/db.json");
-  $array = json_decode($json, true);
-
-  $array["usuarios"][] = $user;
-  $array = json_encode($array, JSON_PRETTY_PRINT);
-
-  file_put_contents("recursos/db.json", $array);
-}
-
-  // Armar array de usuario
-function armarUsuario()
-{
-  return  [
-          "id" => lastId(), // resultado de lastId()
-          "nombre" => trim($_POST["nombre"]),
-          "telefono" => trim($_POST["telefono"]),
-          "email" => trim($_POST["email"]),
-          "password" => password_hash($_POST["pass"], PASSWORD_DEFAULT),
-          ];
-}
-
-
-
-//buscar por email para comprobar que el usuario no este ya registrado
-function buscarPorEmail($email)
-{
-  if(!file_exists("recursos/db.json"))
-    $usuarios = "";
-  else
-    $usuarios = file_get_contents("recursos/db.json");
-
-  $array = json_decode($usuarios, true);
-
-
-  if(!isset($array["usuarios"])){
-    return null;
-  }
-
-  // $array = json_decode($usuarios, true);
-
-  foreach ($array["usuarios"] as $usuario)
-  {
-    if ($email === $usuario["email"])
-      return $usuario;
-  }
-
-  return null;
-}
-
-function existeUsuario($email){
-  return buscarPorEmail($email) !== null;
-}
-
-function usuarioLogueado(){
-  return isset($_SESSION["email"]);
-}
-
-function listaDeUsuarios(){
-  $json = file_get_contents("recursos/db.json");
-  $array = json_decode($json, true);
-
-  // var_dump($array);
-
-  return $array;
-}
-
-function traerUsuarioLogueado(){
-  if(isset($_SESSION["email"])){
-  return buscarPorEmail($_SESSION["email"]);
-  }
-  return false;
-}
-
-function buscarPorID($id){
-  $json = file_get_contents("recursos/db.json");
-  $array = json_decode($json, true);
-
-  // TODO:
-  // var_dump($array["usuarios"][1]["nombre"]);
-  // exit;
-  // var_dump($array["usuarios"]);
-
-  foreach ($array["usuarios"] as $usuario => $datos) {
-
-    if($id == $datos["id"]){
-      return $usuario;
-    }
-    return null;
-  }
-}
 
 ?>

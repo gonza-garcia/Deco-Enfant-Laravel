@@ -5,15 +5,16 @@
     header("Location:index.php");
     exit;
   }
-  $usuarios = listaDeUsuarios()["usuarios"];
-  $usuario = traerUsuarioLogueado();
+  $usuarios = buscarObjeto("recursos/db.json","usuarios");
+  $usuario = buscarObjeto("recursos/db.json", "usuarios", "email", $_SESSION["email"]);
+  var_dump($usuario);
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>Deco Enfant</title>
+    <title>Dèco Enfant</title>
     <?php include("recursos/head.php") ?>
     <title></title>
   </head>
@@ -41,7 +42,7 @@
             <td><?= $datos["id"] ?></td>
             <td><?= $datos["nombre"] ?></td>
             <td><?= $datos["apellido"] ?></td>
-            <td><?= $datos["phone"] ?></td>
+            <td><?= $datos["telefono"] ?></td>
             <td><?= $datos["email"] ?></td>
             <td><a class="btn btn-primary btn-sm" href="<?= 'edit.php?id=' . $datos["id"] ?>">Editar</a></td>
           </tr>
