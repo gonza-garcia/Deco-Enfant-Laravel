@@ -7,54 +7,89 @@ if(usuarioLogueado()){
   exit;
 }
 
-$formRegistro = buscarObjeto("recursos/db.json","formRegistro");
+$camposRegistro = [ //el booleano determina si es editable o no
+      "nombre"   => [ "label_title" => "Nombre",
+                      "input_class" => "class='form-control'",
+                      "input_type"  => "text",
+                      "input_value" => "",
+                      "span_error"  => "",
+                    ],
+      "apellido" => [ "label_title" => "Apellido:",
+                      "input_class" => "class='form-control'",
+                      "input_type"  => "text",
+                      "input_value" => "",
+                      "span_error"  => "",
+                    ],
+      "email"    => [ "label_title" => "E-Mail",
+                      "input_class" => "class='form-control'",
+                      "input_type"  => "email",
+                      "input_value" => "",
+                      "span_error"  => "",
+                    ],
+      "fechaNac" => [ "label_title" => "Fecha De Nacimiento",
+                      "input_class" => "class='form-control'",
+                      "input_type"  => "text",
+                      "input_value" => "",
+                      "span_error"  => "",
+                    ],
+      "pass"     => [ "label_title" => "Contraseña",
+                      "input_class" => "class='form-control'",
+                      "input_type"  => "password",
+                      "input_value" => "",
+                      "span_error"  => "",
+                    ],
+      "pass2"    => [ "label_title" => "Repetir Contraseña",
+                      "input_class" => "class='form-control'",
+                      "input_type"  => "password",
+                      "input_value" => "",
+                      "span_error"  => "",
+                    ],
+];
+
+// $formRegistro = buscarObjeto("recursos/db.json","formRegistro");
 
 
 if (isset($_COOKIE["user"]))
-  $formRegistro["email"]["value"]=$_COOKIE["user"];
-else
-  $formRegistro["email"]["value"] = "";
+  $camposRegistro["email"]["input_value"]=$_COOKIE["user"];
 
 if (isset($_COOKIE["nombre"]))
   $nameOk = $_COOKIE["nombre"];
 else
   $nameOk = "";
 
-if ($_POST)
+if ($_POST && $_POST["formulario"] == "registro")
 {
-  $errores = validarDatos($_POST);
+    $errores = validarDatos($_POST);
 
-  if (empty($errores))   ///si NO hay errores
-  {
-    $usuario = armarObjeto($_POST, "usuarios", "recursos/db.json");
-    $guardarOk = guardarObjeto($usuario, "usuarios", "recursos/db.json");
-
-    if ($guardarOk === true)
+    if (empty($errores))   //si NO hay errores
     {
-      // var_dump($usuario["email"]);
-      setcookie("user",$usuario["email"], time() + 3 );
-      header("Location: login.php");
-      exit;
-    }
-    else
-      echo "Hubo un error al intentar guardar el usuario.";
+        $usuario = armarObjeto($_POST, "usuarios", "recursos/db.json");
+        $guardarOk = guardarObjeto($usuario, "usuarios", "recursos/db.json");
 
-  }
-  else                  ///  si HAY errores
-  {
-    foreach ($formRegistro as $key => $elem)
+        if ($guardarOk === true)
+        {
+            setcookie("user",$usuario["email"], time() + 3 );
+            header("Location: login.php");
+            exit;
+        }
+        else
+            echo "Hubo un error al intentar guardar el usuario.";
+    }
+    else      //  si HAY errores
     {
-      //persistir datos
-      if ($key!=='pass' && $key!=='pass2')
-        $formRegistro[$key]["value"] = $_POST[$key];
+        foreach ($camposRegistro as $key => $campo)
+        {
+            //persistir datos
+            if ($key!=='pass' && $key!=='pass2')
+                $camposRegistro[$key]["input_value"] = $_POST[$key];
 
-      //si hay error: mostrarlo y borde rojo
-      if (isset($errores[$key]))
-      {
-        $formRegistro[$key]["class"] = "class='form-control border border-danger'";
-        $formRegistro[$key]["error"] = $errores[$key];
-      }
-    }
+            //si hay error: mostrarlo y borde rojo
+            if (isset($errores[$key]))
+            {
+                $camposRegistro[$key]["input_class"] = "class='form-control border border-danger'";
+                $camposRegistro[$key]["span_error"] = $errores[$key];
+            }
+        }
   }                    ///end "si Hay errores"
 }  //end if ($_POST)
 
@@ -81,18 +116,23 @@ if ($_POST)
   <form class="col-sm-10 offset-sm-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4" action="registro.php" method="POST" enctype="multipart/form-data">
 
                     <!-- Generar Campos -->
-    <?php foreach ($formRegistro as $key => $elem): ?>
+
+    <?php foreach ($camposRegistro as $key => $campo): ?>
       <div class="form-group">
-        <label for=<?=$key;?>><?=$elem["label"];?></label>
-        <input <?=$elem["class"];?> <?=$elem["parametros"];?> value=<?=$elem["value"];?>>
-        <span class="small text-danger"><?=$elem["error"];?></span>
+          <label for=<?=$key;?>><?=$campo["label_title"];?></label>
+          <input id=<?=$key;?> <?=$campo["input_class"];?>
+                name=<?=$key;?>
+                type=<?=$campo["input_type"];?>
+                value=<?=$campo["input_value"];?>>
+          <span class="small text-danger"><?=$campo["span_error"];?></span>
       </div>
     <?php endforeach; ?>
 
                     <!-- Botón Enviar -->
+
     <div class="form-group">
-      <button type="submit" class="btn btn-light" name="submit" value="Registrarme">Registrarme</button>
-      <button type="btn reset" class="btn btn-outline-primary" name="Limpiar" value="Limpiar">Limpiar</button>
+        <button type="submit" class="btn btn-light" name="formulario" value="registro">Registrarme</button>
+        <button type="reset" class="btn btn-outline-primary">Limpiar</button>
     </div>
   </form><!--  end form de registro -->
 

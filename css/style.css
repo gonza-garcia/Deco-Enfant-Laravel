@@ -4,7 +4,8 @@ colores custom
 #e6d8b6 #d07f7c #dfbb80 #ba8551 #505050 #f8e27a
 
 
-RESETEOS GENERALES-------------------------------------------------------------------------------------------------------- */ li {
+RESETEOS GENERALES-------------------------------------------------------------------------------------------------------- */
+li {
   list-style-type: none;
 }
 
@@ -88,14 +89,6 @@ section {
   color: #fff;
 }
 
-/* FORM DE REGISTRO--------------------------------------------------------------------------------------------------- */
-.btn-outline-primary {
-  background-color: #f2dcce;
-  text-transform: uppercase;
-  color: #fff;
-  border-color: #fff;
-}
-
 /* HEADER -----------------------------------------------------------*/
 /* COLUMNA DE BUSQUEDA ----------------------------------------- */
 #formBuscar {
@@ -103,8 +96,9 @@ section {
 }
 
 #formBuscar a {
+  -webkit-appearance: none;
   position: absolute;
-  right: .3rem;
+  right: 1.4rem;
   color: #666;
 }
 
@@ -147,23 +141,17 @@ nav li.nav-item:hover a.nav-link {
   background-color: #c45678;
 }
 
-#dropCats, #dropSubCats {
+#dropCats, #dropSubCats, #admin {
   border-top: solid 1.5px white;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-#dropCats a, #dropSubCats a {
-  color: #bbb;
-}
-
-#dropCats a:hover, #dropSubCats a:hover {
-  background-color: #c45678;
+#dropCats a, #dropSubCats a, #admin a {
   color: #fff;
 }
 
-#dropCats a:focus, #dropSubCats a:focus {
+#dropCats a:hover, #dropSubCats a:hover, #admin a:hover #dropCats a:focus, #dropSubCats a:focus, #admin a:focus {
   background-color: #c45678;
-  color: #fff;
 }
 
 /* FOOTER----------------------------------------------------------------------------------------------------------------------- */
@@ -175,29 +163,20 @@ footer a {
   display: inline-block;
   color: #fff;
   width: 100%;
-  font-size: 1rem;
   font-weight: bold;
 }
 
 footer a:hover {
-  display: inline-block;
   background-color: #c45678;
   color: #fff;
   text-decoration: none;
-  width: 100%;
   font-size: 1.2rem;
-  font-weight: bold;
-}
-
-footer li:hover {
-  width: 100%;
-  display: inline-block;
 }
 
 .footer-title {
   text-transform: uppercase;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 

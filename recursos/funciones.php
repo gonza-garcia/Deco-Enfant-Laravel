@@ -5,30 +5,30 @@ session_start();
 
 function usuarioLogueado()
 {
-  return isset($_SESSION["email"]);
+    return isset($_SESSION["email"]);
 }
 
 function get_current_url()
 {
-  $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 
-  $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-  return $url;
+    return $url;
 }
 
 //recibe un string y lo devuelve en minúsculas sin
 //espacios ni tildes ni eñes
 function formatearTexto($texto)
 {
-  $array1 = ['á','é','í','ó','ú','ñ','ü',' ']; //chars a reemplazar
-  $array2 = ['a','e','i','o','u','n','u',''];  //chars de reemplazo
+    $array1 = ['á','é','í','ó','ú','ñ','ü',' ']; //chars a reemplazar
+    $array2 = ['a','e','i','o','u','n','u',''];  //chars de reemplazo
 
-  $texto = mb_strtolower ($texto);  //pasa todo a minúscula
-  $texto = str_replace($array1, $array2 ,$texto);
+    $texto = mb_strtolower ($texto);  //pasa todo a minúscula
+    $texto = str_replace($array1, $array2 ,$texto);
     //TRIMEO - me parece que al final no se usa porque se trimea todo adento de la funcion armarUsuario(). O quizás no lo entiendo bien. Pero lo comento y anda todo.
 
-  return $texto;
+    return $texto;
 }
 
 
@@ -48,79 +48,86 @@ function existeEnArray($palabra, $array)
 //un array asociativo de errores.
 function validarDatos($arrayDatos)
 {
-  $key_name = "nombre";        //completar estas variables segun los
-  $key_lastName = "apellido";  //nombres usados como 'keys' en
-  $key_email = "email";        //$arrayDatos pasado como parámetro
-  $key_pass = "pass";
-  $key_rePass = "pass2";
+  //completar los siguientes arrays con los keys de los campos Obligatorios, alfabéticos y númericos.
+  $obligatorios = ["nombre","apellido","email","fechaNac","titulo"];
+  $alfabeticos = ["nombre","apellido"];
+  $numericos = ["telefono","precio","cantidad","cuotas","descuento", "vendidos"];
+
   $key_date = "fechaNac";
-  $key_phone = "telefono";
+  $key_email = "email";
+  $key_pass = "pass";
+  $key_pass2 = "pass2";
 
   $errores=[];
 
   foreach ($arrayDatos as $key => $dato)
   {
-    //validar campos REQUERIDOS (agregar al [...] según necesario)
-    if (existeEnArray($key, [$key_name,$key_lastName,$key_email,$key_date]))
-    {
-      if (!$dato)
-        $errores[$key] = "Campo obligatorio.";
-      else if ($dato !== trim($dato))
-        $errores[$key] = "Este campo no puede contener espacios vacíos al principio o final.";
-    }
-
-    if (!isset($errores[$key]))  //si todavía no hay errores en key...
-    {
-    //validar campos alfabéticos
-      if (($key === $key_name) || ($key === $key_lastName))
-        if (!ctype_alpha(formatearTexto($dato)))
+      //validar campos Obligatorios
+      if (existeEnArray($key, $obligatorios))
+      {
+          if (!$dato){
+              $errores[$key] = "Campo obligatorio.";
+              continue;
+          }
+          else if ($dato !== trim($dato)){
+              $errores[$key] = "Este campo no puede contener espacios vacíos al principio o final.";
+              continue;
+          }
+      }
+      //validar campos alfabéticos
+      if ((existeEnArray($key, $alfabeticos))
+          && (!ctype_alpha(formatearTexto($dato))))
+      {
           $errores[$key] = "Este campo sólo puede contener letras.";
+          continue;
+      }
 
-    //validar campos numéricos
-      if (existeEnArray($key, [$key_phone]))
-        if (!ctype_digit($dato))
+      //validar campos numéricos
+      if ((existeEnArray($key, $numericos))
+          && (!ctype_digit($dato)))
+      {
           $errores[$key] = "Este campo sólo puede contener números.";
+          continue;
+      }
 
-    //validar email
+      //validar email
       if ($key === $key_email)
       {
-        if (!filter_var($dato, FILTER_VALIDATE_EMAIL))
-          $errores[$key] = "El email debe ser del formato usuario@dominio.zzz.";
-        elseif (existeObjeto("recursos/db.json","usuarios",$key,$dato))
-            $errores[$key] = "Ya existe un usuario con este email. Elija un email distinto";
-
-        continue;
-      }
-
-    //validar pass
-      if ($key === $key_pass)
-      {
-        if (!$dato)
-          $errores[$key] = "Por favor ingrese su contraseña.";
-        else if (isset($arrayDatos[$key_rePass]))
-              if ($arrayDatos[$key_pass] !== $arrayDatos[$key_rePass])
-                $errores[$key_rePass] = "Las contraseñas no coinciden.";
-
-        continue;
-      }
-
-    //validar fecha
-      if ($key === $key_date)
-      {
-        $arra = explode('/', $dato); //divide $dato en un array
-
-        if (ctype_digit(implode($arra)) && (count($arra) === 3))
-        {
-          if (!checkdate($arra[1], $arra[0], $arra[2]))
-            $errores[$key] = "La fecha es inválida";
-        }
-        else  //si $arra contiene letras o no tiene 3 campos
-          $errores[$key] = "La fecha es inválida o no tiene el formato correcto dd/mm/yyyy.";
+          if (!filter_var($dato, FILTER_VALIDATE_EMAIL))
+              $errores[$key] = "El email debe ser del formato usuario@dominio.zzz.";
+          elseif (existeObjeto("recursos/db.json","usuarios",$key,$dato))
+              $errores[$key] = "Ya existe un usuario con este email. Elija un email distinto";
 
           continue;
       }
 
-    }  //end if
+      //validar pass
+      if ($key === $key_pass)
+      {
+          if (!$dato)
+              $errores[$key] = "Por favor ingrese su contraseña.";
+          else if (isset($arrayDatos[$key_pass2]))
+              if ($arrayDatos[$key_pass] !== $arrayDatos[$key_pass2])
+                $errores[$key_pass2] = "Las contraseñas no coinciden.";
+
+          continue;
+      }
+
+      //validar fecha
+      if ($key === $key_date)
+      {
+          $arra = explode('/', $dato); //divide $dato en un array
+
+          if (ctype_digit(implode($arra)) && (count($arra) === 3))
+          {
+              if (!checkdate($arra[1], $arra[0], $arra[2]))
+                  $errores[$key] = "La fecha es inválida";
+              continue;
+          }
+          else  //si $arra contiene letras o no tiene 3 campos
+              $errores[$key] = "La fecha es inválida o no tiene el formato correcto dd/mm/yyyy.";
+      }
+
   }   //end foreach
 
   return $errores;
@@ -131,116 +138,143 @@ function validarDatos($arrayDatos)
 // funcion para que retorne e ingrese en armarUsuarrio() el ultimo id+1
 function nuevoId($tabla, $db)
 {
-  $json = file_get_contents($db);
-  $array = json_decode($json, true);
+    $json = file_get_contents($db);
+    $array = json_decode($json, true);
 
-  $ultimoObjeto = array_pop($array[$tabla]);
-  $nuevoId = $ultimoObjeto["id"];
+    $ultimoObjeto = array_pop($array[$tabla]);
+    $nuevoId = $ultimoObjeto["id"];
 
-  if ($nuevoId!==0)
-    $nuevoId++;
+    if ($nuevoId!==0)
+        $nuevoId++;
 
-  return $nuevoId;
+    return $nuevoId;
 }
 
-//recibe array de $datos y devuelve un array modelado segun un usuario o un articulo. Luego SOLO los keys de $datos que coincidan con los keys del objeto modelado se van a pisar y a quedar con el valor de $datos.
-function armarObjeto($datos, $tabla, $db)
+
+function obtenerModelo($tabla, $modeloVacio = false)
 {
-  $objeto = [];
+  $modelo = [];
 
-  if ($tabla === "usuarios"){ // si la $tabla es usuarios
-    $objeto = [               //modelo el $objeto como un usuario
-      "id" => nuevoId($tabla,$db),
-      "nombre" => "",
-      "apellido" => "",
-      "email" => "",
-      "fechaNac" => "",
-      "fechaAlta" => date('Y/m/d H:i:s a', time()),
-      "domicilio" => "",
-      "telefono" => "",
-      "rol_id" => 2, // 2 es 'usuario normal' en la db
-      "pass" => "",
-    ];
-  }
-  else if ($tabla === "articulos"){ //si la $tabla es articulos
-    $objeto = [               //modelo el $objeto como un artículo
-      "id" => nuevoId($tabla,$db),
-      "titulo" => "",
-      "descripcion" => "",
-      "medidas" => "",
-      "precio" => "",
-      "imagen" => "",
-      "fechaAlta" => date('Y/m/d H:i:s a', time()),
-      "cuotas" => "",
-      "descuento" => "",
-      "categoriaPadre_id" => 0, // 0 es 'sin padre' en la db
-    ];
-  }
-
-  foreach ($objeto as $key => $value)
+  switch ($tabla)
   {
-    if (($key==="pass") && isset($datos["pass"]))
+    case 'usuarios':
+        $modelo = [ //el booleano determina si es editable o no
+          "id"        => ["Id",            "text",     false],
+          "nombre"    => ["Nombre",        "text",     true],
+          "apellido"  => ["Apellido",      "text",     true],
+          "email"     => ["E-Mail",        "text",     false],
+          "pass"      => ["Contraseña",    "password", false],
+          "fechaNac"  => ["Fecha De Nac",  "text",     true],
+          "fechaAlta" => ["Fecha De Alta", "text",     false],
+          "domicilio" => ["Domicilio",     "text",     true],
+          "telefono"  => ["Teléfono",      "text",     true],
+          "rol_id"    => ["Rol",           "text",     true]
+        ];
+        break;
+
+    case 'articulos':
+        $modelo = [ //el booleano determina si es editable o no
+          "id"           => ["Id",            "text",  false],
+          "categoria"    => ["Categoría",     "text",  true],
+          "subCategoria" => ["Sub-Categoría", "text",  true],
+          "titulo"       => ["Título",        "text",  true],
+          "descripcion"  => ["Descripción",   "text",  true],
+          "imagen"       => ["Imagen",        "text",  true],
+          "fechaIngreso" => ["Fecha De Alta", "text",  false],
+          "medidas"      => ["Medidas",       "text",  true],
+          "cantidad"     => ["Cantidad",      "text",  true],
+          "precio"       => ["Precio",        "text",  true],
+          "cuotas"       => ["Cuotas",        "text",  true],
+          "descuento"    => ["Descuento",     "text",  true],
+          "vendidos"     => ["Vendidos",      "text",  true]
+        ];
+        break;
+
+    default:
+        break;
+  }
+
+  if($modeloVacio == true)       //si es necesario se deja el..
+    foreach ($modelo as $key => $value)  //..objeto vacío
+      $modelo[$key] = "";
+
+  return $modelo;
+}
+
+
+//recibe array de $datos y devuelve un array modelado segun el nombre de la $tabla. Luego SOLO los keys de $datos que coincidan con los keys del objeto modelado se van a pisar y a quedar con el valor de $datos.
+function armarObjeto($datos, $tabla)
+{
+    $objeto = obtenerModelo($tabla, true); //modelo el objeto según..
+                              //..el tipo de $tabla y lo recibo vacío.
+    foreach ($objeto as $key => $value)
     {
-      $objeto[$key] = password_hash($datos[$key], PASSWORD_DEFAULT);
-      continue;
-    }
+        if (($key==="pass") && isset($datos["pass"]))
+        {
+            $objeto[$key] = password_hash($datos[$key], PASSWORD_DEFAULT);
+            continue;
+        }
 
-    if (isset($datos[$key]))         //solo se van a pisar los campos
-      $objeto[$key] = $datos[$key]; // si los keys coindicen, los que
-  }                              //no coincidan no se tienen en cuenta
+        if (isset($datos[$key]))  //solo se van a pisar los campos..
+            $objeto[$key] = $datos[$key]; // ..si los keys de $datos..
+                                  //..coindicen con los del objeto..
+    }                              //..modelo, si no quedan vacíos.
 
-  return $objeto;
+    return $objeto;
 }
 
 
 
 function guardarObjeto($objeto, $tabla, $db)
 {
-  try
-  {
-    $json = file_get_contents($db);
-    $array = json_decode($json, true);
+    try
+    {
+        $json = file_get_contents($db);
+        $array = json_decode($json, true);
 
-    $array[$tabla][] = $objeto;
-    $array = json_encode($array, JSON_PRETTY_PRINT);
+        $array[$tabla][] = $objeto;
+        $array = json_encode($array, JSON_PRETTY_PRINT);
 
-    file_put_contents($db, $array);
+        file_put_contents($db, $array);
 
-    return true;
-  }
-  catch (\Exception $e)
-  {
-    return false;
-  }
+        return true;
+    }
+    catch (\Exception $e)
+    {
+        return false;
+    }
 }
 
 
-//devuelve el objeto buscado si el datoBuscado coincide
+//devuelve el objeto buscado si el datoBuscado coincide.
 //si no se recibe un dato buscado, devuelve $db[$tabla][$columna]
 //si no se recibe una posicion, devuelve $db[$tabla]
 function buscarObjeto($db, $tabla, $columna="", $datoBuscado="")
 {
-  if(file_exists($db))    //si existe la base de datos
-  {
-    $tempDB = file_get_contents($db);
-    $arrayDB = json_decode($tempDB, true);
-
-    if (isset($arrayDB[$tabla])) //si existe la clave
+    if(file_exists($db))    //si existe la base de datos
     {
-      if ($columna === "")   //si $columna vacia, devuelve $tabla
-        return $arrayDB[$tabla];
-      elseif ($datoBuscado === "")  //si dato vacio devuelve $columna
-              return $arrayDB[$tabla][$columna];
-      else
-      {
-        foreach ($arrayDB[$tabla] as $array)
-          if ((isset($array[$columna])) && ($datoBuscado == $array[$columna]))
-            return $array;
-      }
-    }
-  }
+        $tempDB = file_get_contents($db);
+        $arrayDB = json_decode($tempDB, true);
 
-  return null;
+        if (isset($arrayDB[$tabla])) //si existe la clave
+        {
+            if ($columna === "")       //si no hay columna, devuelve..
+                return $arrayDB[$tabla];    //..la tabla completa
+
+            elseif ($datoBuscado === "")  //si no hay dato devuelve..
+                return $arrayDB[$tabla][$columna]; //..todas las..
+                                                  //..filas de..
+                                                  //..la columna
+            else
+            {
+                foreach ($arrayDB[$tabla] as $array)
+                    if ((isset($array[$columna])) && ($datoBuscado == $array[$columna]))
+                        return $array;
+            }
+        }
+    }
+
+    return null;
 }
 
 

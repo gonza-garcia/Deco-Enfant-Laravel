@@ -7,19 +7,19 @@
 <!DOCTYPE html>
 <!-- HEADER Busqueda, Logo y Autenticacion -------------------------------------------------------------------->
 <header class="navbar navbar-expand-md pb-0 py-md-4">
-  <div class='container p-1'>
+  <div class='container'>
     <!-- FILA única ----------------------------------------->
     <div class="row justify-content-between align-items-center">
       <!-- Columna Busqueda ----------------------------------->
-      <form id='formBuscar' class="col-5 col-md-3 form-inline justify-content-center p-1">
+      <form id='formBuscar' class="col-5 col-md-3 form-inline justify-content-center pl-0" action="./tabla.php" method="GET">
         <input class="form-control w-100 pr-4 py-0" type="search" placeholder="Buscar" aria-label="Buscar">
-        <a href="#" class="pr-2"><i class="fas fa-search"></i></a>
+        <a type="submit" href="#"><i class="fas fa-search"></i></a>
       </form>
 
       <!-- Columna CARRITO Y AUTENTICACION --------------------->
-      <div class="col-7 col-md-3 justify-content-end d-flex d-md-block p-2 order-md-last">
+      <div class="col-7 col-md-3 justify-content-end d-flex d-md-block order-md-last pr-0">
         <!--  CARRITO------------------------->
-        <a id='carrito' class="justify-content-center d-inline-flex d-md-flex ml-1" href="#carrito">
+        <a id='carrito' class="justify-content-center d-inline-flex d-md-flex ml-1 ml-md-0" href="#carrito">
           <i class="mr-1 fas fa-shopping-cart"></i>
           <span>Carrito (0)</span>
         </a>

@@ -3,47 +3,16 @@
 
   if (isset($_GET["tabla"]))
   {
-      if ($_GET["tabla"] === "usuarios")
+      if (($_GET["tabla"] == "usuarios") ||
+          ($_GET["tabla"] == "articulos"))
       {
-          $objetos = buscarObjeto("recursos/db.json", "usuarios");
-          $titulo = "Usuario";
-          $columnas = [
-                        "id"        => "Id",
-                        "nombre"    => "Nombre",
-                        "apellido"  => "Apellido",
-                        "email"     => "E-Mail",
-                        "fechaNac"  => "Fecha De Nacimiento",
-                        "fechaAlta" => "Fecha De Alta",
-                        "domicilio" => "Domicilio",
-                        "telefono"  => "Teléfono",
-                        "rol_id"    => "Rol",
-                      ];
-          $cantidad_mostrada = count($objetos);
+          $objetos = buscarObjeto("recursos/db.json", $_GET["tabla"]);
+          $titulo = ucfirst(substr($_GET["tabla"], 0, -1));
+          $columnas = obtenerModelo($_GET["tabla"]);
           $cantidad_total = count($objetos);
       }
-      elseif ($_GET["tabla"] === "articulos")
+      else
       {
-          $objetos = buscarObjeto("recursos/db.json", "articulos");
-          $titulo = "Usuario";
-          $columnas = [
-                        "id"            => "Id",
-                        "categoria"     => "Categoría",
-                        "subCategoria"  => "Sub-Categoría",
-                        "titulo"        => "Título",
-                        "descripcion"   => "Descripción",
-                        "imagen"        => "Imagen",
-                        "fechaIngreso"  => "Fecha De Alta",
-                        "medidas"       => "Medidas",
-                        "cantidad"      => "Cantidad",
-                        "precio"        => "Precio",
-                        "cuotas"        => "Cuotas",
-                        "descuento"     => "Descuento",
-                        "vendidos"      => "Vendidos",
-                      ];
-          $cantidad_mostrada = count($objetos);
-          $cantidad_total = count($objetos);
-      }
-      else {
         header("Location:index.php");
         exit;
       }
@@ -57,7 +26,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Simple Data Table</title>
+    <title>Dèco Enfant</title>
 
     <!-- Fuentes Custom---------------------------------------------->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
@@ -177,8 +146,8 @@
               								<label for="selectAll"></label>
             							</span>
             						</th>
-                        <?php foreach ($columnas as $columna) :?>
-                          <th><?=$columna?></th>
+                        <?php foreach ($columnas as $col) :?>
+                          <th><?=$col[0]?></th>
                         <?php endforeach; ?>
                     </tr>
                 </thead>
@@ -193,8 +162,9 @@
 							              </span>
 						            </td>
 
-                          <?php foreach ($columnas as $key => $title): ?>
-                            <td><?=$objeto[$key]?></td>
+                          <?php foreach ($objeto as $key => $value): ?>
+                            <?php if ($key === "pass") continue; ?>
+                            <td><?=$value?></td>
                           <?php endforeach; ?>
 
                         <td>
@@ -246,10 +216,11 @@
         					</div>
 
         					<div class="modal-body">
-                      <?php foreach ($columnas as $key => $title): ?>
+                      <?php foreach ($columnas as $key => $col): ?>
+                        <?php if ($key === "pass") continue; ?>
                         <div class="form-group">
-            							  <label for=<?=$key?>> <?=$title?> </label>
-            							  <input type="text" class="form-control" name=<?=$key?>>
+            							  <label for=<?=$key?>> <?=$col[0]?> </label>
+                            <input id=<?=$key?> type=<?=$col[1]?> class="form-control" name=<?=$key?>>
           						  </div>
                       <?php endforeach; ?>
         					</div>
@@ -274,12 +245,20 @@
         					</div>
 
         					<div class="modal-body">
-                      <?php foreach ($columnas as $key => $title): ?>
+                    <?php foreach ($columnas as $key => $col): ?>
+                      <?php if ($key === "pass") continue; ?>
+                      <?php if ($col[2] == true):?>
                         <div class="form-group">
-                            <label for=<?=$key?>> <?=$title?> </label>
-                            <input type="text" class="form-control" name=<?=$key?>>
+                            <label for=<?=$key?>> <?=$col[0]?> </label>
+                            <input id=<?=$key?> type=<?=$col[1]?> class="form-control" name=<?=$key?>>
                         </div>
-                      <?php endforeach; ?>
+                      <?php else : ?>
+                        <div class="form-group">
+                            <label for=<?=$key?>> <?=$col[0]?> </label>
+                            <label> No editable </label>
+                        </div>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
         					</div>
 
         					<div class="modal-footer">

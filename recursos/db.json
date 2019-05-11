@@ -1,55 +1,4 @@
 {
-    "formRegistro": {
-        "nombre": {
-            "label": "Nombre",
-            "class": "class='form-control'",
-            "parametros": "id='nombre' type='text' name='nombre'",
-            "value": "",
-            "error": ""
-        },
-        "apellido": {
-            "label": "Apellido",
-            "class": "class='form-control'",
-            "parametros": "id='apellido' type='text' name='apellido'",
-            "value": "",
-            "error": ""
-        },
-        "email": {
-            "label": "E-mail",
-            "class": "class='form-control'",
-            "parametros": "id='email' type='email' name='email'",
-            "value": "",
-            "error": ""
-        },
-        "telefono": {
-            "label": "Tel\u00e9fono",
-            "class": "class='form-control'",
-            "parametros": "id='telefono' type='text' name='telefono'",
-            "value": "",
-            "error": ""
-        },
-        "fechaNac": {
-            "label": "Fecha De Nacimiento",
-            "class": "class='form-control'",
-            "parametros": "id='fechaNac' type='text' name='fechaNac'",
-            "value": "",
-            "error": ""
-        },
-        "pass": {
-            "label": "Contrase\u00f1a",
-            "class": "class='form-control'",
-            "parametros": "id='pass' type='password' name='pass'",
-            "value": "",
-            "error": ""
-        },
-        "pass2": {
-            "label": "Repetir Contrase\u00f1a",
-            "class": "class='form-control'",
-            "parametros": "id='pass2' type='password' name='pass2'",
-            "value": "",
-            "error": ""
-        }
-    },
     "articulos": [
         {
             "id": "almo_001",
@@ -203,29 +152,90 @@
         }
     ],
     "usuarios": [
+
         {
-            "id": 3,
-            "nombre": "sdgsdf",
-            "apellido": "d",
-            "email": "g@g.com",
-            "fechaNac": "10\/02\/1986",
-            "fechaAlta": "2019\/05\/05 20:51:32 pm",
+            "id": "",
+            "nombre": "123123",
+            "apellido": "123123",
+            "email": "1@g.d",
+            "pass": "$2y$10$mUrSMKNhVnV1r3ZRSV6XvetLZKS5I5k31z3iDT\/VAIPO5zPHiDVFu",
+            "fechaNac": "13\/13\/1986",
+            "fechaAlta": "",
             "domicilio": "",
-            "telefono": "234234",
-            "rol_id": 2,
-            "pass": "$2y$10$ivszV\/1a85E8wZD7Hc0bCO6\/ZBMwbNLr\/H6qF2qBVynO59cIRf8Nq"
+            "telefono": "",
+            "rol_id": ""
         },
         {
-            "id": 4,
-            "nombre": "sdff",
-            "apellido": "sdfd",
-            "email": "gcostoya02@gmail.com",
-            "fechaNac": "12\/12\/1986",
-            "fechaAlta": "2019\/05\/05 21:49:18 pm",
+            "id": "",
+            "nombre": "sdf",
+            "apellido": "sdf",
+            "email": "g@g.com",
+            "pass": "$2y$10$mNVxR\/Bw3PrtVI9IWQje8uGB\/X9XiCZxECtQyKQxUmAwn8fEwyfGS",
+            "fechaNac": "13\/13\/1986",
+            "fechaAlta": "",
             "domicilio": "",
-            "telefono": "123",
-            "rol_id": 2,
-            "pass": "$2y$10$6xQP9cxyaGvQIyQcyX5a5.m8mkb4BFRUOpuq3BfwaNFsxtFU1VSR6"
+            "telefono": "",
+            "rol_id": ""
+        },
+        {
+            "id": "",
+            "nombre": "sdf",
+            "apellido": "sdf",
+            "email": "g@g.com",
+            "pass": "$2y$10$MZXKvqoJv8bvzqAB0rNhquUpik1HQ3i2J2ZrcEXoSVl.24YVlIy16",
+            "fechaNac": "sdf",
+            "fechaAlta": "",
+            "domicilio": "",
+            "telefono": "",
+            "rol_id": ""
+        },
+        {
+            "id": "",
+            "nombre": "231123",
+            "apellido": "123123",
+            "email": "g@g.com",
+            "pass": "$2y$10$NgHcbnnWCIn5xByrNaIlM.IJYztb6Pc7nkZJzMHNVmenO.l5cnXre",
+            "fechaNac": "23",
+            "fechaAlta": "",
+            "domicilio": "",
+            "telefono": "",
+            "rol_id": ""
+        },
+        {
+            "id": "",
+            "nombre": "sdfsf",
+            "apellido": "sdff",
+            "email": "g@g.com",
+            "pass": "$2y$10$K5n8VRirk7Eh1iNiUrCZS.MEjJbUAl7yAwlwFoO5iNlkP4pYYiYcK",
+            "fechaNac": "qw4",
+            "fechaAlta": "",
+            "domicilio": "",
+            "telefono": "",
+            "rol_id": ""
+        },
+        {
+            "id": "",
+            "nombre": "wersfdsfd",
+            "apellido": "sdfsdfsdf",
+            "email": "g@g.com",
+            "pass": "$2y$10$in2S1YDD1C9mcnz.baV7de0O845HqDr7r8ndyIUY58Q9XJ5ovTVDu",
+            "fechaNac": "sdfsdf",
+            "fechaAlta": "",
+            "domicilio": "",
+            "telefono": "",
+            "rol_id": ""
+        },
+        {
+            "id": "",
+            "nombre": "sdf",
+            "apellido": "dsfdfsdd",
+            "email": "g@g.coms",
+            "pass": "$2y$10$a0oFeOKVzcGUfDW9lp9w3uraeLsKr2rwfOAtfn3V3.DBsVLpcSLLu",
+            "fechaNac": "12\/12\/1986",
+            "fechaAlta": "",
+            "domicilio": "",
+            "telefono": "",
+            "rol_id": ""
         }
     ]
 }
