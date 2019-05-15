@@ -3,19 +3,30 @@
 
   if (isset($_GET["tabla"]))
   {
-      if (($_GET["tabla"] == "usuarios") ||
-          ($_GET["tabla"] == "articulos"))
-      {
-          $objetos = buscarObjeto("recursos/db.json", $_GET["tabla"]);
-          $titulo = ucfirst(substr($_GET["tabla"], 0, -1));
-          $columnas = obtenerModelo($_GET["tabla"]);
-          $cantidad_total = count($objetos);
+      $objetos = buscarObjeto("recursos/db.json", $_GET["tabla"]);
+      $columnas = obtenerModelo($_GET["tabla"]);
+      $cantidad_total = count($objetos);
+
+      switch ($_GET["tabla"]) {
+        case 'users':
+          $titulo = "Usuario";
+          break;
+
+        case 'products':
+          $titulo = "Artículo";
+          break;
+
+        default:
+          header("Location:index.php");
+          exit;
+          break;
       }
-      else
-      {
-        header("Location:index.php");
-        exit;
-      }
+
+  }
+  else
+  {
+      header("Location:index.php");
+      exit;
   }
 
 ?>
@@ -92,8 +103,8 @@
 						            <h2>Administrar <b><?=$titulo.'s'?></b></h2>
 					          </div>
     					      <div class="col-sm-6">
-    						        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
-    						        <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
+    						        <a href="#addObjectModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
+    						        <a href="#deleteObjectModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
     					      </div>
                 </div>
             </div>
@@ -146,9 +157,11 @@
               								<label for="selectAll"></label>
             							</span>
             						</th>
-                        <?php foreach ($columnas as $col) :?>
-                          <th><?=$col[0]?></th>
+                        <?php foreach ($columnas as $key => $col) :?>
+                          <?php if ($key === "pass") continue; ?>
+                          <th><?=$col["label_title"]?></th>
                         <?php endforeach; ?>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -163,13 +176,17 @@
 						            </td>
 
                           <?php foreach ($objeto as $key => $value): ?>
-                            <?php if ($key === "pass") continue; ?>
+                            <?php if ($key === "pass") continue;?>
+                            <?php if ($key === "thumbnail"):?>
+                              <td><a href=<?=$value?> class="view" title=<?=$value?> data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a></td>
+                            <?php else:?>
                             <td><?=$value?></td>
+                          <?php endif;?>
                           <?php endforeach; ?>
 
                         <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
+                            <a href="#editObjectModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                            <a href="#deleteObjectModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
                         </td>
                     </tr>
                   <?php endforeach; ?>
@@ -206,7 +223,7 @@
 
 
 	<!-- Add Modal HTML -->
-	<div id="addEmployeeModal" class="modal fade">
+	<div id="addObjectModal" class="modal fade">
   		<div class="modal-dialog">
     			<div class="modal-content">
       				<form>
@@ -219,8 +236,8 @@
                       <?php foreach ($columnas as $key => $col): ?>
                         <?php if ($key === "pass") continue; ?>
                         <div class="form-group">
-            							  <label for=<?=$key?>> <?=$col[0]?> </label>
-                            <input id=<?=$key?> type=<?=$col[1]?> class="form-control" name=<?=$key?>>
+            							  <label for=<?=$key?>> <?=$col["label_title"]?> </label>
+                            <input id=<?=$key?> type=<?=$col["input_type"]?> class="form-control" name=<?=$key?>>
           						  </div>
                       <?php endforeach; ?>
         					</div>
@@ -235,7 +252,7 @@
 	</div>
 
 	<!-- Edit Modal HTML -->
-	<div id="editEmployeeModal" class="modal fade">
+	<div id="editObjectModal" class="modal fade">
   		<div class="modal-dialog">
     			<div class="modal-content">
       				<form>
@@ -249,12 +266,12 @@
                       <?php if ($key === "pass") continue; ?>
                       <?php if ($col[2] == true):?>
                         <div class="form-group">
-                            <label for=<?=$key?>> <?=$col[0]?> </label>
-                            <input id=<?=$key?> type=<?=$col[1]?> class="form-control" name=<?=$key?>>
+                            <label for=<?=$key?>> <?=$col["label_title"]?> </label>
+                            <input id=<?=$key?> type=<?=$col["input_type"]?> class="form-control" name=<?=$key?>>
                         </div>
                       <?php else : ?>
                         <div class="form-group">
-                            <label for=<?=$key?>> <?=$col[0]?> </label>
+                            <label for=<?=$key?>> <?=$col["label_title"]?> </label>
                             <label> No editable </label>
                         </div>
                       <?php endif; ?>
@@ -271,7 +288,7 @@
 	</div>
 
 	<!-- Delete Modal HTML -->
-	<div id="deleteEmployeeModal" class="modal fade">
+	<div id="deleteObjectModal" class="modal fade">
   		<div class="modal-dialog">
     			<div class="modal-content">
       				<form>
