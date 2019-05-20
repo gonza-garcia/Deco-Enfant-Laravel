@@ -233,7 +233,7 @@ function obtenerModelo($tabla, $modeloVacio = false)
                               "is_editable"   => true,
                               "foreign_table" => ""],
           "thumbnail"     => ["label_title"   => "Imagen",
-                              "input_type"    => "text",
+                              "input_type"    => "image",
                               "is_editable"   => true,
                               "foreign_table" => ""],
           "color_id"      => ["label_title"   => "Color",
@@ -307,7 +307,7 @@ function armarObjeto($datos, $tabla)
         if (isset($datos[$key]))  //solo se van a pisar los campos..
             $objeto[$key] = $datos[$key]; // ..si los keys de $datos..
                                   //..coindicen con los del objeto..
-    }                              //..modelo, si no quedan vacíos.
+    }                              //..modelo, si no, quedarán vacíos.
 
     return $objeto;
 }
@@ -396,11 +396,16 @@ function ordenarArray(string $field1, $mod1,$mod2, $arrayToOrder)
 
 
 
-function tipoEspecial($tabla,$key,$tipo){
+//recibe un id buscado y la tabla en donde buscarlo, si lo encuentra, devuelve el NOMBRE de esa fila, si no, devuelve null
+function buscarPorId($tabla, $id_buscado, $db){
 
+  $stmt = $db->prepare("SELECT * FROM $tabla WHERE id=:id");
 
+  $stmt->bindValue(":id",  $id_buscado);
 
+  $stmt->execute();
 
+  return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 ?>

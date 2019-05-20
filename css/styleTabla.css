@@ -1,4 +1,7 @@
 .table-wrapper {
+  table-layout: fixed;
+  width: 100%;
+  /* must have this set */
   font-family: 'Varela Round', sans-serif;
   font-size: 12px;
   background: #fff;
