@@ -1,3 +1,7 @@
+<?php
+  $objeto_actual = [];
+?>
+
 <!-- Add Modal HTML -->
 <div id="add_modal_form" class="modal fade">
     <div class="modal-dialog">
@@ -5,11 +9,38 @@
             <form action="" method="POST" enctype="multipart/form-data">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">Agregar <?=$titulo?></h4>
+                    <h4 class="modal-title">Agregar Artículo</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
 
                 <div class="modal-body">
+                                    <!-- Id (No editable) -->
+                    <div class="form-group">
+                        <label class="mb-0 text-right justify-content-end" for="id">
+                            Id: </label>
+                        <label class="form-control w-75 text-right">
+                            Valor automático </label>
+                    </div>
+                                    <!-- Título -->
+                    <div class="form-group">
+                        <label class="mb-0 text-right justify-content-end" for="title">Título: </label>
+                        <input class="form-control w-75 text-right" id="title" type="text" name="title">
+                    </div>
+                                    <!-- Descripción Corta -->
+                    <div class="form-group">
+                        <label class="mb-0 text-right justify-content-end" for="title">Título: </label>
+                        <input class="form-control w-75 text-right" id="title" type="text" name="title">
+                    </div>
+                                    <!-- Descripción Larga -->
+                    <div class="form-group">
+                        <label class="mb-0 text-right justify-content-end" for="title">Título: </label>
+                        <input class="form-control w-75 text-right" id="title" type="text" name="title">
+                    </div>
+
+
+
+
+
                   <?php foreach ($columnas_modelo as $key => $col): ?>
                       <div class="form-group">
                           <label for=<?=$key?>> <?=$col["label_title"]?> </label>

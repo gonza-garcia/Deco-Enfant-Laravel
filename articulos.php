@@ -12,37 +12,50 @@
                         "color_id"       => "Color",
                         "size_id"        => "Tamaño",
                         "stock"          => "Stock",
-                        "sold"           => "Vendidos",
-                        "dateUpload"     => "Fecha Alta",
-                        "dateUpdate"     => "Fecha Update",
-                        "sale"           => "Sale",
-                        "discount_price" => "Precio Con Descuento",
-                        "discountOff"    => "Descuento %",
-                        "categoria_id"   => "Categoría",
-  ];
+                        "date_upload"    => "Fecha Alta",
+                        "date_update"    => "Fecha Update",
+                        "discount_off"   => "Descuento %",
+                        "category_id"    => "Categoría",
+    ];
+    $limit_options=[5, 10, 20, 50, 100, 200, 500];
+    $order_how_options=["ASC", "DESC"];
 
-    $order_by = "id";
+    $stmt = $db->prepare("SELECT COUNT(*) FROM products");
+    $stmt->execute();
+
+    $order_by = "id";     //valores que va a tomar la tabla por defecto
     $order_how = "ASC";
     $limit = 20;
+    $page = 1;
+    $offset = 0;
+    $total_rows = $stmt->fetch(PDO::FETCH_ASSOC);
+    $pages_qty = ceil($total_rows / $limit);
 
-    if ($_GET)
+
+    if ((isset($_GET["order_by"]) && array_key_exists($_GET["order_by"],$product_columns))
+        && (isset($_GET["order_how"]) && existeEnArray($_GET["order_how"],$order_how_options))
+        && (isset($_GET["limit"]) && existeEnArray($_GET["limit"],$limit_options))
+        && (isset($_GET["page"]) && is_numeric($_GET["page"])))
     {
-        switch ($GET) {
-          case 'value':
-            // code...
-            break;
+        $order_by = $_GET["order_by"];
+        $order_how = $_GET["order_how"];
+        $limit = $_GET["limit"];
+        $page = round($_GET["page"]);
 
-          default:
-            // code...
-            break;
-        }
-
+        // setea offset de acuerdo al valor de page y limit
+        if ($page<=1)
+            $offset = 0;
+        elseif ($page >= $pages_qty)
+            $offset = $limit * ($pages_qty - 1);
+        else
+            $offset = $limit * ($page - 1);
     }
 
     // Traer todas las filas
-    $stmt = $db->prepare("SELECT * FROM products ORDER BY $order_by $order_how LIMIT $limit");
+    $stmt = $db->prepare("SELECT * FROM products ORDER BY $order_by $order_how LIMIT $limit OFFSET $offset");
     $stmt->execute();
     $all_rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 
 ?>
@@ -94,25 +107,31 @@
                         </div>
 
                         <div class="filter-group">
-                            <form action="./articulos.php" method="GET" enctype="multipart/form-data">
-                                <label>Ordenar por</label>
-                                <input name=<?="limit=$limit"?> class="d-none" type="text">
-                                <select class="form-control" name="order_by">
-                                    <?php foreach ($columns as $key => $col) : ?>
-                                        <option value=<?=$key?>><?=$col?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <input type="radio" name="order_how" value="ASC">Ascendente
-                                <input type="radio" name="order_how" value="DESC">Descendente
-                                <button type="submit" class="btn btn-info" name="caller_form" value="order_form">Ordenar</button>
-                            </form>
+                            <label>Ordenar por</label>
+                            <select class="form-control" name="order_by">
+                                <?php foreach ($product_columns as $key => $col) : ?>
+                                    <option value=<?=$key?> <?php if ($key==$order_by) echo 'selected';?>>
+                                        <a href= <?="articulos.php?order_by=$key&order_how=$order_how&limit=$limit"?>>
+                                            <?=$col?>
+                                        </a>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
 
                         <div class="filter-group">
                             <label>Orden</label>
                             <select class="form-control">
-                                <option>Ascendente</option>
-                                <option>Descendente</option>
+                                <option value="ASC">
+                                    <a href= <?="articulos.php?order_by=$order_by&order_how=ASC&limit=$limit"?>>
+                                        Ascendente
+                                    </a>
+                                </option>
+                                <option value="DESC">
+                                    <a href= <?="articulos.php?order_by=$order_by&order_how=DESC&limit=$limit"?>>
+                                        Descendente
+                                    </a>
+                                </option>
                             </select>
                         </div>
                         <span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -132,18 +151,15 @@
 
                         <th style="width: 2.00%;"> Id</th>
                         <th style="width: 7.00%;"> Título</th>
-                        <th style="width: 13.0%;"> Descripción Corta</th>
-                        <th style="width: 13.0%;"> Descripción Larga</th>
+                        <th style="width: 16.5%;"> Descripción Corta</th>
+                        <th style="width: 16.5%;"> Descripción Larga</th>
                         <th style="width: 4.00%;"> Precio</th>
                         <th style="width: 2.50%;"> Imagen</th>
                         <th style="width: 5.00%;"> Color</th>
                         <th style="width: 5.00%;"> Tamaño</th>
                         <th style="width: 2.00%;"> Stock</th>
-                        <th style="width: 2.00%;"> Vendidos</th>
                         <th style="width: 6.50%;"> Fecha Alta</th>
                         <th style="width: 6.50%;"> Fecha Update</th>
-                        <th style="width: 2.50%;"> Sale</th>
-                        <th style="width: 3.00%;"> Precio Con Descuento</th>
                         <th style="width: 2.50%;"> Descuento %</th>
                         <th style="width: 5.00%;"> Categoría</th>
 
@@ -182,6 +198,7 @@
                                   echo $color["name"];
                                 ?>
                           </td>
+
                                     <!-- td Tamaño -->
                           <td> <?php
                                   $stmt = $db->prepare("SELECT name FROM sizes WHERE id=:id");
@@ -193,17 +210,27 @@
                           </td>
 
                           <td> <?=$row["stock"]?>           </td>
-                          <td> <?=$row["sold"]?>            </td>
-                          <td> <?=$row["dateUpload"]?>      </td>
-                          <td> <?=$row["dateUpdate"]?>      </td>
-                          <td> <?=$row["sale"]?>            </td>
-                          <td> <?=$row["discount_price"]?>  </td>
-                          <td> <?=$row["discountOff"]?>     </td>
+
+                                    <!-- td Fecha De Alta -->
+                          <td> <?php
+                                  $date = DateTime::createFromFormat('Y-m-d H:i:s', $row["date_upload"]);
+                                  echo $date->format('d-m-Y');
+                               ?>
+                          </td>
+
+                                    <!-- td Fecha De Update -->
+                          <td> <?php
+                                  $date = DateTime::createFromFormat('Y-m-d H:i:s', $row["date_update"]);
+                                  echo $date->format('d-m-Y');
+                               ?>
+                          </td>
+
+                          <td> <?=$row["discount_off"]?>     </td>
 
                                     <!-- td Categoría -->
                           <td> <?php
                                   $stmt = $db->prepare("SELECT name FROM categories WHERE id=:id");
-                                  $stmt->bindValue(":id", $row["categoria_id"]);
+                                  $stmt->bindValue(":id", $row["category_id"]);
                                   $stmt->execute();
                                   $cat=$stmt->fetch(PDO::FETCH_ASSOC);
                                   echo $cat["name"];
@@ -227,22 +254,37 @@
                 <div class="show-entries">
                     <span>Mostrando</span>
                     <select class="p-0">
-                        <option>5</option>
-                        <option>10</option>
-                        <option>15</option>
-                        <option>20</option>
+                      <?php foreach ($limit_options as $value) : ?>
+                        <option value=<?=$value?> <?php if ($value==$limit) echo 'selected';?>>
+                            <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$value"?>>
+                                <?=$value?>
+                            </a>
+                        </option>
+                      <?php endforeach; ?>
                     </select>
-                    <span>de <b><?=count($all_rows)?></b> entradas</span>
+                    <span>de <b><?=$total_rows?></b> entradas</span>
                 </div>
 
                 <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Anterior</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Siguiente</a></li>
+                    <li <?php if (($page-1)==0) echo "class='page-item disabled'";
+                                  else          echo "class='page-item'"; ?>>
+                        <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$limit&page=1"?> class="page-link"> Anterior
+                        </a>
+                    </li>
+
+                    <?php for ($i=1; $i <= $pages_qty; $i++) : ?>
+                        <li <?php if ($i==$page) echo "class='page-item active'";
+                                  else           echo "class='page-item'"; ?>>
+                            <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$limit&page=$i"?> class="page-link"> <?=$i?>
+                            </a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <li <?php if (($page+1)>$pages_qty) echo "class='page-item disabled'";
+                                  else          echo "class='page-item'"; ?>>
+                        <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$limit&page=".($page+1)?> class="page-link"> Siguiente
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
