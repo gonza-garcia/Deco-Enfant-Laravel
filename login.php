@@ -1,22 +1,19 @@
 <?php
 
-  require_once("recursos/funciones.php");
+  require_once "init.php";
 
   if (isset($_GET["url"]))
   {
     $ultima_url = $_GET["url"];
   }
 
-  if(usuarioLogueado()){
+  if($auth->usuarioLogueado()){
     header("Location:index.php");
     exit;
   }
 
-  $error = "";
+  $errores = [];
   $recordarOk = false;
-
-  // var_dump($_COOKIE);
-  // var_dump($_POST);
 
   if (isset($_COOKIE["user"])) {
     $emailOk = $_COOKIE["user"];
@@ -29,28 +26,35 @@
   if ($_POST) {
 
     $emailOk = $_POST["email"];
-    $usuario = buscarObjeto("recursos/db.json", "usuarios","email",$_POST["email"]);
-    $recordarOk = (isset($_POST["recordar"]));
 
-    // var_dump($usuario);
+    $errores = Validator::validarLog($_POST);
 
-    if ($recordarOk) {
-      setcookie("user",$emailOk);
-    } else {
-      setcookie("user", null, time() -1);
-    }
+    if (empty($errores)) {
 
-    if ($emailOk !== null && password_verify($_POST["pass"], $usuario["pass"])) {
-      $_SESSION["email"] = $usuario["email"];
-      $_SESSION["nombre"] = $usuario["nombre"];
+      $usuario = new Usuario($_POST);
+
+      $recordarOk = (isset($_POST["recordar"]));
+
+      if ($recordarOk) {
+        setcookie("user",$emailOk);
+      } else {
+        setcookie("user", null, time() -1);
+      }
+
+    var_dump($_POST["pass"],password_hash($_POST["pass"], PASSWORD_DEFAULT),$usuario->getPass());
+    var_dump(password_verify($_POST["pass"],$usuario->getPass()));
+
+    if (password_verify($_POST["pass"],$usuario->getPass())) {
+      // $auth->loguearUsuario($_POST["email"]);
+      $auth->loguearUsuario($usuario->getEmail(),$usuario->getUser_name());
 
       header("location: index.php");
       exit;
-
+    } else {
+      $errores["pass"] = "Usuario o contraseña invalida";
     }
-      $error = "Email o contraseña incorrectos. Por favor, crear una cuenta.";
   }
-
+}
 
  ?>
 
@@ -73,10 +77,16 @@
     <div class="form-group no-gutters">
       <label for="email">Email</label>
       <input class="form-control" id="email" type="email" name="email" value="<?= $emailOk?>" placeholder="Ingrese su email aqui...">
+      <?php if (isset($errores["email"])):?>
+        <span class="small text-danger"><?=$errores["email"]?></span>
+      <?php endif;?>
     </div>
     <div class="form-group">
       <label for="pass">Contraseña</label>
       <input class="form-control" id="pass" type="password" name="pass" value="" placeholder="Ingrese su Contraseña aqui...">
+      <?php if (isset($errores["pass"])):?>
+        <span class="small text-danger"><?=$errores["pass"]?></span>
+      <?php endif;?>
     </div>
     <div class="form-group form-check">
       <!-- <input class="form-check-input" type="checkbox" name="recordar" value="recordar" id="CheckRecordar" > -->
@@ -86,13 +96,6 @@
         <input class="form-check-input" type="checkbox" name="recordar" value="recordar" id="CheckRecordar" >
       <?php endif; ?>
       <label class="form-check-label" for="CheckRecordar">Recordarme</label>
-    </div>
-    <div class="form-group">
-      <? if ($error !== "") :?>
-        <a class="nav-link" href="registro.php">
-          <span class="small text-danger col-form-label"><?= $error?></span>
-        </a>
-      <? endif; ?>
     </div>
     <div class="form-group">
       <input type="submit" class="btn btn-outline-primary" name="Ingresar" value="Ingresar">

@@ -1,6 +1,7 @@
 <?php
 
     require_once "./recursos/pdo.php";
+    require_once "./init.php";
 
     // Traer todas las categorias
     $stmt = $db->prepare("SELECT * FROM categories WHERE id_parent = 0");
@@ -33,11 +34,12 @@
 
                 <!-- AUTENTICACION-------------------->
                 <div id='autenticacion' class='justify-content-center d-inline-flex d-md-flex p-0 order-first my-auto'>
-                    <?php if (isset($_SESSION["email"])) : ?>
-                        <a class="pr-1 border-right border-white text-right" href="#">Hola, <?=$_SESSION["email"]?></a>
+
+                    <?php if ($auth->usuarioLogueado()) : ?>
+                        <a class="pr-1 border-right border-white text-right" href="#"><?=$_SESSION["email"]?></a>
                         <a class="pl-1 border-left border-white text-left" href="./logout.php">Salir</a>
                     <?php else : ?>
-                        <a class="pr-1 border-right border-white text-right" href="<?='./login.php?u=' . get_current_url()?>">Iniciar Sesión</a>
+                        <a class="pr-1 border-right border-white text-right" href="<?='./login.php'?>">Iniciar Sesión</a>
                         <a class="pl-1 border-left border-white text-left" href="./registro.php">Crear Cuenta</a>
                     <?php endif; ?>
                 </div>

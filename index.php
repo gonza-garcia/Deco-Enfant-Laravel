@@ -1,12 +1,11 @@
 <?php
 
     require_once "./recursos/funciones.php";
-
     require_once "./recursos/pdo.php";
 
 
     // Traer los articulos que se van a mostrar en Destacados
-    $stmt = $db->prepare("SELECT * FROM products ORDER BY sold DESC LIMIT 8");
+    $stmt = $db->prepare("SELECT * FROM products ORDER BY id DESC LIMIT 8");
     $stmt->execute();
     $articulos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

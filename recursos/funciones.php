@@ -1,12 +1,12 @@
 <?php
 
-session_start();
+// session_start();
 
 
-function usuarioLogueado()
-{
-    return isset($_SESSION["email"]);
-}
+// function usuarioLogueado()
+// {
+//     return isset($_SESSION["email"]);
+// }
 
 function get_current_url()
 {

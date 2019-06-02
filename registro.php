@@ -1,98 +1,75 @@
 <?php
 
-require_once "recursos/funciones.php";
+require_once "init.php";
 
-if(usuarioLogueado()){
+if($auth->usuarioLogueado()) {
   header("Location:index.php");
   exit;
 }
 
-$camposRegistro = [ //el booleano determina si es editable o no
-      "nombre"   => [ "label_title" => "Nombre",
-                      "input_class" => "class='form-control'",
-                      "input_type"  => "text",
-                      "input_value" => "",
-                      "span_error"  => "",
-                    ],
-      "apellido" => [ "label_title" => "Apellido:",
-                      "input_class" => "class='form-control'",
-                      "input_type"  => "text",
-                      "input_value" => "",
-                      "span_error"  => "",
-                    ],
-      "email"    => [ "label_title" => "E-Mail",
-                      "input_class" => "class='form-control'",
-                      "input_type"  => "email",
-                      "input_value" => "",
-                      "span_error"  => "",
-                    ],
-      "fechaNac" => [ "label_title" => "Fecha De Nacimiento",
-                      "input_class" => "class='form-control'",
-                      "input_type"  => "text",
-                      "input_value" => "",
-                      "span_error"  => "",
-                    ],
-      "pass"     => [ "label_title" => "Contraseña",
-                      "input_class" => "class='form-control'",
-                      "input_type"  => "password",
-                      "input_value" => "",
-                      "span_error"  => "",
-                    ],
-      "pass2"    => [ "label_title" => "Repetir Contraseña",
-                      "input_class" => "class='form-control'",
-                      "input_type"  => "password",
-                      "input_value" => "",
-                      "span_error"  => "",
-                    ],
-];
 
-// $formRegistro = buscarObjeto("recursos/db.json","formRegistro");
+$errores = [];
 
+$user_nameOk = "";
+$first_nameOk = "";
+$last_nameOk = "";
+$date_of_birthOk = "";
+$phoneOk = "";
+$emailOk = "";
+// $sex_idOk = "";
 
-if (isset($_COOKIE["user"]))
-  $camposRegistro["email"]["input_value"]=$_COOKIE["user"];
-
-if (isset($_COOKIE["nombre"]))
-  $nameOk = $_COOKIE["nombre"];
-else
-  $nameOk = "";
+if (isset($_COOKIE["user"])) {
+  $emailOk = $_COOKIE["user"];
+} else {
+  $emailOk = "";
+}
+if (isset($_COOKIE["first_name"])) {
+  $first_nameOk = $_COOKIE["first_name"];
+} else {
+  $first_nameOk = "";
+}
 
 if ($_POST && $_POST["formulario"] == "registro")
 {
-    $errores = validarDatos($_POST);
+    $errores = Validator::validarRegistro($_POST);
 
-    if (empty($errores))   //si NO hay errores
-    {
-        $usuario = armarObjeto($_POST, "usuarios", "recursos/db.json");
-        $guardarOk = guardarObjeto($usuario, "usuarios", "recursos/db.json");
 
-        if ($guardarOk === true)
-        {
-            setcookie("user",$usuario["email"], time() + 3 );
+    $user_nameOk = trim($_POST["user_name"]);
+    $first_nameOk =trim($_POST["first_name"]);
+    $last_nameOk = trim($_POST["last_name"]);
+    $date_of_birthOk = trim($_POST["date_of_birth"]);
+    $phoneOk = trim($_POST["phone"]);
+    $emailOk = trim($_POST["email"]);
+    // $sex_idOk = trim($_POST["sex_id"]);
+
+
+
+      if (empty($errores)) {
+        // Si no hay errores
+          //Crear usuario
+          if(!$dbMysql->existeUsuario($_POST["email"])){
+
+            $usuario = new Usuario($_POST);
+            // $usuario = armarUsuario();
+
+            //Guardar usuario
+            $dbMysql->guardarUsuario($usuario);
+
+            //redireccionar el usuario a la pagina de exito.
+            // header("Location: registradoExito.php"); //nombre de archivo inventado. no existe todavia.
+
+            //redireccionar el usuario a la pagina de login.
+            setcookie("user",$emailOk, time() + 3 );
             header("Location: login.php");
             exit;
-        }
-        else
-            echo "Hubo un error al intentar guardar el usuario.";
+          }
+
+          else{
+           return "el usuario ya existe";
+          }
+          //Guardar Imagen
+      }
     }
-    else      //  si HAY errores
-    {
-        foreach ($camposRegistro as $key => $campo)
-        {
-            //persistir datos
-            if ($key!=='pass' && $key!=='pass2')
-                $camposRegistro[$key]["input_value"] = $_POST[$key];
-
-            //si hay error: mostrarlo y borde rojo
-            if (isset($errores[$key]))
-            {
-                $camposRegistro[$key]["input_class"] = "class='form-control border border-danger'";
-                $camposRegistro[$key]["span_error"] = $errores[$key];
-            }
-        }
-  }                    ///end "si Hay errores"
-}  //end if ($_POST)
-
 
 ?>
 
@@ -116,17 +93,92 @@ if ($_POST && $_POST["formulario"] == "registro")
   <form class="col-sm-10 offset-sm-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4" action="registro.php" method="POST" enctype="multipart/form-data">
 
                     <!-- Generar Campos -->
-
-    <?php foreach ($camposRegistro as $key => $campo): ?>
-      <div class="form-group">
-          <label for=<?=$key;?>><?=$campo["label_title"];?></label>
-          <input id=<?=$key;?> <?=$campo["input_class"];?>
-                name=<?=$key;?>
-                type=<?=$campo["input_type"];?>
-                value=<?=$campo["input_value"];?>>
-          <span class="small text-danger"><?=$campo["span_error"];?></span>
-      </div>
-    <?php endforeach; ?>
+    <div class="form-group">
+        <label for="user_name">Usuario *</label>
+        <input id="user_name" class="form-control"
+              name="user_name"
+              type="text"
+              value="<?= $user_nameOk ?>"
+              placeholder="Ingrese su nombre de usuario aqui ...">
+        <?php if (isset($errores["user_name"])):?>
+          <span class="small text-danger"><?= $errores["user_name"] ?></span>
+        <?php endif;?>
+    </div>
+    <div class="form-group">
+        <label for="first_name">Nombre *</label>
+        <input id="first_name" class="form-control"
+              name="first_name"
+              type="text"
+              value="<?= $first_nameOk ?>"
+              placeholder="Ingrese su nombre aqui ...">
+        <?php if (isset($errores["first_name"])):?>
+          <span class="small text-danger"><?=$errores["first_name"]?></span>
+        <?php endif;?>
+    </div>
+    <div class="form-group">
+        <label for="last_name">Apellido *</label>
+        <input id="last_name" class="form-control"
+              name="last_name"
+              type="text"
+              value="<?= $last_nameOk ?>"
+              placeholder="Ingrese su apellido aqui...">
+        <?php if (isset($errores["last_name"])):?>
+          <span class="small text-danger"><?= $errores["last_name"] ?></span>
+        <?php endif;?>
+    </div>
+    <div class="form-group">
+        <label for="date_of_birth">Fecha de nacimiento</label>
+        <input id="date_of_birth" class="form-control"
+              name="date_of_birth"
+              type="text"
+              value="<?= $date_of_birthOk ?>"
+              placeholder="Ingrese su fecha de nacimiento aqui...">
+        <?php if (isset($errores["date_of_birth"])):?>
+          <span class="small text-danger"><?= $errores["date_of_birth"] ?></span>
+        <?php endif;?>
+    </div>
+    <div class="form-group">
+        <label for="phone">Telefono</label>
+        <input id="phone" class="form-control"
+              name="phone"
+              type="text"
+              value="<?= $phoneOk ?>"
+              placeholder="Ingrese su telefono aqui...">
+        <?php if (isset($errores["phone"])):?>
+          <span class="small text-danger"><?= $errores["phone"] ?></span>
+        <?php endif;?>
+    </div>
+    <div class="form-group">
+        <label for="email">E-Mail *</label>
+        <input id="email" class="form-control"
+              name="email"
+              type="email"
+              value="<?= $emailOk ?>"
+              placeholder="Ingrese su email aqui...">
+        <?php if (isset($errores["email"])):?>
+          <span class="small text-danger"><?= $errores["email"] ?></span>
+        <?php endif;?>
+    </div>
+    <div class="form-group">
+        <label for="pass">Contraseña *</label>
+        <input id="pass" class="form-control"
+              name="pass"
+              type="password"
+              placeholder="Ingrese su contraseña aqui...">
+        <?php if (isset($errores["pass"])):?>
+          <span class="small text-danger"><?= $errores["pass"] ?></span>
+        <?php endif;?>
+    </div>
+    <div class="form-group">
+        <label for="pass2">Repetir Contraseña *</label>
+        <input id="pass2" class="form-control"
+              name="pass2"
+              type="password"
+              placeholder="Repita su contraseña aqui...">
+        <?php if (isset($errores["pass2"])):?>
+          <span class="small text-danger"><?= $errores["pass2"] ?></span>
+        <?php endif;?>
+    </div>
 
                     <!-- Botón Enviar -->
 
