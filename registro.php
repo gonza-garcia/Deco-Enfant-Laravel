@@ -29,10 +29,9 @@ if (isset($_COOKIE["first_name"])) {
   $first_nameOk = "";
 }
 
-if ($_POST && $_POST["formulario"] == "registro")
+if ($_POST)
 {
     $errores = Validator::validarRegistro($_POST);
-
 
     $user_nameOk = trim($_POST["user_name"]);
     $first_nameOk =trim($_POST["first_name"]);
@@ -40,13 +39,12 @@ if ($_POST && $_POST["formulario"] == "registro")
     $date_of_birthOk = trim($_POST["date_of_birth"]);
     $phoneOk = trim($_POST["phone"]);
     $emailOk = trim($_POST["email"]);
-    // $sex_idOk = trim($_POST["sex_id"]);
-
-
 
       if (empty($errores)) {
         // Si no hay errores
           //Crear usuario
+
+              // var_dump(!$dbMysql->existeUsuario($_POST["email"]));
           if(!$dbMysql->existeUsuario($_POST["email"])){
 
             $usuario = new Usuario($_POST);
@@ -63,11 +61,9 @@ if ($_POST && $_POST["formulario"] == "registro")
             header("Location: login.php");
             exit;
           }
-
-          else{
-           return "el usuario ya existe";
-          }
-          //Guardar Imagen
+          // else{
+          //  return "el usuario ya existe";
+          // }
       }
     }
 

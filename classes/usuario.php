@@ -9,6 +9,7 @@
     protected $first_name;
     protected $last_name;
     protected $date_of_birth;
+    protected $phone;
     protected $email;
     protected $pass;
     protected $date_upload;
@@ -19,6 +20,9 @@
 
       function __construct(Array $datos)
       {
+// var_dump(isset($datos[0]["id"]));
+// var_dump(($datos["id"]==null));
+// var_dump($datos);
           if (isset($datos["id"])) {
             $this->id = $datos["id"];
             $this->pass = $datos["pass"];
@@ -27,20 +31,39 @@
             $this->pass = password_hash($datos["pass"], PASSWORD_DEFAULT);
           }
 
-          $this->user_name = $datos["user_name"];
-          $this->nombre = $datos["first_name"];
-          $this->gender = $datos["last_name"];
-          $this->date_of_birth = $datos["date_of_birth"];
           $this->email = $datos["email"];
-          $this->date_upload = $datos["date_upload"];
-          $this->date_update = $datos["date_update"];
-          $this->sex_id = $datos["sex_id"];
-          $this->user_status_id = $datos["user_status_id"];
-          $this->role_id = $datos["role_id"];
+
+          if (isset($datos["user_name"])) {
+            $this->user_name = $datos["user_name"];
+            $this->first_name = $datos["first_name"];
+            $this->last_name = $datos["last_name"];
+            $this->date_of_birth = $datos["date_of_birth"];
+            $this->phone = $datos["phone"];
+            // $this->date_upload = $datos["date_upload"];
+            // $this->date_update = $datos["date_update"];
+            // $this->sex_id = $datos["sex_id"];
+            // $this->user_status_id = $datos["user_status_id"];
+            $this->role_id = 2;
+          }
+
+      }
+
+      function buscarPorId($id){
+
+        $stmt = $db->prepare("SELECT * FROM users WHERE id=:id");
+
+        $stmt->bindValue(":id",  $id);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
       }
 
       public function getId() {
         return $this->id;
+      }
+      public function getUser_name() {
+        return $this->user_name;
       }
       public function getFirst_name() {
         return $this->first_name;
@@ -51,8 +74,14 @@
       public function getDate_of_birth() {
         return $this->date_of_birth;
       }
+      public function getPhone() {
+        return $this->phone;
+      }
       public function getEmail() {
         return $this->email;
+      }
+      public function getPass() {
+        return $this->pass;
       }
       public function getDate_upload() {
         return $this->date_upload;
@@ -78,6 +107,10 @@
         $this->id = $id;
         return $this;
       }
+      public function setUser_name($user_name) {
+        $this->user_name = $user_name;
+        return $this;
+      }
       public function setFirst_name($first_name) {
         $this->first_name = $first_name;
         return $this;
@@ -88,6 +121,14 @@
       }
       public function setDate_of_birth($date_of_birth) {
         $this->date_of_birth = $date_of_birth;
+        return $this;
+      }
+      public function setPhone($phone) {
+        $this->phone = $phone;
+        return $this;
+      }
+      public function setPass($pass) {
+        $this->pass = $pass;
         return $this;
       }
       public function setEmail($email) {

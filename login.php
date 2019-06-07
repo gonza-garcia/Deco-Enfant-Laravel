@@ -14,46 +14,37 @@
 
   $errores = [];
   $recordarOk = false;
-
-  if (isset($_COOKIE["user"])) {
-    $emailOk = $_COOKIE["user"];
-    $recordarOk = true;
-  } else {
+  //
+  // if (isset($_COOKIE["user"])) {
+  //   $emailOk = $_COOKIE["user"];
+  //   $recordarOk = true;
+  // } else {
     $emailOk = "";
-    $recordarOk = false;
-  }
+  //   $recordarOk = false;
+  // }
 
   if ($_POST) {
 
     $emailOk = $_POST["email"];
-
     $errores = Validator::validarLog($_POST);
 
     if (empty($errores)) {
 
-      $usuario = new Usuario($_POST);
-
       $recordarOk = (isset($_POST["recordar"]));
-
       if ($recordarOk) {
         setcookie("user",$emailOk);
       } else {
         setcookie("user", null, time() -1);
       }
 
-    var_dump($_POST["pass"],password_hash($_POST["pass"], PASSWORD_DEFAULT),$usuario->getPass());
-    var_dump(password_verify($_POST["pass"],$usuario->getPass()));
-
-    if (password_verify($_POST["pass"],$usuario->getPass())) {
-      // $auth->loguearUsuario($_POST["email"]);
-      $auth->loguearUsuario($usuario->getEmail(),$usuario->getUser_name());
+      $auth->loguearUsuario($_POST["email"]);
 
       header("location: index.php");
       exit;
     } else {
       $errores["pass"] = "Usuario o contraseña invalida";
     }
-  }
+  // }
 }
 
  ?>

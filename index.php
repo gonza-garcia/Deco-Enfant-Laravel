@@ -1,14 +1,10 @@
 <?php
 
-    require_once "./recursos/funciones.php";
-    require_once "./recursos/pdo.php";
+    // require_once "./recursos/funciones.php";
+    // require_once "./recursos/pdo.php";
+    require_once "init.php";
 
-
-    // Traer los articulos que se van a mostrar en Destacados
-    $stmt = $db->prepare("SELECT * FROM products ORDER BY id DESC LIMIT 8");
-    $stmt->execute();
-    $articulos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    $articulos = $dbMysql->buscarDestacados();
 ?>
 
 
@@ -75,7 +71,7 @@
           <?php foreach ($articulos as $key => $articulo): ?>
               <article class="col-6 col-md-4 col-lg-3 p-1">
                   <img class="img-fluid img-thumbnail destacados-img"
-                  src=<?=$articulo["thumbnail"]?> alt=<?= $articulo["title"]?>>
+                  src=<?=$articulo["thumbnail"]?> alt=<?= $articulo["name"]?>>
 
                   <div class="d-flex flex-wrap align-items-center justify-content-between">
                       <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2"><?= $articulo["short_desc"]?></div>
