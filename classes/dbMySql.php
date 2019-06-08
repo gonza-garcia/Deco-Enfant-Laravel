@@ -31,8 +31,8 @@ class dbMysql extends Db
   {
     // global $db;
     $stmt = $this->conection->prepare("INSERT INTO users
-      (id, user_name, first_name, last_name, date_of_birth, phone, email, pass, role_id) VALUES
-      (default, :user_name, :first_name, :last_name, :date_of_birth, :phone, :email, :pass, 2)");
+      (id, user_name, first_name, last_name, date_of_birth, phone, email, pass, role_id, user_status_id) VALUES
+      (default, :user_name, :first_name, :last_name, :date_of_birth, :phone, :email, :pass, 2, 1)");
 
     $stmt->bindValue(":user_name", $usuario->getUser_name());
     $stmt->bindValue(":first_name", $usuario->getFirst_name());

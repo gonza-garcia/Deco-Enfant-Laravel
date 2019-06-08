@@ -64,7 +64,6 @@ DEFAULT CHARACTER SET = latin1;
 CREATE TABLE IF NOT EXISTS `deco_enfant`.`categories` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `id_parent` INT(11) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -72,6 +71,17 @@ DEFAULT CHARACTER SET = latin1;
 
 ALTER TABLE `deco_enfant`.`categories`
   ADD UNIQUE INDEX `ui_categories_name` (`id` ASC, `name` ASC) ;
+
+-- -----------------------------------------------------
+-- Table `deco_enfant`.`sub_categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sub_categories` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
 
 -- -----------------------------------------------------
 -- Table `deco_enfant`.`colors`
@@ -106,10 +116,11 @@ CREATE TABLE IF NOT EXISTS `deco_enfant`.`products` (
   `color_id` INT(11) NULL DEFAULT NULL,
   `size_id` INT(11) NULL DEFAULT NULL,
   `stock` INT(11) NOT NULL,
-  `date_upload` DATETIME NOT NULL,
-  `date_update` DATETIME NULL DEFAULT NULL,
-  `discount_off` DECIMAL(5,2) NULL DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT NOW(),
+  `discount` DECIMAL(5,2) NULL DEFAULT NULL,
   `category_id` INT(11) NOT NULL,
+  `sub_category_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `products_ibfk_2`
     FOREIGN KEY (`category_id`)
@@ -128,6 +139,15 @@ DEFAULT CHARACTER SET = latin1;
 ALTER TABLE `products`
   ADD INDEX `products_i2` (`category_id`),
   ADD INDEX `products_i4` (`color_id`);
+  
+ALTER TABLE `products`
+  ADD INDEX `fk_products_sub_categories1_idx` (`sub_category_id` ASC) ,
+  ADD CONSTRAINT `fk_products_sub_categories1`
+    FOREIGN KEY (`sub_category_id`)
+    REFERENCES `deco_enfant`.`sub_categories` (`id`)
+    ON UPDATE NO ACTION,
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
 -- -----------------------------------------------------
 -- Table `deco_enfant`.`users`
@@ -139,9 +159,10 @@ CREATE TABLE IF NOT EXISTS `deco_enfant`.`users` (
   `last_name` VARCHAR(80) NULL DEFAULT NULL,
   `date_of_birth` DATE NOT NULL,
   `email` VARCHAR(50) NOT NULL,
-  `pass` VARCHAR(50) NOT NULL,
-  `date_upload` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `date_update` DATETIME NULL,
+  `phone` VARCHAR(50) NOT NULL,
+  `pass` VARCHAR(250) NOT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT NOW(),
   `sex_id` INT(11) NULL DEFAULT NULL,
   `user_status_id` INT(11) NOT NULL,
   `role_id` INT(11) NOT NULL,
@@ -193,13 +214,13 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `deco_enfant`.`addresses` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) NOT NULL,
   `street` VARCHAR(100) NOT NULL,
   `street_2` VARCHAR(100) NULL DEFAULT NULL,
   `number` VARCHAR(15) NULL DEFAULT NULL,
   `piso` VARCHAR(10) NULL DEFAULT NULL,
   `dpto` VARCHAR(10) NULL DEFAULT NULL,
   `cp` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
   `country_id` INT(11) NOT NULL,
   `province_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`));
@@ -256,7 +277,8 @@ CREATE TABLE IF NOT EXISTS `deco_enfant`.`orders` (
   `product_id` INT(11) NOT NULL,
   `product_qty` INT(11) NOT NULL,
   `product_price_unit` DECIMAL(8,2) NOT NULL,
-  `order_date` DATE NULL DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT NOW(),
   `order_status_id` INT(11) NOT NULL,
   `shipping_status_id` INT(11) NULL DEFAULT NULL,
   `user_id` INT(11) NOT NULL,
@@ -288,6 +310,35 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
+
+use deco_enfant;
+
+
+rename table order_status to order_statuses;
+rename table shipping_status to shipping_statuses;
+rename table user_status to user_statuses;
+
+
+
+-- ----------------------------------------------------
+-- -------------------Order Statuses----------------------------
+
+INSERT INTO order_statuses VALUES (1, 'Válido');
+INSERT INTO order_statuses VALUES (2, 'Inválido');
+
+
+-- ----------------------------------------------------
+-- -------------------Shipping Statuses----------------------------
+
+INSERT INTO shipping_statuses VALUES (1, 'Enviado');
+INSERT INTO shipping_statuses VALUES (2, 'Entregado');
+
+
+-- ----------------------------------------------------
+-- -------------------User_Statuses----------------------------
+
+INSERT INTO user_statuses VALUES (1, 'Activo');
+INSERT INTO user_statuses VALUES (2, 'Inactivo');
 
 
 
@@ -339,27 +390,32 @@ INSERT INTO colors VALUES (10, 'Rosa');
 -- ----------------------------------------------------
 -- --------------Categories----------------------------
 
-INSERT INTO categories VALUES (1, 'Alfombras',        0);
-INSERT INTO categories VALUES (2, 'Almohadones',      0);
-INSERT INTO categories VALUES (3, 'Bolsas De Dormir', 0);
-INSERT INTO categories VALUES (4, 'Muebles',          0);
-INSERT INTO categories VALUES (5, 'Puffs',            0);
+INSERT INTO categories VALUES (1, 'Alfombras');
+INSERT INTO categories VALUES (2, 'Almohadones');
+INSERT INTO categories VALUES (3, 'Bolsas De Dormir');
+INSERT INTO categories VALUES (4, 'Muebles');
+INSERT INTO categories VALUES (5, 'Puffs');
 
-INSERT INTO categories VALUES (6, 'Tusor Liso',            2);
-INSERT INTO categories VALUES (7, 'Estampados',            2);
-INSERT INTO categories VALUES (8, 'Tusor Pintados A Mano', 2);
 
-INSERT INTO categories VALUES (9, 'Bancos',       4);
-INSERT INTO categories VALUES (10, 'Sillones',     4);
 
-INSERT INTO categories VALUES (11, 'Lino',         1);
-INSERT INTO categories VALUES (12, 'Playmats',     1);
+-- ----------------------------------------------------
+-- --------------Sub Categories----------------------------
+INSERT INTO sub_categories VALUES (6, 'Tusor Liso');
+INSERT INTO sub_categories VALUES (7, 'Estampados');
+INSERT INTO sub_categories VALUES (8, 'Tusor Pintados A Mano');
 
-INSERT INTO categories VALUES (13, 'Grandes',      5);
-INSERT INTO categories VALUES (14, 'Pequeños',     5);
+INSERT INTO sub_categories VALUES (9, 'Bancos');
+INSERT INTO sub_categories VALUES (10, 'Sillones');
 
-INSERT INTO categories VALUES (15, 'Grandes',      3);
-INSERT INTO categories VALUES (16, 'Pequeños',     3);
+INSERT INTO sub_categories VALUES (11, 'Lino');
+INSERT INTO sub_categories VALUES (12, 'Playmats');
+
+INSERT INTO sub_categories VALUES (13, 'Grandes');
+INSERT INTO sub_categories VALUES (14, 'Pequeños');
+
+INSERT INTO sub_categories VALUES (15, 'Grandes');
+INSERT INTO sub_categories VALUES (16, 'Pequeños');
+
 
 -- ----------------------------------------------------
 -- -------------------Products-------------------------
@@ -377,6 +433,7 @@ INSERT INTO products
         '2019-04-20',
         NOW(),
         20,
+        2,
         6);
         
 INSERT INTO products 
@@ -392,6 +449,7 @@ INSERT INTO products
         '2019-04-21',
         NOW(),
         0,
+        2,
         7);
         
 INSERT INTO products 
@@ -407,6 +465,7 @@ INSERT INTO products
         '2019-04-21',
         NOW(),
         0,
+        2,
         8);
         
 INSERT INTO products 
@@ -422,6 +481,7 @@ INSERT INTO products
         '2019-03-02',
         NOW(),
         5,
+        4,
         9);
         
 INSERT INTO products 
@@ -437,6 +497,7 @@ INSERT INTO products
         '2019-03-30',
         NOW(),
         13,
+        4,
         10);
         
         
@@ -453,6 +514,7 @@ INSERT INTO products
         '2019-04-10',
         NOW(),
         0,
+        1,
         11);
         
 INSERT INTO products 
@@ -468,6 +530,7 @@ INSERT INTO products
         '2019-05-02',
         NOW(),
         10,
+        1,
         12);
         
         
@@ -484,6 +547,7 @@ INSERT INTO products
         '2019-05-16',
         NOW(),
         30,
+        5,
         13);
         
 INSERT INTO products 
@@ -499,6 +563,7 @@ INSERT INTO products
         '2019-03-10',
         NOW(),
         25,
+        5,
         14);
         
 INSERT INTO products 
@@ -514,4 +579,5 @@ INSERT INTO products
         '2019-02-15',
         NOW(),
         14,
+        3,
         15);

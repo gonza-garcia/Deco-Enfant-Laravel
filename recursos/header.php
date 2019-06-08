@@ -4,7 +4,7 @@
     require_once "./init.php";
 
     // Traer todas las categorias
-    $stmt = $db->prepare("SELECT * FROM categories WHERE id_parent = 0");
+    $stmt = $db->prepare("SELECT * FROM categories");
     $stmt->execute();
     $all_categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -76,7 +76,7 @@
                     <!-- lista subcategorias de la categoria actual -->
                           <div id="dropSubCats"class="dropdown-menu" aria-labelledby=<?=$cat["id"]?>>
                               <?php
-                                  $stmt = $db->prepare("SELECT * FROM categories WHERE id_parent = :id");
+                                  $stmt = $db->prepare("SELECT * FROM sub_categories");
                                   $stmt->bindValue(":id", $cat["id"]);
                                   $stmt->execute();
                                   $sub_cats = $stmt->fetchAll(PDO::FETCH_ASSOC);

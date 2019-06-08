@@ -1,6 +1,5 @@
 <?php
 
-    require_once "./recursos/funciones.php";
     require_once "./recursos/pdo.php";
 
 
