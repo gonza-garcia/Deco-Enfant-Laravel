@@ -1,6 +1,8 @@
 @extends("template_table")
 
-
+@php
+    // $stmt-withPath('?order_by='.$_GET[])
+@endphp
 
 @section("titulo_objeto")
     Productos
@@ -8,7 +10,7 @@
 
 
 @section("table_headers")
-    <!-- Invertir el orden actual para pasarlo como parametro cuando se haga click en los links siguientes -->
+    <!-- Invertir el orden actual para pasarlo como parametro por get cuando se haga click en los links siguientes -->
       <?php if ($order_how=="ASC") $new_order="DESC";
             else                   $new_order="ASC"; ?>
 
