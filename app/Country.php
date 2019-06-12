@@ -8,4 +8,9 @@ class Country extends Model
 {
     public $timestamps = false;
     public $guarded = [];
+
+    public function provinces()
+    {
+        return $this->hasMany('App\Province', 'country_id');
+    }
 }

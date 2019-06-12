@@ -1,4 +1,4 @@
-@extends("template_main")
+@extends("recursos/template_main")
 
 
 @section("titulo")

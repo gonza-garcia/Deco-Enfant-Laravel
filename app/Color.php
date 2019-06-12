@@ -8,4 +8,9 @@ class Color extends Model
 {
     public $timestamps = false;
     public $guarded = [];
+
+    public function products()
+    {
+        return $this->hasMany('App\Product', 'color_id');
+    }
 }

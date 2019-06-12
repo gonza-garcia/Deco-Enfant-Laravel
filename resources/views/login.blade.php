@@ -1,4 +1,4 @@
-@extends ("template_main")
+@extends("recursos/template_main")
 
 
 @section("titulo")
@@ -19,10 +19,10 @@
       </div>
 
       <div class="form-group">
-          <label for="pass">Contraseña</label>
-          <input class="form-control" id="pass" type="password" name="pass" value="" placeholder="Ingrese su Contraseña aqui...">
-          @if (isset($errores["pass"]))
-            <span class="small text-danger">{{$errores["pass"]}}</span>
+          <label for="password">Contraseña</label>
+          <input class="form-control" id="password" type="password" name="password" value="" placeholder="Ingrese su Contraseña aqui...">
+          @if (isset($errores["password"]))
+            <span class="small text-danger">{{$errores["password"]}}</span>
           @endif
       </div>
 

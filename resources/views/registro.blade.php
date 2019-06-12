@@ -1,4 +1,4 @@
-@extends ("template_main")
+@extends ("recursos/template_main")
 
 
 @section("titulo")
@@ -84,24 +84,24 @@
         </div>
                         <!-- Contraseña-->
         <div class="form-group">
-            <label for="pass">Contraseña *</label>
-            <input id="pass" class="form-control"
-                  name="pass"
+            <label for="password">Contraseña *</label>
+            <input id="password" class="form-control"
+                  name="password"
                   type="password"
                   placeholder="Ingrese su contraseña aqui...">
-            @if (isset($errores["pass"]))
-                <span class="small text-danger">{{$errores["pass"]}}</span>
+            @if (isset($errores["password"]))
+                <span class="small text-danger">{{$errores["password"]}}</span>
             @endif
         </div>
                         <!-- Repetir Contraseña-->
         <div class="form-group">
-            <label for="pass2">Repetir Contraseña *</label>
-            <input id="pass2" class="form-control"
-                  name="pass2"
+            <label for="password2">Repetir Contraseña *</label>
+            <input id="password2" class="form-control"
+                  name="password2"
                   type="password"
                   placeholder="Repita su contraseña aqui...">
-            @if (isset($errores["pass2"]))
-                <span class="small text-danger">{{$errores["pass2"]}}</span>
+            @if (isset($errores["password2"]))
+                <span class="small text-danger">{{$errores["password2"]}}</span>
             @endif
         </div>
                         <!-- Botón Enviar -->

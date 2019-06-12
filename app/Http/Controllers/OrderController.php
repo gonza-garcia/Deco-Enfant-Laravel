@@ -16,7 +16,7 @@ class OrderController extends Controller
     {
         $orders = Order::paginate(20);
 
-        return view("orders", compact("orders"));
+        return view("table_order", compact("orders"));
     }
 
     /**
@@ -50,7 +50,7 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
 
-        return view("order_show", compact("order"));
+        return view("show_order", compact("order"));
     }
 
     /**

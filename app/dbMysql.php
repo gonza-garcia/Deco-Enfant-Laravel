@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\User;
 
 class dbMysql extends DataBase
@@ -30,20 +31,21 @@ class dbMysql extends DataBase
 
     public static function guardarUsuario(User $user)
     {
+      // dd($user);
         $is_true = DB::insert('INSERT INTO users
-          (id, user_name, first_name, last_name, date_of_birth, phone, email, pass, role_id, sex_id, user_status_id) VALUES
-          (default, :user_name, :first_name, :last_name, :date_of_birth, :phone, :email, :pass, 2, 1, 1)',
+          (id, user_name, first_name, last_name, date_of_birth, phone, email, password, role_id, sex_id, user_status_id) VALUES
+          (default, :user_name, :first_name, :last_name, :date_of_birth, :phone, :email, :password, 2, 1, 1)',
           ['user_name' => $user->user_name,
           'first_name' => $user->first_name,
           'last_name' => $user->last_name,
           // 'date_of_birth' => date('Y-m-d', strtotime(str_replace('-', '/', $user->date_of_birth))),
-          'date_of_birth' => (DateTime::createFromFormat('d-m-Y', $user->date_of_birth))->format('Y-m-d'),
+          'date_of_birth' => (Carbon::createFromFormat('d/m/Y', $user->date_of_birth))->format('Y-m-d'),
           'phone' => $user->phone,
           'email' => $user->email,
-          'pass' => $user->pass,
+          'password' => $user->password,
           ]);
 
-        dd($is_true);
+        // dd($is_true);
         // // global $db;
         // $stmt = $this->connection->prepare("INSERT INTO users
         //   (id, user_name, first_name, last_name, date_of_birth, phone, email, pass, role_id) VALUES
@@ -99,24 +101,4 @@ class dbMysql extends DataBase
         return dbMysql::buscarPorEmail($email) != null;
     }
 
-
-    public static function buscarDestacados()
-    {
-        // Traer los articulos que se van a mostrar en Destacados
-        $stmt = $this->conection->prepare("SELECT * FROM products ORDER BY id DESC LIMIT 8");
-        $stmt->execute();
-        $articulos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return $articulos;
-    }
-
-    public static function buscarTodosArticulos()
-    {
-        // Traer todas las filas
-        $stmt = $this->conection->prepare("SELECT * FROM products ORDER BY id ASC LIMIT 20");
-        $stmt->execute();
-        $all_rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return $all_rows;
-    }
 }

@@ -80,12 +80,12 @@ class Validator extends Model
       //completar los siguientes arrays con los keys de los campos Obligatorios, alfabéticos y númericos.
       $obligatorios = ["user_name","first_name","last_name","email","date_of_birth"];
       $alfabeticos = ["first_name","last_name"];
-      $numericos = ["phone","price","stock","discount_off","sold"];
+      $numericos = ["phone","price","stock","discount","sold"];
 
       $key_date = "date_of_birth";
       $key_email = "email";
-      $key_pass = "pass";
-      $key_pass2 = "pass2";
+      $key_pass = "password";
+      $key_pass2 = "password2";
 
       $errores=[];
 
@@ -179,18 +179,17 @@ class Validator extends Model
 
         //PASSWORD
         //campo vacio
-        if (strlen($datos["pass"]) == 0)
+        if (strlen($datos["password"]) == 0)
         {
-            $errores["pass"] = "Campo obligatorio";
+            $errores["password"] = "Campo obligatorio";
         }
         else
         {
             $usuario = dbMysql::buscarPorEmail($datos["email"]);
 
-            if(!password_verify($datos["pass"], $usuario[0]->pass))
-            {
-                $errores["pass"] = "La contraseña es incorrecta.";
-            }
+            if($usuario)
+                if(!password_verify($datos["password"], $usuario[0]->password))
+                    $errores["password"] = "La contraseña es incorrecta.";
         }
 
         return $errores;

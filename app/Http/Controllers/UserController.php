@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         $users = User::paginate(20);
 
-        return view("users", compact("users"));
+        return view("table_user", compact("users"));
     }
 
     /**
@@ -49,7 +49,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view("user_show", compact("user"));
+        return view("show_user", compact("user"));
     }
 
     /**

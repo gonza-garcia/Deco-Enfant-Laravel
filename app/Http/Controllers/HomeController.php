@@ -137,7 +137,7 @@ class HomeController extends Controller
             }
             else
             {
-                $errores["pass"] = "Usuario o contraseña inválida";
+                $errores["password"] = "Usuario o contraseña inválida";
             }
         }
 

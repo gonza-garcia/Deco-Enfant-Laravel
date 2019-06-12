@@ -1,4 +1,4 @@
-@extends("template_table")
+@extends("recursos/template_table")
 
 @php
     // $stmt-withPath('?order_by='.$_GET[])
@@ -92,7 +92,7 @@
             <td> {{$product->discount}} </td>
 
   <!-- Celda Categoría -->
-            <td> {{(DB::select("SELECT x.name FROM (SELECT * FROM categories WHERE id_parent=0) as x INNER JOIN (SELECT * FROM categories WHERE id = :cat_id) as y WHERE x.id=y.id_parent", ['cat_id' => $product->category_id]))[0]->name}} </td>
+            <td> {{(DB::select("SELECT x.name FROM categories as x INNER JOIN (SELECT * FROM categories WHERE id = :cat_id) as y WHERE x.id=y.id_parent", ['cat_id' => $product->category_id]))[0]->name}} </td>
 
   <!-- Celda Sub_Categoría -->
             <td> {{(DB::select("SELECT name FROM categories WHERE id=:cat_id", ['cat_id' => $product->category_id]))[0]->name}} </td>

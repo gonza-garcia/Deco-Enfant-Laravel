@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $order_by_options = ["id","name","short_desc","long_desc","price","thumbnail","color_id","size_id","stock","date_upload","date_update","discount_off","category_id"];
+        $order_by_options = ["id","name","short_desc","long_desc","price","images","color_id","size_id","stock","created_at","updated_at","discount","category_id"];
         $order_how_options=["ASC", "DESC"];
         $limit_options=["5", "10", "20", "50", "100", "200", "500"];
 
@@ -64,7 +64,7 @@ class ProductController extends Controller
         $all_categories = Category::where('id_parent', '=', 0);
         $all_sub_categories = Category::where('id_parent', '!=', 0);
 
-        return view("products", compact("order_by","order_how","offset","limit","pages_qty","page","total_rows","all_products","all_colors","all_sizes","all_categories","all_sub_categories","order_by_options","order_how_options","limit_options"));
+        return view("table_product", compact("order_by","order_how","offset","limit","pages_qty","page","total_rows","all_products","all_colors","all_sizes","all_categories","all_sub_categories","order_by_options","order_how_options","limit_options"));
     }
 
 
@@ -107,7 +107,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        return view("product_show", compact("product"));
+        return view("show_product", compact("product"));
     }
 
     /**

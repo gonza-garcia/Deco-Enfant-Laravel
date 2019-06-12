@@ -96,7 +96,7 @@
                 <tbody>
             <!-- Traer todas las filas segun el objeto (products, users, etc):::: -->
                     @yield("table_rows")
-                    
+
                 </tbody>
             </table>
 

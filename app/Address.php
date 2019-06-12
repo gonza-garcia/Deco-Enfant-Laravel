@@ -8,4 +8,9 @@ class Address extends Model
 {
     public $timestamps = false;
     public $guarded = [];
+
+    public function province()
+    {
+        return $this->belongsTo('App\Province', 'province_id');
+    }
 }

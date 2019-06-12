@@ -11,14 +11,31 @@ class User extends Authenticatable
     public $timestamps = true;
     public $guarded = [];
 
+    public function products()
+    {
+        return $this->belongsToMany('App\Product', 'orders', 'user_id', 'product_id');
+    }
+    public function sex()
+    {
+        return $this->belongsTo('App\Sex', 'sex_id');
+    }
+    public function user_status()
+    {
+        return $this->belongsTo('App\User_status', 'user_status_id');
+    }
+    public function role()
+    {
+        return $this->belongsTo('App\Role', 'role_id');
+    }
+
     function __construct(Array $datos)
     {
         if (isset($datos["id"])) {
             $this->id = $datos["id"];
-            $this->pass = $datos["pass"];
+            $this->password = $datos["password"];
         } else {
             $this->id = null;
-            $this->pass = password_hash($datos["pass"], PASSWORD_DEFAULT);
+            $this->password = password_hash($datos["password"], PASSWORD_DEFAULT);
         }
 
         $this->email = $datos["email"];

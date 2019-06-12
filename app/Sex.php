@@ -8,4 +8,9 @@ class Sex extends Model
 {
     public $timestamps = false;
     public $guarded = [];
+
+    public function users()
+    {
+        return $this->hasMany('App\User','sex_id');
+    }
 }

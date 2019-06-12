@@ -93,82 +93,6 @@ CREATE TABLE IF NOT EXISTS `deco_enfant`.`sizes` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
--- -----------------------------------------------------
--- Table `deco_enfant`.`products`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `deco_enfant`.`products` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  `short_desc` VARCHAR(150) NULL DEFAULT NULL,
-  `long_desc` TEXT NULL DEFAULT NULL,
-  `images` VARCHAR(255) NOT NULL,
-  `stock` INT(11) NOT NULL,
-  `price` DECIMAL(8,2) NOT NULL,
-  `discount` DECIMAL(5,2) NULL DEFAULT 0,
-  `color_id` INT(11) NOT NULL DEFAULT 1,
-  `size_id` INT(11) NOT NULL DEFAULT 1,
-  `category_id` INT(11) NOT NULL DEFAULT 1,
-  `created_at` TIMESTAMP,
-  `updated_at` TIMESTAMP DEFAULT NOW(),
-  PRIMARY KEY (`id`),
-  CONSTRAINT `products_ibfk_2`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `deco_enfant`.`categories` (`id`)
-    ON UPDATE CASCADE,
-  CONSTRAINT `products_ibfk_3`
-    FOREIGN KEY (`size_id`)
-    REFERENCES `deco_enfant`.`sizes` (`id`)
-    ON UPDATE CASCADE,
-  CONSTRAINT `products_ibfk_4`
-    FOREIGN KEY (`color_id`)
-    REFERENCES `deco_enfant`.`colors` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-ALTER TABLE `products`
-  ADD INDEX `products_i2` (`category_id`),
-  ADD INDEX `products_i4` (`color_id`);
-
-
--- -----------------------------------------------------
--- Table `deco_enfant`.`users`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `deco_enfant`.`users` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `user_name` VARCHAR(50) NOT NULL,
-  `first_name` VARCHAR(80) NULL DEFAULT NULL,
-  `last_name` VARCHAR(80) NULL DEFAULT NULL,
-  `date_of_birth` DATE NOT NULL,
-  `email` VARCHAR(50) NOT NULL,
-  `phone` VARCHAR(50) NOT NULL,
-  `pass` VARCHAR(250) NOT NULL,
-  `sex_id` INT(11) NOT NULL DEFAULT 1,
-  `user_status_id` INT(11) NOT NULL DEFAULT 1,
-  `role_id` INT(11) NOT NULL DEFAULT 3,
-  `created_at` TIMESTAMP,
-  `updated_at` TIMESTAMP DEFAULT NOW(),
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-ALTER TABLE `users`  
-  ADD UNIQUE INDEX `user_email` (`email` ASC),
-  ADD UNIQUE INDEX `user_username` (`user_name` ASC) ,
-  ADD INDEX `users_ibfk_2` (`user_status_id` ASC) ,
-  ADD INDEX `users_ibfk_3` (`role_id` ASC) ,
-  ADD INDEX `users_ibfk_1` (`sex_id` ASC) ,
-  ADD  CONSTRAINT `users_ibfk_1`
-    FOREIGN KEY (`sex_id`)
-    REFERENCES `deco_enfant`.`sexes` (`id`)
-    ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_ibfk_2`
-    FOREIGN KEY (`user_status_id`)
-    REFERENCES `deco_enfant`.`user_statuses` (`id`)
-    ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_ibfk_3`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `deco_enfant`.`roles` (`id`)
-    ON UPDATE CASCADE;
   
 -- -----------------------------------------------------
 -- Table `deco_enfant`.`countries`
@@ -186,9 +110,20 @@ DEFAULT CHARACTER SET = latin1;
 CREATE TABLE IF NOT EXISTS `deco_enfant`.`provinces` (
   `id` INT(11) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`id`))
+  `country_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`));
+
+  ALTER TABLE `deco_enfant`.`provinces`
+  ADD INDEX `fk_provinces_countries1_idx` (`country_id` ASC),
+  ADD CONSTRAINT `fk_provinces_countries1`
+    FOREIGN KEY (`country_id`)
+    REFERENCES `deco_enfant`.`countries` (`id`)
+    ON UPDATE NO ACTION,
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
+
+
+
 
 -- -----------------------------------------------------
 -- Table `deco_enfant`.`addresses`
@@ -202,22 +137,16 @@ CREATE TABLE IF NOT EXISTS `deco_enfant`.`addresses` (
   `unit` VARCHAR(10) NULL DEFAULT NULL,
   `postal_code` INT(11) NOT NULL,
   `user_id` INT(11) NOT NULL,
-  `country_id` INT(11) NOT NULL,
-  `province_id` INT(11) NOT NULL,
+  `province_id` INT(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`));
   
   ALTER TABLE `deco_enfant`.`addresses`
   ADD INDEX `adresses_ibfk_1` (`user_id` ASC) ,
-  ADD INDEX `fk_adresses_countries1_idx` (`country_id` ASC) ,
   ADD INDEX `fk_adresses_provinces1_idx` (`province_id` ASC) ,
   ADD CONSTRAINT `adresses_ibfk_1`
     FOREIGN KEY (`user_id`)
     REFERENCES `deco_enfant`.`users` (`id`)
     ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_adresses_countries1`
-    FOREIGN KEY (`country_id`)
-    REFERENCES `deco_enfant`.`countries` (`id`)
-    ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_adresses_provinces1`
     FOREIGN KEY (`province_id`)
     REFERENCES `deco_enfant`.`provinces` (`id`)
@@ -287,6 +216,84 @@ CREATE TABLE IF NOT EXISTS `deco_enfant`.`orders` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+
+-- -----------------------------------------------------
+-- Table `deco_enfant`.`products`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `deco_enfant`.`products` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `short_desc` VARCHAR(150) NULL DEFAULT NULL,
+  `long_desc` TEXT NULL DEFAULT NULL,
+  `images` VARCHAR(255) NOT NULL,
+  `stock` INT(11) NOT NULL,
+  `price` DECIMAL(8,2) NOT NULL,
+  `discount` DECIMAL(5,2) NULL DEFAULT 0,
+  `color_id` INT(11) NOT NULL DEFAULT 1,
+  `size_id` INT(11) NOT NULL DEFAULT 1,
+  `category_id` INT(11) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT NOW(),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `products_ibfk_2`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `deco_enfant`.`categories` (`id`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `products_ibfk_3`
+    FOREIGN KEY (`size_id`)
+    REFERENCES `deco_enfant`.`sizes` (`id`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `products_ibfk_4`
+    FOREIGN KEY (`color_id`)
+    REFERENCES `deco_enfant`.`colors` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+ALTER TABLE `products`
+  ADD INDEX `products_i2` (`category_id`),
+  ADD INDEX `products_i4` (`color_id`);
+
+
+-- -----------------------------------------------------
+-- Table `deco_enfant`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `deco_enfant`.`users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(50) NOT NULL,
+  `first_name` VARCHAR(80) NULL DEFAULT NULL,
+  `last_name` VARCHAR(80) NULL DEFAULT NULL,
+  `date_of_birth` DATE NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
+  `phone` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `sex_id` INT(11) NOT NULL DEFAULT 1,
+  `user_status_id` INT(11) NOT NULL DEFAULT 1,
+  `role_id` INT(11) NOT NULL DEFAULT 3,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT NOW(),
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+ALTER TABLE `users`  
+  ADD UNIQUE INDEX `user_email` (`email` ASC),
+  ADD UNIQUE INDEX `user_username` (`user_name` ASC) ,
+  ADD INDEX `users_ibfk_2` (`user_status_id` ASC) ,
+  ADD INDEX `users_ibfk_3` (`role_id` ASC) ,
+  ADD INDEX `users_ibfk_1` (`sex_id` ASC) ,
+  ADD  CONSTRAINT `users_ibfk_1`
+    FOREIGN KEY (`sex_id`)
+    REFERENCES `deco_enfant`.`sexes` (`id`)
+    ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_ibfk_2`
+    FOREIGN KEY (`user_status_id`)
+    REFERENCES `deco_enfant`.`user_statuses` (`id`)
+    ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_ibfk_3`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `deco_enfant`.`roles` (`id`)
+    ON UPDATE CASCADE;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -295,6 +302,70 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 use deco_enfant;
 
 
+-- ----------------------------------------------------
+-- -------------------Countries----------------------------
+INSERT INTO countries VALUES (1,  'Indefinido');
+INSERT INTO countries VALUES (2,  'Argentina');
+INSERT INTO countries VALUES (3,  'Bolivia');
+INSERT INTO countries VALUES (4,  'Brasil');
+INSERT INTO countries VALUES (5,  'Colombia');
+INSERT INTO countries VALUES (6,  'Chile');
+INSERT INTO countries VALUES (7,  'Ecuador');
+INSERT INTO countries VALUES (8,  'Paraguay');
+INSERT INTO countries VALUES (9,  'Perú');
+INSERT INTO countries VALUES (10, 'Uruguay');
+
+
+-- ----------------------------------------------------
+-- -------------------Provinces----------------------------
+INSERT INTO provinces VALUES (1,  'Indefinido',          1);    -- Indefinido
+INSERT INTO provinces VALUES (2,  'Buenos Aires',        2);    -- Argentina
+INSERT INTO provinces VALUES (3,  'Catamarca',           2);
+INSERT INTO provinces VALUES (4,  'Chaco',               2);
+INSERT INTO provinces VALUES (5,  'Chubut',              2);
+INSERT INTO provinces VALUES (6,  'Córdoba',             2);
+INSERT INTO provinces VALUES (7,  'Corrientes',          2);
+INSERT INTO provinces VALUES (8,  'Entre Ríos',          2);
+INSERT INTO provinces VALUES (9,  'Formosa',             2);
+INSERT INTO provinces VALUES (10, 'Jujuy',               2);
+INSERT INTO provinces VALUES (11, 'La Pampa',            2);
+INSERT INTO provinces VALUES (12, 'La Rioja',            2);
+INSERT INTO provinces VALUES (13, 'Mendoza',             2);
+INSERT INTO provinces VALUES (14, 'Misiones',            2);
+INSERT INTO provinces VALUES (15, 'Neuquén',             2);
+INSERT INTO provinces VALUES (16, 'Río Negro',           2);
+INSERT INTO provinces VALUES (17, 'Salta',               2);
+INSERT INTO provinces VALUES (18, 'San Juan',            2);
+INSERT INTO provinces VALUES (19, 'San Luis',            2);
+INSERT INTO provinces VALUES (20, 'Santa Cruz',          2);
+INSERT INTO provinces VALUES (21, 'Santa Fe',            2);
+INSERT INTO provinces VALUES (22, 'Santiago Del Estero', 2);
+INSERT INTO provinces VALUES (23, 'Tierra Del Fuego',    2);
+INSERT INTO provinces VALUES (24, 'Tucumán',             2);
+INSERT INTO provinces VALUES (25, 'Abel Iturralde',      3);    -- Bolivia
+INSERT INTO provinces VALUES (26, 'Abuná',               3);
+INSERT INTO provinces VALUES (27, 'Alonso De Ibañez',    3);
+INSERT INTO provinces VALUES (28, 'Acre',                4);    -- Brasil-
+INSERT INTO provinces VALUES (29, 'Bahia',               4);
+INSERT INTO provinces VALUES (30, 'Sao Paulo',           4);
+INSERT INTO provinces VALUES (31, 'Caldas',              5);    -- Colombia
+INSERT INTO provinces VALUES (32, 'Magdalena',           5);
+INSERT INTO provinces VALUES (33, 'Santander',           5);
+INSERT INTO provinces VALUES (34, 'Atacama',             6);    -- Chile-
+INSERT INTO provinces VALUES (35, 'Coquimbo',            6);
+INSERT INTO provinces VALUES (36, 'Valparaíso',          6);
+INSERT INTO provinces VALUES (37, 'Bolívar',             7);    -- Ecuador
+INSERT INTO provinces VALUES (38, 'Chimborazo',          7);
+INSERT INTO provinces VALUES (39, 'Esmeraldas',          7);
+INSERT INTO provinces VALUES (40, 'Alto Paraná',         8);    -- Paraguay-
+INSERT INTO provinces VALUES (41, 'Boquerón',            8);
+INSERT INTO provinces VALUES (42, 'Central',             8);
+INSERT INTO provinces VALUES (43, 'Amazonas',            9);    -- Perú
+INSERT INTO provinces VALUES (44, 'Arequipa',            9);
+INSERT INTO provinces VALUES (45, 'Callao',              9);
+INSERT INTO provinces VALUES (46, 'Canelones',          10);    -- Uruguay-
+INSERT INTO provinces VALUES (47, 'Colonia',            10);
+INSERT INTO provinces VALUES (48, 'Montevideo',         10);
 
 
 -- ----------------------------------------------------
@@ -347,7 +418,6 @@ INSERT INTO sizes VALUES (10, '100x100');
 INSERT INTO sizes VALUES (13, '130x130');
 
 
-
 -- ----------------------------------------------------
 -- -------------------Colors---------------------------
 INSERT INTO colors VALUES (1, 'Multi');
@@ -363,7 +433,6 @@ INSERT INTO colors VALUES (10, 'Violeta');
 INSERT INTO colors VALUES (11, 'Rosa');
 
 
-
 -- ----------------------------------------------------
 -- --------------Categories----------------------------
 INSERT INTO categories VALUES (1, 'Varios',           0);
@@ -373,21 +442,17 @@ INSERT INTO categories VALUES (4, 'Bolsas De Dormir', 0);
 INSERT INTO categories VALUES (5, 'Muebles',          0);
 INSERT INTO categories VALUES (6, 'Puffs',            0);
                 
-INSERT INTO categories VALUES (11, 'Tusor Liso',            3);
+INSERT INTO categories VALUES (11, 'Tusor Liso',            3);    -- Subcategorias de Almohadones
 INSERT INTO categories VALUES (12, 'Estampados',            3);
 INSERT INTO categories VALUES (13, 'Tusor Pintados A Mano', 3);
-
-INSERT INTO categories VALUES (14,  'Bancos',      5);
-INSERT INTO categories VALUES (15, 'Sillones',     5);
-
-INSERT INTO categories VALUES (16, 'Lino',         2);
-INSERT INTO categories VALUES (17, 'Playmats',     2);
-
-INSERT INTO categories VALUES (18, 'Grandes',      6);
-INSERT INTO categories VALUES (19, 'Pequeños',     6);
-
-INSERT INTO categories VALUES (20, 'Grandes',      4);
-INSERT INTO categories VALUES (21, 'Pequeños',     4);
+INSERT INTO categories VALUES (14,  'Bancos',               5);    -- Subcategorias de Muebles
+INSERT INTO categories VALUES (15, 'Sillones',              5);
+INSERT INTO categories VALUES (16, 'Lino',                  2);    -- Subcategorias de Alfombras
+INSERT INTO categories VALUES (17, 'Playmats',              2);
+INSERT INTO categories VALUES (18, 'Grandes',               6);    -- Subcategorias de Puffs
+INSERT INTO categories VALUES (19, 'Pequeños',              6);
+INSERT INTO categories VALUES (20, 'Grandes',               4);    -- Subcategorias de Bolsas De Dormir
+INSERT INTO categories VALUES (21, 'Pequeños',              4);
 
 
 -- ----------------------------------------------------
@@ -432,7 +497,6 @@ INSERT INTO products VALUES (5,
         1, 12, 15,
         '2019-03-30', NOW());
         
-        
 INSERT INTO products VALUES (6,
 		'Alfombra De Lino.', 'Alfombra de lino acolchada.',
         'Alfombra de lino acolchada. 1 metro de diámetro. 100x100.',
@@ -448,7 +512,6 @@ INSERT INTO products VALUES (7,
         6, 1200, 10,
         1, 13, 17,
         '2019-05-02', NOW());
-        
         
 INSERT INTO products VALUES (8,
 		'Puff Grande.', 'Puff grande de pelo sintético largo.',
@@ -473,3 +536,7 @@ INSERT INTO products VALUES (10,
         2500, 6, 14,
         9, 7, 20,
         '2019-02-15', NOW());
+        
+
+-- ----------------------------------------------------
+-- -------------------Usuarios-------------------------
