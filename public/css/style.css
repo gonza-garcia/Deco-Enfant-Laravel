@@ -1,0 +1,199 @@
+/* colores sugeridos
+#bfd0ce #f0e9f0 #f2dcce #e8cab0 #cc5955
+colores custom
+#e6d8b6 #d07f7c #dfbb80 #ba8551 #505050 #f8e27a
+
+
+RESETEOS GENERALES-------------------------------------------------------------------------------------------------------- */
+li {
+  list-style-type: none;
+}
+
+ul, ol {
+  padding: 0;
+}
+
+body {
+  font-family: 'Ubuntu Condensed', sans-serif;
+  position: relative;
+  min-height: 800px;
+}
+
+body::after {
+  /*para hacer la imagen del body transparente */
+  background-image: url("../img/fondo1.jpg");
+  background-repeat: repeat;
+  opacity: 0.09;
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+section {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* First message ------------------------------------------------------------------------------------------------------------*/
+#first-msg {
+  background-color: rgba(112, 96, 205, 0.3);
+  font-family: 'Sacramento', cursive;
+  color: #fff;
+}
+
+#first-msg h2 {
+  font-size: 2.45rem;
+}
+
+/* Landing----------------------------0--------------------------------------------------------------------------------- */
+#landing-carousel, #feature-one, #feature-two {
+  position: relative;
+}
+
+#row-landing h2 {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.67rem;
+  color: #fff;
+  position: absolute;
+  transform: translate(-50%, -60%);
+  top: 50%;
+  left: 50%;
+}
+
+#landing-carousel h2 {
+  font-size: 2.8rem;
+  border: 2px solid #fff;
+}
+
+/* Destacados--------------------------------------------------------------------------------------------------------------- */
+#descrip-item {
+  height: 56px;
+}
+
+#btn-destacados {
+  background-color: rgb(195, 185, 255);
+  color: #c45678;
+  border-radius: .35rem !important;
+}
+
+#btn-destacados:hover {
+  background-color: #c45678;
+  color: #fff;
+}
+
+/* HEADER -----------------------------------------------------------*/
+/* COLUMNA DE BUSQUEDA ----------------------------------------- */
+#formBuscar {
+  position: relative;
+}
+
+#formBuscar a {
+  -webkit-appearance: none;
+  position: absolute;
+  right: 1.4rem;
+  color: #666;
+}
+
+/* COLUMNA CARRITO Y AUTENTICACION-------------------------------- */
+#carrito {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px;
+  color: #fff;
+  line-height: 1;
+}
+
+#carrito:hover {
+  background-color: #c45678;
+}
+
+#autenticacion a {
+  font-size: .87rem;
+  text-transform: uppercase;
+  color: #000;
+  border-color: #fff !important;
+}
+
+#autenticacion a:hover {
+  color: #c45678;
+}
+
+/* NAVBAR DE MENUS -------------------------------------------- */
+nav {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+nav a.nav-link {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+nav li.nav-item:hover a.nav-link {
+  background-color: #c45678;
+}
+
+#dropCats, #dropSubCats, #admin {
+  border-top: solid 1.5px white;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+#dropCats a, #dropSubCats a, #admin a {
+  color: #fff;
+}
+
+#dropCats a:hover, #dropSubCats a:hover, #admin a:hover #dropCats a:focus, #dropSubCats a:focus, #admin a:focus {
+  background-color: #c45678;
+}
+
+/* FOOTER----------------------------------------------------------------------------------------------------------------------- */
+footer {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+footer a {
+  display: inline-block;
+  color: #fff;
+  width: 100%;
+  font-weight: bold;
+}
+
+footer a:hover {
+  background-color: #c45678;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.footer-title {
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* MEDIA QUERY HASTA 992PX (LG) --------------------------------- */
+@media (max-width: 992px) {}
+
+/* MEDIA QUERY DESDE 450px  ------------------------------------*/
+@media (min-width: 450px) {}
+
+/* MEDIA QUERY DESDE 576px (XS) --------------------------------*/
+@media (min-width: 576px) {}
+
+/* MEDIA QUERY DESDE 768px (MD) --------------------------------*/
+@media (min-width: 768px) {}
+
+/* MEDIA QUERY DESDE 992px (LG) --------------------------------*/
+@media (min-width: 992px) {}
+
+/* MEDIA QUERY DESDE 1280px  -----------------------------------*/
+@media (min-width: 1280px) {}
