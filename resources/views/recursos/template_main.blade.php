@@ -298,8 +298,13 @@
       <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
       <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
+<<<<<<< HEAD
       <script src="/js/productDetail.js"></script>
 
+=======
+      @yield("custom_js") 
+      
+>>>>>>> 309c552cfbb33731a1e8e8cbd738f09ac96d7694
 
 
       <script type="text/javascript">
