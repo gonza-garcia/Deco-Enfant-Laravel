@@ -29,9 +29,8 @@ Route::get('/', 'IndexController@index');
 // Route::get("/login",function(){
 //   return view("login");
 // });
-// Route::get("/register",function(){
-//   return view("register");
-// });
+
+// Route::get("/register",'Auth\RegisterController@load');
 
 
 Route::get('/productos', 'ProductController@index');
@@ -58,7 +57,7 @@ Route::get("/DELETE/role/{id}","RoleController@delete")->middleware('auth');
 Route::get('/colores', 'ColorController@index')->middleware('auth');
 Route::get('/color/{myColor}', 'ColorController@show')->middleware('auth');
 Route::get('/colores/add', 'ColorController@create')->middleware('auth');
-Route::post('/colores/add', 'ColorController@store');
+Route::post('/colores/add', 'ColorController@store')->middleware('auth');
 Route::get("/DELETE/color/{id}","ColorController@delete")->middleware('auth');
 // Route::get("/color/{myColor}/edit","ColorController@edit");
 // Route::put("/color/{id}","ColorController@update");

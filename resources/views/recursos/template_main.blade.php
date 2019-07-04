@@ -11,7 +11,7 @@
 
       <!-- Fuentes Custom---------------------------------------------->
       {{-- <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet"> --}}
-      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">      
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Sacramento&amp;subset=latin-ext" rel="stylesheet">
 
 
@@ -35,10 +35,10 @@
       <link rel="stylesheet" href="/css/style.css">
       <link rel="stylesheet" href="/css/style_tabla.css">
       <link rel="stylesheet" href="/css/style_modals.css">
-      
+
       @yield('custom_css')
 
-      
+
   </head>
 
 
@@ -60,9 +60,9 @@
                       <div class="col-7 col-md-3 justify-content-end d-flex d-md-block order-md-last pr-0">
 
                           <!--  CARRITO------------------------->
-                          <a id='carrito' class="justify-content-center d-inline-flex d-md-flex ml-1 ml-md-0" href="#carrito">
+                          <a id='carrito' class="justify-content-center d-inline-flex d-md-flex ml-1 ml-md-0" href="/cart">
                               <i class="mr-1 fas fa-shopping-cart"></i>
-                              <span>Carrito (0)</span>
+                              <span>Carrito</span>
                           </a>
 
                           <!-- AUTENTICACION-------------------->
@@ -165,6 +165,7 @@
                           <a class="nav-link py-0" href="#dropCats" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">listar</a>
                           <div class="collapse py-2" id="dropCats" data-parent="#navMenu">
                               <div class="dropdown dropright">
+                                  <a class="dropdown-item px-2" href="/cart" aria-haspopup="true" aria-expanded="false"> carrito </a>
                                   <a class="dropdown-item px-2" href="/colores" aria-haspopup="true" aria-expanded="false"> colores </a>
                                   <a class="dropdown-item px-2" href="/roles" aria-haspopup="true" aria-expanded="false"> roles </a>
                                   <a class="dropdown-item px-2" href="/categorias" aria-haspopup="true" aria-expanded="false"> categorias </a>
@@ -221,7 +222,7 @@
 <footer class="navbar navbar-expand-lg mt-4">
   <div class='container'>
     <div class="row p-1 w-100">
-    
+
       <!-- COLUMNA NAVEGACION-------------------------------------->
       <div class="footer-nav col-sm-3 p-0">
         <div class="border-bottom border-light mr-5">
@@ -262,7 +263,7 @@
             <div class="border-bottom border-light mr-5">
                 <h5 class="footer-title m-0 pb-1">Newsletter</h5>
             </div>
-            <form>              
+            <form>
               <p class="p-none pt-2 text-white mb-1">Suscribite a nuestra newsletter:</p>
               <div class="input-group">
                 <input class="form-control w-75 border-white" type="email" placeholder="Email" required>
@@ -297,8 +298,8 @@
       <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
       <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-      <script src="/js/productDetail.js"></script>  
-      
+      <script src="/js/productDetail.js"></script>
+
 
 
       <script type="text/javascript">
