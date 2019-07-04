@@ -21,7 +21,7 @@ body {
 
 body::after {
   /*para hacer la imagen del body transparente */
-  background-image: url("../img/fondo1.jpg");
+  /* background-image: url("../img/fondo1.jpg"); */
   background-repeat: repeat;
   opacity: 0.09;
   content: "";
@@ -80,12 +80,12 @@ section {
 
 #btn-destacados {
   background-color: rgb(195, 185, 255);
-  color: #c45678;
+  color: #d39eae;
   border-radius: .35rem !important;
 }
 
 #btn-destacados:hover {
-  background-color: #c45678;
+  background-color: #d39eae;
   color: #fff;
 }
 
@@ -108,21 +108,25 @@ section {
   padding: 5px;
   color: #fff;
   line-height: 1;
+  display:inline-block;
 }
 
 #carrito:hover {
-  background-color: #c45678;
+  background-color: #d39eae;
+  text-decoration: none;
 }
 
 #autenticacion a {
-  font-size: .87rem;
+  font-size: .8rem;
   text-transform: uppercase;
   color: #000;
   border-color: #fff !important;
+  text-decoration: none;
 }
 
 #autenticacion a:hover {
-  color: #c45678;
+  color: #d39eae;
+  text-decoration: none;
 }
 
 /* NAVBAR DE MENUS -------------------------------------------- */
@@ -132,13 +136,16 @@ nav {
 
 nav a.nav-link {
   text-transform: uppercase;
-  font-weight: bold;
+  /* font-weight: bold; */
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 nav li.nav-item:hover a.nav-link {
-  background-color: #c45678;
+  background-color: #d39eae;
+  border-radius: 5px;
 }
 
 #dropCats, #dropSubCats, #admin {
@@ -151,7 +158,7 @@ nav li.nav-item:hover a.nav-link {
 }
 
 #dropCats a:hover, #dropSubCats a:hover, #admin a:hover #dropCats a:focus, #dropSubCats a:focus, #admin a:focus {
-  background-color: #c45678;
+  background-color: #d39eae;
 }
 
 /* FOOTER----------------------------------------------------------------------------------------------------------------------- */
@@ -163,14 +170,17 @@ footer a {
   display: inline-block;
   color: #fff;
   width: 100%;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 footer a:hover {
-  background-color: #c45678;
+  cursor: pointer;
+  /* background-color: #d39eae; */
   color: #fff;
   text-decoration: none;
-  font-size: 1.2rem;
+  /* font-size: 1.2rem; */
+  font-style: italic;
+  padding-top: 2px;
 }
 
 .footer-title {

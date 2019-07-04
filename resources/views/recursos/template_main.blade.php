@@ -10,7 +10,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
       <!-- Fuentes Custom---------------------------------------------->
-      <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
+      {{-- <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet"> --}}
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">      
       <link href="https://fonts.googleapis.com/css?family=Sacramento&amp;subset=latin-ext" rel="stylesheet">
 
 
@@ -28,9 +29,16 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+
       <link rel="stylesheet" href="/css/style.css">
       <link rel="stylesheet" href="/css/style_tabla.css">
       <link rel="stylesheet" href="/css/style_modals.css">
+      
+      @yield('custom_css')
+
+      
   </head>
 
 
@@ -52,9 +60,9 @@
                       <div class="col-7 col-md-3 justify-content-end d-flex d-md-block order-md-last pr-0">
 
                           <!--  CARRITO------------------------->
-                          <a id='carrito' class="justify-content-center d-inline-flex d-md-flex ml-1 ml-md-0" href="/cart">
+                          <a id='carrito' class="justify-content-center d-inline-flex d-md-flex ml-1 ml-md-0" href="#carrito">
                               <i class="mr-1 fas fa-shopping-cart"></i>
-                              <span>Carrito</span>
+                              <span>Carrito (0)</span>
                           </a>
 
                           <!-- AUTENTICACION-------------------->
@@ -88,6 +96,13 @@
                                     @endauth
                                 </div>
                             @endif
+                              {{-- @if ($auth->usuarioLogueado())
+                                  <a class="pr-1 border-right border-white text-right" href="#">{{$_SESSION["user_name"]}}</a>
+                                  <a class="pl-1 border-left border-white text-left" href="{{route('logout')}}">Salir</a>
+                              @else
+                                  <a class="pr-1 border-right border-white text-right" href="{{route('login')}}">Iniciar Sesión</a>
+                                  <a class="pl-1 border-left border-white text-left" href="{{route('registro')}}">Crear Cuenta</a>
+                              @endif --}}
                           </div>
 
                       </div>
@@ -109,7 +124,7 @@
               <ul class="navbar-nav d-flex flex-row py-0">
 
                   <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-3" href="/">inicio</a>
+                      <a class="nav-link py-0" href="/">inicio</a>
                   </li>
 
                   {{-- <li class="nav-item px-3">
@@ -135,22 +150,21 @@
                   </li> --}}
 
                   <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-3" href="/productos">productos</a>
+                      <a class="nav-link py-0" href="/productos">productos</a>
                   </li>
 
 
                   <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-3" href="#novedades">novedades</a>
+                      <a class="nav-link py-0" href="#novedades">novedades</a>
                   </li>
 
                   <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-3" href="#contacto">contacto</a>
+                      <a class="nav-link py-0" href="#contacto">contacto</a>
                   </li>
                       <li class="nav-item px-3">
-                          <a class="nav-link py-3" href="#dropCats" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">listar</a>
+                          <a class="nav-link py-0" href="#dropCats" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">listar</a>
                           <div class="collapse py-2" id="dropCats" data-parent="#navMenu">
                               <div class="dropdown dropright">
-                                  <a class="dropdown-item px-2" href="/cart" aria-haspopup="true" aria-expanded="false"> carrito </a>
                                   <a class="dropdown-item px-2" href="/colores" aria-haspopup="true" aria-expanded="false"> colores </a>
                                   <a class="dropdown-item px-2" href="/roles" aria-haspopup="true" aria-expanded="false"> roles </a>
                                   <a class="dropdown-item px-2" href="/categorias" aria-haspopup="true" aria-expanded="false"> categorias </a>
@@ -162,7 +176,7 @@
                            </div>
                       </li>
                   <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-3" href="#admin" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">Agregar</a>
+                      <a class="nav-link py-0" href="#admin" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">Agregar</a>
                       <div class="collapse py-2" id="admin" data-parent="#navMenu">
                         <div class="dropdown dropright">
                             <a class="dropdown-item px-2" href="/colores/add" aria-haspopup="true" aria-expanded="false"> color </a>
@@ -206,35 +220,55 @@
 
 <footer class="navbar navbar-expand-lg mt-4">
   <div class='container'>
-    <div class="row p-4 w-100">
-
-
+    <div class="row p-1 w-100">
+    
       <!-- COLUMNA NAVEGACION-------------------------------------->
-      <div class="footer-nav col-sm-3">
+      <div class="footer-nav col-sm-3 p-0">
         <div class="border-bottom border-light mr-5">
           <h5 class="footer-title m-0 pb-1">Navegación</h5>
         </div>
         <ul class="p-none pt-2">
-          <li><a href="/">inicio</a></li>
-          <li><a href="/productos">productos</a></li>
-          <li><a href="#novedades">novedades</a></li>
-          <li><a href="#contacto">contacto</a></li>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/productos">Productos</a></li>
+          <li><a href="#novedades">Novedades</a></li>
+          {{-- <li><a href="#contacto">Contacto</a></li> --}}
         </ul>
       </div>
       <!-- COLUMNA CONTACTO--------------------------------------->
-      <div class="footer-nav col-sm-3">
+      <div class="footer-nav col-sm-3 p-0">
         <div class="border-bottom border-light mr-5">
           <h5 class="footer-title m-0 pb-1">Contacto</h5>
         </div>
         <ul class="p-none pt-2">
-          <li><a href="#whatsapp">+491637325192</a></li>
-          <li><a href="#direccion">Elcano 5859, Mar del Plata</a></li>
-          <li><a href="#email">gcostoya02@gmail.com</a></li>
+          <li><a href="#phone"><i class="fas fa-mobile-alt"></i> +49 163 7325192</a></li>
+          <li><a href="#direccion"><i class="fas fa-map-pin"></i> Elcano 5859 - Mar del Plata</a></li>
+          <li><a href="#email"><i class="fa fa-envelope"></i> gcostoya02@gmail.com</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav col-sm-3 p-0">
+        <div class="border-bottom border-light mr-5">
+            <h5 class="footer-title m-0 pb-1">Social</h5>
+        </div>
+        <ul class="p-none pt-2">
+            <li><a href="#instagram"><i class="fab fa-instagram"></i> Instagram</a></li>
+            <li><a href="#facebook"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="#whatsapp"><i class="fab fa-whatsapp"></i> Whatsapp</a></li>
         </ul>
       </div>
       <!-- COLUMNA MEDIOS DE PAGO---------------------------------->
 
       <!-- COLUMNA NEWSLETTER------------------------------------->
+      <div class="footer-nav col-sm-3 p-0">
+            <div class="border-bottom border-light mr-5">
+                <h5 class="footer-title m-0 pb-1">Newsletter</h5>
+            </div>
+            <form>              
+              <p class="p-none pt-2 text-white mb-1">Suscribite a nuestra newsletter:</p>
+              <div class="input-group">
+                <input class="form-control w-75 border-white" type="email" placeholder="Email" required>
+                <button class="btn btn-sm text-white mt-2 border-white">Suscribirme</button>
+            </form>
+          </div>
     </div>
   </div>
 </footer>
@@ -259,6 +293,13 @@
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+      <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+      <script src="/js/productDetail.js"></script>  
+      
+
 
       <script type="text/javascript">
           $(document).ready(function(){
