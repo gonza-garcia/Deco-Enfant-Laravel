@@ -42,6 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function hasRole($role_id)
+    {
+        return User::where('role_id', $role_id)->get();
+    }
+
     public function products(){
         return $this->hasMany('App\Product', "user_id"); //tabla de destino y columna de FK local
     }

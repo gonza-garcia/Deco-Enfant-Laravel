@@ -14,7 +14,7 @@ class Role extends Model
     // public $primaryKey = "id"; // si es id, no es necesario escribirla
     // public $timestamps = false;
     public $guarded = []; // se pueden escribir todo lo que no este mencionado
-    public $fillable = [];  // Los campos que si se pueden escribir en la base
+    // public $fillable = [];  // Los campos que si se pueden escribir en la base
 
 
     public function users(){

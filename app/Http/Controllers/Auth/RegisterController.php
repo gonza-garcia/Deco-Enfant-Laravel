@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Sex;
+use App\Role;
+use App\User_status;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -57,7 +60,7 @@ class RegisterController extends Controller
             'first_name' => ['required', 'string', 'max:50'],
             'last_name' => ['required', 'string', 'max:50'],
             'date_of_birth' => ['date'],
-            'phone' => ['string', 'max:190'],
+            'phone' => ['numeric'],
         ];
 
         $messages = [
@@ -69,6 +72,7 @@ class RegisterController extends Controller
             'email' => 'El campo :attribute debe tener formato de mail.',
             'unique' => 'El campo :attribute ya se encuentra en la base.',
             'date' => 'El campo :attribute no corresponde a una fecha.',
+            'numeric' => 'El campo :attribute no corresponde a un numero.',
         ];
 
         return Validator::make($data, $rules, $messages);
@@ -90,9 +94,21 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'phone' => $data['phone'],
             'date_of_birth' => $data['date_of_birth'],
-            // 'sex_id' => $data['sex_id'],
-            // 'user_status_id' => $data['user_status_id'],
-            // 'role_id' => $data['role_id'],
+            'sex_id' => $data['sex_id'],
+            'user_status_id' => $data['user_status_id'],
+            'role_id' => $data['role_id'],
         ]);
+    }
+
+    protected function showRegistrationForm() {
+
+      $sexes = Sex::all();
+      $roles = Role::all();
+      $user_statuses = user_status::all();
+       // dd($sexes);
+
+      // return view('\auth\register')->with('sexes',$sexes);
+      return view('\auth\register',compact('sexes','roles','user_statuses'));
+
     }
 }

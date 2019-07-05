@@ -106,11 +106,9 @@
 
                           <div class="col-md-6">
                               <select class="form-control" id='sex_id' name='sex_id'>
-                                  {{-- @foreach ($sexes as $sex)
-                                      <option value={{$sex->id}}> {{$sex->name}} </option> --}}
-                                  <option value="1">Femenino</option>
-                                  <option value="2">Masculino</option>
-                                  {{-- @endforeach --}}
+                                  @foreach ($sexes as $sex)
+                                      <option value={{$sex->id}}> {{$sex->name}} </option>
+                                  @endforeach
                               </select>
                               {{-- <button>Nuevo</button> --}}
 
@@ -127,11 +125,9 @@
 
                           <div class="col-md-6">
                               <select class="form-control" id='user_status_id' name='user_status_id'>
-                                  {{-- @foreach ($all_colors as $color)
-                                      <option value={{$color->id}}>
-                                          {{$color->name}}
-                                      </option>
-                                  @endforeach --}}
+                                  @foreach ($roles as $role)
+                                      <option value="{{$role->id}}"> {{$role->name}} </option>
+                                  @endforeach
                               </select>
                               {{-- <button>Nuevo</button> --}}
 
@@ -148,11 +144,9 @@
 
                           <div class="col-md-6">
                               <select class="form-control" id='role_id' name='role_id'>
-                                  {{-- @foreach ($all_colors as $color)
-                                      <option value={{$color->id}}>
-                                          {{$color->name}}
-                                      </option>
-                                  @endforeach --}}
+                                  @foreach ($user_statuses as $user_status)
+                                      <option value="{{$user_status->id}}"> {{$user_status->name}} </option>
+                                  @endforeach
                               </select>
                               {{-- <button>Nuevo</button> --}}
 
