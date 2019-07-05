@@ -33,8 +33,13 @@ Route::get('/', 'IndexController@index');
 //   return view("register");
 // });
 
+Route::get('/productos/admin', 'ProductController@admin');
+Route::get('/usuarios/admin', 'UserController@admin');
+Route::get('/carts/admin', 'CartController@admin');
+
 
 Route::get('/productos', 'ProductController@index');
+Route::get('/productos/search/{buscado}', 'ProductController@search');
 Route::get('/producto/{prod}', 'ProductController@show');
 
 // Carrito
