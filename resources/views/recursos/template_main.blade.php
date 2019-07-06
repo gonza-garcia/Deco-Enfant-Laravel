@@ -166,6 +166,7 @@
                           <div class="collapse py-2" id="dropCats" data-parent="#navMenu">
                               <div class="dropdown dropright">
                                   <a class="dropdown-item px-2" href="/cart" aria-haspopup="true" aria-expanded="false"> carrito </a>
+                                  <a class="dropdown-item px-2" href="/history" aria-haspopup="true" aria-expanded="false"> historial de compras </a>
                                   <a class="dropdown-item px-2" href="/colores" aria-haspopup="true" aria-expanded="false"> colores </a>
                                   <a class="dropdown-item px-2" href="/roles" aria-haspopup="true" aria-expanded="false"> roles </a>
                                   <a class="dropdown-item px-2" href="/categorias" aria-haspopup="true" aria-expanded="false"> categorias </a>
@@ -298,8 +299,18 @@
       <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
       <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+      <script src="/js/productDetail.js"></script>
+
+=======
+      @yield("custom_js")
+
+>>>>>>> 309c552cfbb33731a1e8e8cbd738f09ac96d7694
+=======
       @yield("custom_js") 
       
+>>>>>>> 87d25d8283907b39e808ad8ba262b24e0339b7a9
 
 
       <script type="text/javascript">

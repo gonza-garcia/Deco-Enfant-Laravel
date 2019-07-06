@@ -63,7 +63,7 @@ class CartController extends Controller
 
       // dd($newItem);
       $newItem->save();
-      return redirect('/productos');
+      return redirect('/cart');
 
     }
 

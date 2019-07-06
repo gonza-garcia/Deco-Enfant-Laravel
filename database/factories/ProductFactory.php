@@ -15,5 +15,15 @@ $factory->define(Product::class, function (Faker $faker) {
       'long_desc' => $faker->sentence(8),
       'price'=>$faker->randomFloat(2, 300, 4000),
       'thumbnail'=> $faker->image($path, 480, 600,'cats', false),
+      'discount_off'=>$faker->randomFloat(2, 10, 40),     // $table->bigInteger('sex_id')  => function () {
+      'size_id' => function () {
+          return factory(App\Size::class)->create()->id;
+        },
+      'color_id'  => function () {
+            return factory(App\Color::class)->create()->id;
+        },
+      'category_id'  => function () {
+            return factory(App\Category::class)->create()->id;
+        },
     ];
 });
