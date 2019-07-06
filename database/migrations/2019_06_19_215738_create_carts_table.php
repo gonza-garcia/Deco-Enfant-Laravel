@@ -24,10 +24,14 @@ class CreateCartsTable extends Migration
             $table->decimal('discount_off',8,2)->nullable();
             $table->integer('status')->default(0);
             $table->integer('cart_number')->nullable();
-            $table->bigInteger('user_id')->nullable();
-            $table->bigInteger('size_id')->nullable();
-            $table->bigInteger('color_id')->nullable();
-            $table->bigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('size_id')->nullable();
+            $table->foreign('size_id')->references('id')->on('sizes');
+            $table->unsignedBigInteger('color_id')->nullable();
+            $table->foreign('color_id')->references('id')->on('colors');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
             $table->softDeletes(); // tambien debo indicarlo en el modelo
         });

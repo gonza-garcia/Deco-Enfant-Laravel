@@ -18,7 +18,7 @@
         @foreach ($cart as $item)
           <li>Nombre: {{$item->name}}</li>
         @endforeach
-
+        <br>
       </ul>
     </li>
   @empty
