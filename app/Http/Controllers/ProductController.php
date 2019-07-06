@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Category;
+use App\Size;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -52,7 +54,13 @@ class ProductController extends Controller
     {
       $product = Product::find($prod->id);
 
-      $vac = compact("product");
+      $category = Category::select('categories.name')
+      ->join('products', 'category_id', '=', 'categories.id')
+      ->where('category_id', $prod->category_id)
+      ->first();
+    //   dd($category->name);
+
+      $vac = compact("product", "category");
       return view("product",$vac);
     }
 

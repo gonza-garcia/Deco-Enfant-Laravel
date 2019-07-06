@@ -251,8 +251,8 @@
             <h5 class="footer-title m-0 pb-1">Social</h5>
         </div>
         <ul class="p-none pt-2">
-            <li><a href="#instagram"><i class="fab fa-instagram"></i> Instagram</a></li>
-            <li><a href="#facebook"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="https://www.instagram.com/decoenfant_/"><i class="fab fa-instagram"></i> Instagram</a></li>
+            <li><a href="https://www.facebook.com/decoenfant0/"><i class="fab fa-facebook"></i> Facebook</a></li>
             <li><a href="#whatsapp"><i class="fab fa-whatsapp"></i> Whatsapp</a></li>
         </ul>
       </div>
@@ -298,13 +298,8 @@
       <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
       <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-<<<<<<< HEAD
-      <script src="/js/productDetail.js"></script>
-
-=======
       @yield("custom_js") 
       
->>>>>>> 309c552cfbb33731a1e8e8cbd738f09ac96d7694
 
 
       <script type="text/javascript">
