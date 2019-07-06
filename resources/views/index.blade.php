@@ -52,7 +52,7 @@
 
 
   <!--SECCION DESTACADOS---------------------------------------------------------------------------------------------------------->
-{{-- <section class="container">
+<section class="container">
 
     <div class="text-center pt-4">
         <h2 class="my-0 mx-auto w-100 text-uppercase"><img src="./img/icon-paper-plane.png">destacados</h2>
@@ -83,7 +83,7 @@
 
     </div>
 
-</section> --}}
+</section>
 @endsection
 
 {{-- @section("links")

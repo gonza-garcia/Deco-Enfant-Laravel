@@ -64,7 +64,7 @@
                 src={{$product->thumbnail}} alt={{$product->name}}>
 
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
-                    <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2">{{$product->short_desc}}</div>
+                    <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2">{{$product->name}}</div>
                     <div class="col-12 col-lg-4 p-1">
                         <button id="btn-destacados" class="btn text-uppercase p-0 w-100 py-2">ver más
                         </button>
