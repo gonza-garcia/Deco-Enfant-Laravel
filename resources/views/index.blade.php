@@ -6,7 +6,7 @@
 
 
 @section('principal')
-  
+
   <!--SECCION LANDING---------------------------------------------------------------------------------------------------------->
 
   <section class="container">
@@ -35,7 +35,7 @@
 
               <div id="feature-two">
                   <img class="img-fluid pl-2 pl-lg-0 pt-lg-1" src="./img/landing-feature-02.jpg" alt="sale">
-                  <h2 class="p-0 m-0 text-center">sale<br>25 &#37 off</h2>
+                  <h2 class="p-0 m-0 text-center">sale<br>25 & 37 off</h2>
               </div>
           </div>
 
@@ -46,44 +46,43 @@
           <hr>
       </div>
 
-
   </section>
 
 
 
   <!--SECCION DESTACADOS---------------------------------------------------------------------------------------------------------->
-{{-- <section class="container">
+  <section class="container">
 
-    <div class="text-center pt-4">
-        <h2 class="my-0 mx-auto w-100 text-uppercase"><img src="./img/icon-paper-plane.png">destacados</h2>
-        <hr>
-    </div>
+      <div class="text-center pt-4">
+          <h2 class="my-0 mx-auto w-100 text-uppercase"><img src="./img/icon-paper-plane.png">destacados</h2>
+          <hr>
+      </div>
 
-    <div class="row px-2">
+      <div class="row px-2">
 
-      <!--- Generar Articulos ------------->
-        @forelse ($products as $product)
-            <article class="col-6 col-md-4 col-lg-3 p-1">
-              <a href="/producto/{{$product->id}}">
-                <img class="img-fluid img-thumbnail destacados-img"
-                src={{$product->thumbnail}} alt={{$product->name}}>
+        <!--- Generar Articulos ------------->
+          @forelse ($products as $product)
+              <article class="col-6 col-md-4 col-lg-3 p-1">
+                <a href="/producto/{{$product->id}}">
+                  <img class="img-fluid img-thumbnail destacados-img"
+                  src={{$product->thumbnail}} alt={{$product->name}}>
 
-                <div class="d-flex flex-wrap align-items-center justify-content-between">
-                    <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2">{{$product->short_desc}}</div>
-                    <div class="col-12 col-lg-4 p-1">
-                        <button id="btn-destacados" class="btn text-uppercase p-0 w-100 py-2">ver más
-                        </button>
-                    </div>
-                </div>
-              </a>
-              <hr class="m-3">
-            </article>
-        @empty
-        @endforelse
+                  <div class="d-flex flex-wrap align-items-center justify-content-between">
+                      <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2">{{$product->short_desc}}</div>
+                      <div class="col-12 col-lg-4 p-1">
+                          <button id="btn-destacados" class="btn text-uppercase p-0 w-100 py-2">ver más
+                          </button>
+                      </div>
+                  </div>
+                </a>
+                <hr class="m-3">
+              </article>
+          @empty
+          @endforelse
 
-    </div>
+      </div>
 
-</section> --}}
+  </section>
 @endsection
 
 {{-- @section("links")

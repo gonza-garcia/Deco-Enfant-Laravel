@@ -82,7 +82,7 @@
 @endsection
 
 @section("links")
-  <nav class="">
+  {{-- <nav class="">
       <p>{{$products->links()}}</p>
-  </nav>
+  </nav> --}}
 @endsection

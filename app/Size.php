@@ -19,4 +19,8 @@ class Size extends Model
     public function products(){
         return $this->hasMany('App\Product', "size_id"); //tabla de destino y columna de FK local
     }
+
+    public function carts(){
+        return $this->hasMany('App\Cart', "size_id"); //tabla de destino y columna de FK local
+    }
 }

@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $products = Product::paginate(8);
+      $products = Product::take(8)->get();
 
       $vac = compact("products");
       return view ("products",$vac);
@@ -57,13 +57,13 @@ class ProductController extends Controller
     {
       $product = Product::find($prod->id);
 
-      $category = Category::select('categories.name')
-      ->join('products', 'category_id', '=', 'categories.id')
-      ->where('category_id', $prod->category_id)
+      $subcategory = Subcategory::select('subcategories.name')
+      ->join('products', 'subcategory_id', '=', 'subcategories.id')
+      ->where('subcategory_id', $prod->subcategory_id)
       ->first();
     //   dd($category->name);
 
-      $vac = compact("product", "category");
+      $vac = compact("product", "subcategory");
       return view("product",$vac);
     }
 
@@ -102,12 +102,12 @@ class ProductController extends Controller
     }
 
     public function search($buscado){
-        
+
     }
 
     public function admin()
     {
-        $order_by_options = ["id","name","short_desc","long_desc","price","thumbnail","stock","discount_off","size_id","color_id","category_id","created_at","updated_at","deleted_at"];
+        $order_by_options = ["id","name","short_desc","long_desc","price","thumbnail","stock","discount_off","size_id","color_id","subcategory_id","created_at","updated_at","deleted_at"];
         $order_how_options=["ASC", "DESC"];
         $limit_options=["5", "10", "20", "50", "100", "200", "500"];
 
@@ -152,8 +152,8 @@ class ProductController extends Controller
         $all_products = Product::orderBy($order_by, $order_how)->paginate($limit);
         $all_colors = Color::all();
         $all_sizes = Size::all();
-        $all_categories = Category::where('id_parent', '=', 0);
-        $all_sub_categories = Category::where('id_parent', '!=', 0);
+        $all_categories = Category::all();
+        $all_sub_categories = \App\Subcategory::all();
 
 
         $all_products->withPath('?order_by='.$order_by.'&order_how='.$order_how. '&limit='.$limit);

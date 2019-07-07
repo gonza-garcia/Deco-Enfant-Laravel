@@ -14,7 +14,7 @@ class CreateIndicesTable extends Migration
     public function up()
     {
         Schema::create('indices', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->BigIncrements('id');
             $table->timestamps();
         });
     }

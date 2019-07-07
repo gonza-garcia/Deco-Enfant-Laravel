@@ -14,22 +14,23 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->BigIncrements('id');
             $table->string('name',100);
             $table->string('short_desc',150);
             $table->string('long_desc',250);
             $table->decimal('price',6,2);
             $table->string('thumbnail');
             $table->integer('stock')->default(0);
-            $table->decimal('discount_off',8,2)->nullable()->default(0);
-            $table->unsignedBigInteger('size_id')->nullable();
-            $table->foreign('size_id')->references('id')->on('sizes');
-            $table->unsignedBigInteger('color_id')->nullable();
-            $table->foreign('color_id')->references('id')->on('colors');
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->decimal('discount',8,2)->nullable()->default(0);
+            $table->unsignedBigInteger('color_id')->default(1);
+            $table->unsignedBigInteger('size_id')->default(1);
+            $table->unsignedBigInteger('subcategory_id')->default(1);
             $table->timestamps();
             $table->softDeletes(); // tambien debo indicarlo en el modelo
+
+            $table->foreign('color_id')->references('id')->on('colors');
+            $table->foreign('size_id')->references('id')->on('sizes');
+            $table->foreign('subcategory_id')->references('id')->on('subcategories');
 
         });
     }
