@@ -51,6 +51,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Product', "user_id"); //tabla de destino y columna de FK local
     }
 
+    public function carts(){
+        return $this->hasMany('App\Cart', "user_id"); //tabla de destino y columna de FK local
+    }
+
     public function role(){
         return $this->belongsTo('App\Role', "role_id");
     }

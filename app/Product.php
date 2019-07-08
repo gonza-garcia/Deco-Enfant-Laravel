@@ -19,16 +19,12 @@ class Product extends Model
       return $this->belongsTo('App\Color', "color_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
     }
 
-    public function user(){
-      return $this->belongsTo('App\User', "user_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
-    }
-
-    public function category(){
-      return $this->belongsTo('App\Category', "category_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
-    }
-
     public function size(){
       return $this->belongsTo('App\Size', "size_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
+    }
+
+    public function subcategory(){
+      return $this->belongsTo('App\Subcategory', "subcategory_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
     }
 
 }

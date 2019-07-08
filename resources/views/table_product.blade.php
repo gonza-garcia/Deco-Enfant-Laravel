@@ -73,7 +73,7 @@
             <td> {{$product->price}} </td>
 
   <!-- Celda Imagen -->
-            <td> <a href={{$product->images}} class="view" title={{$product->images}} data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a></td>
+            <td> <a href={{$product->thumbnail}} class="view" title={{$product->thumbnail}} data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a></td>
 
   <!-- Celda Color -->
             <td> {{(DB::select("SELECT name FROM colors WHERE id=:color_id", ['color_id' => $product->color_id]))[0]->name}} </td>
@@ -94,10 +94,10 @@
             <td> {{$product->discount}} </td>
 
   <!-- Celda Categoría -->
-            <td> {{(DB::select("SELECT x.name FROM categories as x INNER JOIN (SELECT * FROM categories WHERE id = :cat_id) as y WHERE x.id=y.id_parent", ['cat_id' => $product->category_id]))[0]->name}} </td>
+            <td> {{(DB::select("SELECT x.name FROM categories as x INNER JOIN (SELECT * FROM categories WHERE id = :cat_id) as y WHERE x.id=y.id_parent", ['cat_id' => $product->subcategory_id]))[0]->name}} </td>
 
   <!-- Celda Sub_Categoría -->
-            <td> {{(DB::select("SELECT name FROM categories WHERE id=:cat_id", ['cat_id' => $product->category_id]))[0]->name}} </td>
+            <td> {{(DB::select("SELECT name FROM categories WHERE id=:cat_id", ['cat_id' => $product->subcategory_id]))[0]->name}} </td>
 
   <!-- Celda Acciones -->
             <td id="acciones">

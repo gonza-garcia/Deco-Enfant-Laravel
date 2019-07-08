@@ -14,8 +14,8 @@ class CreateSexesTable extends Migration
     public function up()
     {
         Schema::create('sexes', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name',25);
+            $table->BigIncrements('id');
+            $table->string('name',30);
             $table->timestamps();
             $table->softDeletes(); // tambien debo indicarlo en el modelo
         });

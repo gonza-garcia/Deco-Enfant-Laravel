@@ -54,10 +54,10 @@ class CartController extends Controller
       $newItem->long_desc = $product->long_desc;
       $newItem->price = $product->price;
       $newItem->thumbnail = $product->thumbnail;
-      $newItem->discount_off = $product->discount_off;
+      $newItem->discount = $product->discount;
       $newItem->size_id = $product->size_id;
       $newItem->color_id = $product->color_id;
-      $newItem->category_id = $product->category_id;
+      $newItem->subcategory_id = $product->subcategory_id;
       $newItem->cant =  1; //Vamos a hardcodear el número pero debería venir de un form o del array.
       $newItem->user_id = Auth::User()->id;
 

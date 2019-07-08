@@ -11,20 +11,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call(ColorsTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(SexesTableSeeder::class);
+        $this->call(SizesTableSeeder::class);
 
-      factory(\App\Country::class)->create();
-      factory(\App\Province::class, 10)->create();
+        $this->call(Order_StatusesTableSeeder::class);
+        $this->call(Shipping_StatusesTableSeeder::class);
+        $this->call(User_StatusesTableSeeder::class);
 
-      factory(\App\Role::class, 20)->create();
-      factory(\App\User_status::class, 3)->create();
-      factory(\App\Color::class, 15)->create();
-      factory(\App\Sex::class, 2)->create();
-      factory(\App\Order_status::class, 3)->create();
-      factory(\App\Shipping_status::class, 3)->create();
-      factory(\App\Category::class, 8)->create();
-      factory(\App\Size::class, 6)->create();
+        $this->call(SubcategoriesTableSeeder::class);
+        $this->call(ProvincesTableSeeder::class);
 
-      factory(\App\Product::class, 20)->create();
+        $this->call(ProductsTableSeeder::class);
+
+        factory(\App\Product::class, 62)->create();
+        factory(\App\User::class, 25)->create();
+        factory(\App\Cart::class, 47)->create();
     }
 }
