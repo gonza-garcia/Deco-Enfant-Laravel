@@ -7,6 +7,7 @@ use App\Product;
 use App\Size;
 use App\Color;
 use App\Category;
+use App\Subcategory;
 
 use Illuminate\Http\Request;
 

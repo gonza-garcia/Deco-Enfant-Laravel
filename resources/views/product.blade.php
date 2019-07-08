@@ -129,17 +129,25 @@ Dèco Enfant - Detalle producto
 
           </div>
 
-          <div class="mb-3 ml-1">
-            <div class="qty mt-1">
-              <span class="qty-sp minus bg-dark">-</span>
-              <input type="number" class="qty-in count" name="qty" value="1">
-              <span class="qty-sp plus bg-dark">+</span>
-            </div>
+          {{-- <form class="" action="{{$product->id}}/cart?qty=1" method="get"> --}}
+              <div class="mb-3 ml-1">
+                <div class="qty mt-1">
 
-          </div>
+                  <span class="qty-sp minus bg-dark">-</span>
+                  <input type="number" class="qty-in count" name="qty" value="1">
+                  <span class="qty-sp plus bg-dark">+</span>
 
-          <p><a href="{{$product->id}}/cart" class="btn-cart btn btn-sm height-auto px-3 py-2 float-left "><i class="mr-1 fas fa-shopping-cart"></i>
-            Agregar</a></p>
+                </div>
+
+              </div>
+
+              <p><a href="{{$product->id}}/cart" class="btn-cart btn btn-sm height-auto px-3 py-2 float-left "><i class="mr-1 fas fa-shopping-cart"></i>
+                Agregar</a></p>
+
+                {{-- <button type="submit" class="mr-1 fas fa-shopping-cart height-auto px-3 py-2 float-left" name="qty" value=1></button> --}}
+          </form>
+
+
 
           </div>
         </div>
