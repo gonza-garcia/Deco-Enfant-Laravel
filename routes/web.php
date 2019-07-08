@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/', 'IndexController@index');
+Route::get('/', 'ProductController@destacados');
 // Route::get('Registro',)
 
 // Route::get("/login",function(){
@@ -38,6 +39,7 @@ Route::get('/carts/admin', 'CartController@admin');
 
 
 Route::get('/productos', 'ProductController@index');
+Route::get('/productos/{myCategory}', 'CategoryController@show');
 Route::get('/productos/search/{buscado}', 'ProductController@search');
 Route::get('/producto/{prod}', 'ProductController@show');
 
@@ -51,6 +53,7 @@ Route::get('/history', 'CartController@history')->middleware('auth');
 Route::get('/thanks', function(){
   view('thanks')->middleware('auth');
 });
+Route::get('/cart', 'CartController@totalPrice')->middleware('auth');
 
 
 Route::get('/roles', 'RoleController@index')->middleware('auth');

@@ -24,36 +24,35 @@ Dèco Enfant - Detalle producto
 
 
 
-<div class="bg-transparent py-3 pl-0">
+<div class="py-3 pl-0">
   <div class="container">
     <div class="row">
       <div class="col-md-12 mb-0 pl-0 mb-2">
         <a class="menu-esc" href="/">Inicio</a> <span class="mx-2 mb-0">/</span> 
         <a class="menu-esc" href="/productos">Productos</a> <span class="mx-2 mb-0">/</span>
-        {{-- //falta agregar esto en el controlador para que busque el nombre de la categoria del producto. y sea link a la vista de todos lo productos de esa categoria. --}}
-        <a class="menu-esc" href="/productos/{{ $category->name }}">{{ $product->category->name }}</a> <span class="mx-2 mb-0">/</span>
+        <a class="menu-esc" href="/productos/{{ $product->category->name }}">{{ $product->category->name }}</a> <span class="mx-2 mb-0">/</span>
          
         <span class="text-black">{{ $product->name }}</span>
       </div>
     </div>
   </div>
-</div>  
-
+</div>
 
 <div class="detalle-producto">  
   <div class="container pl-0">    
     <div class="row">      
       <div class="col-md-6">        
         <div class="border rounded">
-          <img src="/img/Almohadon_Estampado_01.jpg" alt="Image" class="img-fluid rounded">
+          {{-- @dd($product->thumbnail) --}}
+          <img src="{{url($product->thumbnail)}}" alt="{{ $product->name }}" class="img-fluid rounded">
         </div>
         <div class="center slider">
-          <div class="slider-item"><img src="/img/Almohadon_Estampado_01.jpg" alt=""></div>
-          <div class="slider-item"><img src="/img/Almohadon_Estampado_01.jpg" alt=""></div>
-          <div class="slider-item"><img src="/img/Almohadon_Estampado_01.jpg" alt=""></div>
-          <div class="slider-item"><img src="/img/Almohadon_Estampado_01.jpg" alt=""></div>
-          <div class="slider-item"><img src="/img/Almohadon_Estampado_01.jpg" alt=""></div>
-          <div class="slider-item"><img src="/img/Almohadon_Estampado_01.jpg" alt=""></div>
+          <div class="slider-item"><img src="{{url($product->thumbnail)}}" alt=""></div>
+          <div class="slider-item"><img src="{{url($product->thumbnail)}}" alt=""></div>
+          <div class="slider-item"><img src="{{url($product->thumbnail)}}" alt=""></div>
+          <div class="slider-item"><img src="{{url($product->thumbnail)}}" alt=""></div>
+          <div class="slider-item"><img src="{{url($product->thumbnail)}}" alt=""></div>
+          <div class="slider-item"><img src="{{url($product->thumbnail)}}" alt=""></div>
         </div>
       </div>      
       <div class="col-md-6">        

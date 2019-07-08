@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -71,6 +72,7 @@ class CategoryController extends Controller
      */
     public function show(Category $myCategory)
     {
+      
       $category = Category::find($myCategory->id);
 
       $vac = compact("category");
@@ -117,4 +119,20 @@ class CategoryController extends Controller
       $categoriaABorrar->delete();
       return redirect("/categorias");
     }
+
+    // public function Subcategories($myCategory){
+    //   // dd($myCategory);
+    //   $subCategory = Category::where('categories.id_parent', $myCategory->id)->get();
+    //   // dd($subCategory);
+    //   foreach($subCategory as $subCat){
+    //     $ids [] = $subCat->id;
+    //   }
+    //   dd($ids);
+    //   $products = Product::where('category_id', $subCategory->id)
+    //   ->get();
+    //   dd($products);
+    // }
+
+
+
 }

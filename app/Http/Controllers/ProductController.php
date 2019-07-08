@@ -71,6 +71,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Product  $product
+     * 
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
@@ -160,4 +161,17 @@ class ProductController extends Controller
 
         return view("table_product", compact("order_by","order_how","offset","limit","pages_qty","page","total_rows","all_products","all_colors","all_sizes","all_categories","all_sub_categories","order_by_options","order_how_options","limit_options"));
     }
+
+    public function destacados()
+    {
+      $products = Product::orderBy('created_at', 'desc')
+      ->limit(8)
+      ->get();
+
+      // dd($products);
+
+      $vac = compact("products");
+      return view ("/index",$vac);
+    }
+
 }
