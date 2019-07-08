@@ -20,8 +20,9 @@ class CreateCartsTable extends Migration
             $table->text('long_desc');
             $table->decimal('price',8,2);
             $table->string('thumbnail');
-            $table->integer('cant')->nullable();
+            $table->integer('cant')->default(0);
             $table->decimal('discount',8,2)->nullable();
+            $table->integer('status')->default(0);
             $table->bigInteger('cart_number')->nullable();
             $table->unsignedBigInteger('order_status_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
