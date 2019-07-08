@@ -120,19 +120,6 @@ class CategoryController extends Controller
       return redirect("/categorias");
     }
 
-    // public function Subcategories($myCategory){
-    //   // dd($myCategory);
-    //   $subCategory = Category::where('categories.id_parent', $myCategory->id)->get();
-    //   // dd($subCategory);
-    //   foreach($subCategory as $subCat){
-    //     $ids [] = $subCat->id;
-    //   }
-    //   dd($ids);
-    //   $products = Product::where('category_id', $subCategory->id)
-    //   ->get();
-    //   dd($products);
-    // }
-
 
 
 }

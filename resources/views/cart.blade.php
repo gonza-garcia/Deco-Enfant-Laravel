@@ -5,6 +5,14 @@
 Dèco Enfant - Detalle del carrito
 @endsection
 
+@section('custom_css')
+<link rel="stylesheet" href="/css/style_cart.css">
+@endsection
+{{-- 
+@section('custom_js')
+<script src="/js/cart.js"></script>
+@endsection --}}
+
 @section("principal")
 
 <section class="container">
@@ -39,8 +47,8 @@ Dèco Enfant - Detalle del carrito
     </div> --}}
     
     <div class="container">
-      <table id="cart" class="table table-hover table-condensed">
-        <thead>
+      <table id="cart" class="table table-hover">
+        <thead class="cart-thead">
           <tr>
             <th style="width:50%">Producto</th>
             <th style="width:10%">Precio</th>
@@ -54,20 +62,21 @@ Dèco Enfant - Detalle del carrito
           <tr>
             <td data-th="Product">
               <div class="row">
-                <div class="col-sm-2 hidden-xs"><img src="{{$items->thumbnail}}" alt={{ $items->name }} class="img-fluid img-thumbnail"/></div>
+                <div class="col-sm-2 d-sm-block"><img src="{{$items->thumbnail}}" alt={{ $items->name }} class="img-fluid img-thumbnail"/></div>
                 <div class="col-sm-10">
-                  <h4 class="nomargin">{{ $items->name }}</h4>
-                  <p>{{$items->short_desc}}</p>
+                  <h5 class="m-0">{{ $items->name }}</h5>
+                  <p class="font-italic my-0">{{$items->short_desc}}</p>
+                  <p class="font-italic my-0">{{$items->size->name}}</p>
                 </div>
               </div>
             </td>
-            <td data-th="Price">{{$items->price}}</td>
+            <td data-th="Price">$ {{$items->price}}</td>
             <td data-th="Quantity">
               <input type="number" class="form-control text-center" value="1">
             </td>
-            <td data-th="Subtotal" class="text-center">1.99</td>
+            <td data-th="Subtotal" class="text-center"> $ </td>
             <td class="actions" data-th="">
-              <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+              {{-- <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button> --}}
               <form class="" action="/cart/{{$items->id}}" method="post">
                 @csrf
                 <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
@@ -81,17 +90,17 @@ Dèco Enfant - Detalle del carrito
         @endforelse
         
         <tfoot>
-          <tr class="visible-xs">
+          <tr class="d-sm-none">
             <td class="text-center"><strong>Total 1.99</strong></td>
           </tr>
           <tr>
             <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Seguir Comprando</a></td>
             <td colspan="2" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong>$ {{ $totalPrice }}</strong></td>
+            <td class="hidden-xs text-center"><strong> Total $ {{ $totalPrice }}</strong></td>
             
             <td class="px-0">
               @if ($cart->isNotEmpty())
-                <a href="/cart/close" class="btn btn-success btn-block">Comprar <i class="fa fa-angle-right"></i></a>
+                <a href="/cart/close" class="btn btn-comprar btn-block">Comprar <i class="fa fa-angle-right"></i></a>
               @endif
             </td>  
           </tr>
