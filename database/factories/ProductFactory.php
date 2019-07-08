@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\File;
 $factory->define(Product::class, function (Faker $faker) {
     // $path = storage_path('public/product');
     // $path = storage_path('app/public/product'); //Atención con la ruta a la carpeta.
-    $path = public_path('img\products');
+    // $path = public_path('img\products');
 
     //traer lista de nombres de archivos de imagenes
-    $files = File::files(public_path('img\articles'));
+    $files = File::files(public_path('img\products'));
     $images_list = [];
     foreach ($files as $file)
     {
-        $images_list[] = './img/articles/' . pathinfo($file)['basename'];
+        $images_list[] = './img/products/' . pathinfo($file)['basename'];
     }
 
     return [
@@ -25,7 +25,7 @@ $factory->define(Product::class, function (Faker $faker) {
       'short_desc' => $faker->sentence(5),
       'long_desc'  => $faker->sentence(8),
       'price'      => $faker->randomFloat(2, 300, 4000),
-      'thumbnail'  => $faker->image($path, 480, 600,'cats', false),
+      // 'thumbnail'  => $faker->image($path, 480, 600,'cats', false),
       'thumbnail'  => $faker->randomElement($images_list),
       'stock'      => $faker->numberBetween($min = 0, $max = 1000),
       'discount'   => $faker->randomFloat(2, 10, 40),
