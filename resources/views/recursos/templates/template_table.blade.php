@@ -120,7 +120,8 @@
 
     <!-- :::::::::::::::::::::::::::PAGINACIÓN:::::::::::::::::::::::::::::: -->
                 <ul class="pagination">
-                    <li <?php if (($page-1)==0) echo "class='page-item disabled'";
+                @php/*
+                  <li <?php if (($page-1)==0) echo "class='page-item disabled'";
                                   else          echo "class='page-item'"; ?>>
                         <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$limit&page=1"?> class="page-link"> Anterior
                         </a>
@@ -138,7 +139,8 @@
                                   else          echo "class='page-item'"; ?>>
                         <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$limit&page=".($page+1)?> class="page-link"> Siguiente
                         </a>
-                    </li>
+                    </li>*/
+                @endphp
                 </ul>
             </div>
         </div>

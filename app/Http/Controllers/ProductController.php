@@ -152,10 +152,10 @@ class ProductController extends Controller
         // $stmt = $db->prepare("SELECT * FROM products ORDER BY $order_by $order_how LIMIT $limit OFFSET $offset");
         // $stmt->execute();
 
-        $all_products = Product::orderBy($order_by, $order_how)->paginate($limit);
-        $all_colors = Color::all();
-        $all_sizes = Size::all();
-        $all_categories = Category::all();
+        $all_products = \App\Product::orderBy($order_by, $order_how)->paginate($limit);
+        $all_colors = \App\Color::all();
+        $all_sizes = \App\Size::all();
+        $all_categories = \App\Category::all();
         $all_sub_categories = \App\Subcategory::all();
 
 
