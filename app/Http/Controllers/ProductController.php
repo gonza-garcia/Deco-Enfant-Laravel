@@ -21,9 +21,11 @@ class ProductController extends Controller
     public function index()
     {
       $products = Product::paginate(8);
+      $categories = Category::orderBy('name')->get();
+
     //   dd($products);
 
-      $vac = compact("products");
+      $vac = compact("products", "categories");
       return view ("products",$vac);
 
     }
@@ -58,12 +60,13 @@ class ProductController extends Controller
     public function show(Product $prod)
     {
       $product = Product::find($prod->id);
+      // dd($product->subcategory);
 
       $subcategory = Subcategory::select('subcategories.name')
       ->join('products', 'subcategory_id', '=', 'subcategories.id')
       ->where('subcategory_id', $prod->subcategory_id)
       ->first();
-    //   dd($category->name);
+    //   dd($subcategory->name);
 
       $vac = compact("product", "subcategory");
       return view("product",$vac);

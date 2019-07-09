@@ -94,9 +94,9 @@ Dèco Enfant - Detalle del carrito
             <td class="text-center"><strong>Total 1.99</strong></td>
           </tr>
           <tr>
-            <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Seguir Comprando</a></td>
+            <td><a href="/productos" class="btn btn-seguir"><i class="fa fa-angle-left"></i> Seguir Comprando</a></td>
             <td colspan="2" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong> Total $ {{ $totalPrice }}</strong></td>
+            <td class="d-none d-sm-block text-center"><strong> Total $ {{ $totalPrice }}</strong></td>
             
             <td class="px-0">
               @if ($cart->isNotEmpty())

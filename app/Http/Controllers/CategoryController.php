@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Product;
+use App\Subcategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-      $categories = Category::all();;
+      $categories = Category::orderBy('name')->get();
 
       $vac = compact("categories");
       return view ("categories",$vac);
@@ -74,9 +75,24 @@ class CategoryController extends Controller
     {
       
       $category = Category::find($myCategory->id);
+      // dd($category);
 
-      $vac = compact("category");
-      return view("category",$vac);
+      $subcats = Subcategory::where("category_id", $myCategory->id)
+      ->get();
+      // dd($subcats);
+
+      $categories = Category::orderBy('name')->get();
+
+      $products = Product::join('subcategories', 'subcategories.id', '=', 'subcategory_id')
+      ->join('categories', 'categories.id', '=', 'category_id')
+      ->where('category_id', '=', $myCategory->id)
+      ->select('products.*')
+      ->paginate(8);
+
+      // dd($products);
+
+      $vac = compact("category", "subcats", "categories", "products");
+      return view("products", $vac);
     }
 
     /**

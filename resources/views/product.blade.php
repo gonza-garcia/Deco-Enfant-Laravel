@@ -31,7 +31,7 @@ Dèco Enfant - Detalle producto
         <a class="menu-esc" href="/">Inicio</a> <span class="mx-2 mb-0">/</span>
         <a class="menu-esc" href="/productos">Productos</a> <span class="mx-2 mb-0">/</span>
         {{-- //falta agregar esto en el controlador para que busque el nombre de la categoria del producto. y sea link a la vista de todos lo productos de esa categoria. --}}
-        <a class="menu-esc" href="/productos/{{ $subcategory->name }}">{{ $product->subcategory->name }}</a> <span class="mx-2 mb-0">/</span>
+        <a class="menu-esc" href="/productos/{{ $product->subcategory->category->id }}">{{ $product->subcategory->category->name }}</a> <span class="mx-2 mb-0">/</span>
 
         <span class="text-black">{{ $product->name }}</span>
       </div>
