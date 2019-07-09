@@ -97,10 +97,18 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request, $id)
     {
-        //
+        $item = Cart::find($id);
+        
+        $item->cant = $request->cant;
+        $item->save();
+
+        return redirect('cart');
+        
+        // if($cant<$stock){
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -112,8 +120,9 @@ class CartController extends Controller
     {
       $item = Cart::find($id);
       $item->delete();
-      return redirect('/cart');
+      return redirect('cart');
     }
+
     public function closeCart()
     {
         //Traemos los carritos abiertos: status = 0;
@@ -139,9 +148,11 @@ class CartController extends Controller
         $totalPrice = 0;
         $openCart = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 0);
         foreach ($openCart as $item) {            
-           $totalPrice += $item->price;
+           $totalPrice += $item->cant * $item->price;
         }
             // $vac = compact("totalPrice", "openCart");
-            return view("/cart")->with('cart', $openCart)->with('totalPrice', $totalPrice);;
+            return view("/cart")->with('cart', $openCart)->with('totalPrice', $totalPrice);
     }
+
+
 }

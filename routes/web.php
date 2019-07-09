@@ -48,6 +48,9 @@ Route::get('producto/{id}/cart','CartController@store')->middleware('auth');
 
 Route::get('/cart', 'CartController@index')->middleware('auth');
 Route::post('/cart/{id}', 'CartController@destroy')->middleware('auth');
+
+Route::put('/cart/update/{id}', 'CartController@update')->middleware('auth');
+
 Route::get('/cart/close', 'CartController@closeCart')->middleware('auth');
 Route::get('/history', 'CartController@history')->middleware('auth');
 Route::get('/thanks', function(){

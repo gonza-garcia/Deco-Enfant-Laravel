@@ -72,15 +72,28 @@ Dèco Enfant - Detalle del carrito
             </td>
             <td data-th="Price">$ {{$items->price}}</td>
             <td data-th="Quantity">
-              <input type="number" class="form-control text-center" value="1">
+
+
+              <form action="/cart/update/{{$items->id}}" method="post">
+              {{ csrf_field() }}     
+              {{ method_field('PUT') }}
+              <input type="hidden" name="prodId" value={{ $items->id }}>
+              <input type="number" name="cant" class="form-control text-center" value={{ $items->cant }}>
+
+              <input class="btn btn-info btn-sm" type="submit" value="update">
+              
+              </form>
+              {{-- <input type="number" name="qty" class="form-control text-center" value="1"> --}}
             </td>
-            <td data-th="Subtotal" class="text-center"> $ </td>
+            <td data-th="Subtotal" class="text-center"> $ {{ $items->cant * $items->price }} </td>
             <td class="actions" data-th="">
               {{-- <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button> --}}
               <form class="" action="/cart/{{$items->id}}" method="post">
                 @csrf
                 <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
               </form>
+
+
               
             </td>
           </tr>
@@ -91,7 +104,7 @@ Dèco Enfant - Detalle del carrito
         
         <tfoot>
           <tr class="d-sm-none">
-            <td class="text-center"><strong>Total 1.99</strong></td>
+            <td class="text-center"><strong> Total $ {{ $totalPrice }}</strong></td>
           </tr>
           <tr>
             <td><a href="/productos" class="btn btn-seguir"><i class="fa fa-angle-left"></i> Seguir Comprando</a></td>
