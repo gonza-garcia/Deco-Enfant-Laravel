@@ -83,11 +83,10 @@ Dèco Enfant - Detalle del carrito
               <input class="btn btn-info btn-sm" type="submit" value="update">
               
               </form>
-              {{-- <input type="number" name="qty" class="form-control text-center" value="1"> --}}
+              
             </td>
             <td data-th="Subtotal" class="text-center"> $ {{ $items->cant * $items->price }} </td>
             <td class="actions" data-th="">
-              {{-- <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button> --}}
               <form class="" action="/cart/{{$items->id}}" method="post">
                 @csrf
                 <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
