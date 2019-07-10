@@ -33,8 +33,6 @@
 
 
       <link rel="stylesheet" href="/css/style.css">
-      <link rel="stylesheet" href="/css/style_tabla.css">
-      <link rel="stylesheet" href="/css/style_modals.css">
 
       @yield('custom_css')
 
@@ -285,8 +283,54 @@
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 <!-- SECCION MODALS:::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-      {{-- @yield("modals") --}}
 
+<div id="modal_popup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            @yield('modal-content')
+
+        </div>
+    </div>
+</div>
+
+{{-- <!-- :::::::::::::::::::::::::::::::: ADD Modal HTML ::::::::::::::::::::::::::::::::::::-->
+<!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+
+
+<div id="add_modal_form" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @yield()
+
+        </div>
+    </div>
+</div>
+
+
+<!-- :::::::::::::::::::::::::::::::: EDIT Modal HTML :::::::::::::::::::::::::::::::::::-->
+<!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+<div class="container">
+    <div id="edit_modal_form" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- :::::::::::::::::::::::::::::::: DELETE Modal HTML :::::::::::::::::::::::::::::::::-->
+<!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+<div id="delete_modal_form" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div> --}}
 
 
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
@@ -302,34 +346,8 @@
 
       <script src="/js/productDetail.js"></script>
 
+
       @yield("custom_js")
 
-
-
-      <script type="text/javascript">
-          $(document).ready(function(){
-          	// Activate tooltip
-          	$('[data-toggle="tooltip"]').tooltip();
-
-          	// Select/Deselect checkboxes
-          	var checkbox = $('table tbody input[type="checkbox"]');
-          	$("#selectAll").click(function(){
-          		if(this.checked){
-          			checkbox.each(function(){
-          				this.checked = true;
-          			});
-          		} else{
-          			checkbox.each(function(){
-          				this.checked = false;
-          			});
-          		}
-          	});
-          	checkbox.click(function(){
-          		if(!this.checked){
-          			$("#selectAll").prop("checked", false);
-          		}
-          	});
-          });
-      </script>
   </body>
 </html>
