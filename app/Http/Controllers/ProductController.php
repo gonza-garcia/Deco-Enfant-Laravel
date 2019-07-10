@@ -76,7 +76,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Product  $product
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
@@ -177,6 +177,14 @@ class ProductController extends Controller
 
       $vac = compact("products");
       return view ("/index",$vac);
+    }
+
+    public function buscar() {
+        return view("buscarProd");
+    }
+
+    public function api() {
+        return Product::all();
     }
 
 }
