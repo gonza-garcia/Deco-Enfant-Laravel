@@ -22,7 +22,7 @@ class ColorsTableSeeder extends Seeder
             ['id' => 8, 'name' => 'Naranja'],
             ['id' => 9, 'name' => 'Marrón'],
             ['id' => 10, 'name' => 'Violeta'],
-            ['id' => 10, 'name' => 'Rosa'],
+            ['id' => 11, 'name' => 'Rosa'],
         ];
 
         foreach ($colors as $color)

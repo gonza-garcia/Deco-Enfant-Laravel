@@ -20,9 +20,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $products = Product::take(8)->get();
+      $products = Product::paginate(8);
+      $categories = Category::orderBy('name')->get();
 
-      $vac = compact("products");
+    //   dd($products);
+
+      $vac = compact("products", "categories");
       return view ("products",$vac);
 
     }
@@ -57,12 +60,13 @@ class ProductController extends Controller
     public function show(Product $prod)
     {
       $product = Product::find($prod->id);
+      // dd($product->subcategory);
 
       $subcategory = Subcategory::select('subcategories.name')
       ->join('products', 'subcategory_id', '=', 'subcategories.id')
       ->where('subcategory_id', $prod->subcategory_id)
       ->first();
-    //   dd($category->name);
+    //   dd($subcategory->name);
 
       $vac = compact("product", "subcategory");
       return view("product",$vac);
@@ -72,6 +76,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Product  $product
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
@@ -161,4 +166,25 @@ class ProductController extends Controller
 
         return view("table_product", compact("order_by","order_how","offset","limit","pages_qty","page","total_rows","all_products","all_colors","all_sizes","all_categories","all_sub_categories","order_by_options","order_how_options","limit_options"));
     }
+
+    public function destacados()
+    {
+      $products = Product::orderBy('created_at', 'desc')
+      ->limit(8)
+      ->get();
+
+      // dd($products);
+
+      $vac = compact("products");
+      return view ("/index",$vac);
+    }
+
+    public function buscar() {
+        return view("buscarProd");
+    }
+
+    public function api() {
+        return Product::all();
+    }
+
 }

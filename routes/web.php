@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/', 'IndexController@index');
+Route::get('/', 'ProductController@destacados');
 // Route::get('Registro',)
 
 // Route::get("/login",function(){
@@ -32,12 +33,14 @@ Route::get('/', 'IndexController@index');
 
 // Route::get("/register",'Auth\RegisterController@load');
 
+Route::get("/buscarProd", "ProductController@buscar");
 Route::get('/productos/admin', 'ProductController@admin');
 Route::get('/usuarios/admin', 'UserController@admin');
 Route::get('/carts/admin', 'CartController@admin');
 
 
 Route::get('/productos', 'ProductController@index');
+Route::get('/productos/{myCategory}', 'CategoryController@show');
 Route::get('/productos/search/{buscado}', 'ProductController@search');
 Route::get('/producto/{prod}', 'ProductController@show');
 
@@ -46,11 +49,15 @@ Route::get('producto/{id}/cart','CartController@store')->middleware('auth');
 
 Route::get('/cart', 'CartController@index')->middleware('auth');
 Route::post('/cart/{id}', 'CartController@destroy')->middleware('auth');
+
+Route::put('/cart/update/{id}', 'CartController@update')->middleware('auth');
+
 Route::get('/cart/close', 'CartController@closeCart')->middleware('auth');
 Route::get('/history', 'CartController@history')->middleware('auth');
 Route::get('/thanks', function(){
   view('thanks')->middleware('auth');
 });
+Route::get('/cart', 'CartController@totalPrice')->middleware('auth');
 
 
 Route::get('/roles', 'RoleController@index')->middleware('auth');

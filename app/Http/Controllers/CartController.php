@@ -20,7 +20,7 @@ class CartController extends Controller
         // $carts = Cart::paginate(8);;
         $openCart = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 0);
 
-        // $vac = compact("carts");
+        // $vac = compact("openCarts");
         // return view("carts",$vac);
         return view('cart')->with('cart',$openCart);
     }
@@ -97,10 +97,18 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request, $id)
     {
-        //
+        $item = Cart::find($id);
+        
+        $item->cant = $request->cant;
+        $item->save();
+
+        return redirect('cart');
+        
+        // if($cant<$stock){
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -112,8 +120,9 @@ class CartController extends Controller
     {
       $item = Cart::find($id);
       $item->delete();
-      return redirect('/cart');
+      return redirect('cart');
     }
+
     public function closeCart()
     {
         //Traemos los carritos abiertos: status = 0;
@@ -133,4 +142,17 @@ class CartController extends Controller
       $history = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 1)->groupBy('cart_number'); //Agrupamos por nro de carrito para mostrarlo en la vista.
       return view('history')->with('history', $history);
     }
+
+    public function totalPrice() {
+        
+        $totalPrice = 0;
+        $openCart = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 0);
+        foreach ($openCart as $item) {            
+           $totalPrice += $item->cant * $item->price;
+        }
+            // $vac = compact("totalPrice", "openCart");
+            return view("/cart")->with('cart', $openCart)->with('totalPrice', $totalPrice);
+    }
+
+
 }

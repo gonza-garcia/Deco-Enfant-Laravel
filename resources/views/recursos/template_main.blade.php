@@ -34,6 +34,8 @@
 
       <link rel="stylesheet" href="/css/style.css">
 
+      <script src="js/buscarProd.js"></script>
+
       @yield('custom_css')
 
 
@@ -49,10 +51,17 @@
                   <!-- FILA única ----------------------------------------->
                   <div class="row justify-content-between align-items-center">
                       <!-- Columna Busqueda ----------------------------------->
-                      <form id='formBuscar' class="col-5 col-md-3 form-inline justify-content-center pl-0" action="./tabla.php" method="GET">
+                      {{-- <form id='formBuscar' class="col-5 col-md-3 form-inline justify-content-center pl-0" action="./tabla.php" method="GET">
                           <input class="form-control w-100 pr-4 py-0" type="search" placeholder="Buscar" aria-label="Buscar">
                           <a type="submit" href="#"><i class="fas fa-search"></i></a>
+                      </form> --}}
+
+                      {{-- <p>Buscar Productos</p> --}}
+                      <form class="buscador" class="col-5 col-md-3 form-inline justify-content-center pl-0" action="">
+                          <input type="text" class="buscar">
+                          <button>Buscar</button>
                       </form>
+                      {{-- <ul class="resultados"></ul> --}}
 
                       <!-- Columna CARRITO Y AUTENTICACION --------------------->
                       <div class="col-7 col-md-3 justify-content-end d-flex d-md-block order-md-last pr-0">
@@ -105,6 +114,8 @@
 
                       </div>
 
+
+
                       <!-- Columna Logo --------------------------------------->
                       <div class="col-9 col-xs-8 col-md-4 p-0 my-5 my-md-0 mx-auto">
                           <a href="/">
@@ -112,9 +123,12 @@
                           </a>
                       </div>
                   </div>
+
               </div>
+
           </header>
 
+          <ul class="resultados"></ul>
       <!-- NAVBAR De Menus --------------------------------------------->
 
       <nav id='navMenu' class="navbar navbar-expand-md p-1 mb-4">
