@@ -6,12 +6,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 // agregado para soft delete
-use Illuminate\Database\Eloquent\softDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
-    use softDeletes;  // agregado por borrado logico
+    use SoftDeletes;  // agregado por borrado logico
 
     /**
      * The attributes that are mass assignable.

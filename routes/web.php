@@ -15,6 +15,11 @@
 //     return view('welcome');
 // });
 
+Route::get("/install", function(){
+  Artisan::call("migrate:fresh");
+  Artisan::call("db:seed");
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
