@@ -34,9 +34,8 @@ Route::get('/', 'ProductController@destacados');
 // Route::get("/register",'Auth\RegisterController@load');
 
 Route::get("/buscarProd", "ProductController@buscar");
-Route::get('/productos/admin', 'ProductController@admin');
-Route::get('/usuarios/admin', 'UserController@admin');
-Route::get('/carts/admin', 'CartController@admin');
+
+Route::get('/admin/{table}', 'HomeController@admin');
 
 
 Route::get('/productos', 'ProductController@index');

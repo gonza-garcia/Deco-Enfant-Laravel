@@ -57,7 +57,7 @@
                       </form> --}}
 
                       {{-- <p>Buscar Productos</p> --}}
-                      <form class="buscador" class="col-5 col-md-3 form-inline justify-content-center pl-0" action="">
+                      <form class="buscador" class="col-5 col-md-3 form-inline justify-content-center pl-0" action="" method='GET'>
                           <input type="text" class="buscar">
                           <button>Buscar</button>
                       </form>
@@ -187,10 +187,10 @@
                                   <a class="dropdown-item px-2" href="/orderStatuses" aria-haspopup="true" aria-expanded="false"> estados de ordenes </a>
                                   <a class="dropdown-item px-2" href="/shippingStatuses" aria-haspopup="true" aria-expanded="false"> estados de despachos </a>
                               </div>
-                           </div>
+                          </div>
                       </li>
                   <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-0" href="#admin" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">Agregar</a>
+                      <a class="nav-link py-0" href="#admin" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">Administrar</a>
                       <div class="collapse py-2" id="admin" data-parent="#navMenu">
                         <div class="dropdown dropright">
                             <a class="dropdown-item px-2" href="/colores/add" aria-haspopup="true" aria-expanded="false"> color </a>
@@ -298,15 +298,9 @@
 <!-- SECCION MODALS:::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 
-<div id="modal_popup" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            @yield('modal-content')
+@yield('modals')
 
-        </div>
-    </div>
-</div>
 
 {{-- <!-- :::::::::::::::::::::::::::::::: ADD Modal HTML ::::::::::::::::::::::::::::::::::::-->
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
