@@ -5,7 +5,7 @@
 use App\Cart;
 use Faker\Generator as Faker;
 $factory->define(Cart::class, function (Faker $faker) {
-    $path = public_path('img\products');
+    $path = public_path('img/products');
 
     return [
       'name'            => $faker->sentence(3),

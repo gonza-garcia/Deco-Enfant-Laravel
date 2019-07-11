@@ -48,12 +48,12 @@ Dèco Enfant - Detalle del carrito
       
       <div class="container">
         <table id="cart" class="table table-hover">
-          <thead class="cart-thead">
+          <thead class="cart-thead text-left">
             <tr>
               <th style="width:45%">Producto</th>
-              <th style="width:10%">Precio</th>
+              <th style="width:15%">Precio x Unid.</th>
               <th style="width:15%">Cantidad</th>
-              <th style="width:20%" class="text-center">Subtotal</th>
+              <th style="width:15%" class="text-center">Subtotal</th>
               <th style="width:10%"></th>
             </tr>
           </thead>
@@ -62,8 +62,8 @@ Dèco Enfant - Detalle del carrito
             <tr>
               <td data-th="Product">
                 <div class="row">
-                  <div class="col-sm-2 d-sm-block"><img src="{{$items->thumbnail}}" alt={{ $items->name }} class="img-fluid img-thumbnail"/></div>
-                  <div class="col-sm-10">
+                  <div class="col-sm-3 d-sm-block"><img src="{{$items->thumbnail}}" alt={{ $items->name }} class="img-fluid img-thumbnail"/></div>
+                  <div class="col-sm-9">
                     <h5 class="m-0">{{ $items->name }}</h5>
                     <p class="font-italic my-0">{{$items->short_desc}}</p>
                     <p class="font-italic my-0">{{$items->size->name}}</p>
@@ -74,25 +74,21 @@ Dèco Enfant - Detalle del carrito
               <td data-th="Price">$ {{$items->price}}</td>
               
               <td data-th="Quantity">
-                <form action="/cart/update/{{$items->id}}" method="post">
+                <form class="input-group" action="/cart/update/{{$items->id}}" method="post">
                   {{ csrf_field() }}     
                   {{ method_field('PUT') }}
                   <input type="hidden" name="prodId" value={{ $items->id }}>
-                  <input type="number" name="cant" class="form-control text-center" value={{ $items->cant }}>                  
-                  <button class="btn btn-sm" type="submit" value=""><i class="fas fa-sync-alt"></i></button>
-                  
+                  <input type="number" name="cant" class="form-control" value={{ $items->cant }} min="1" max={{ $items->stock }}>   
+                  <button class="btn btn-sm ml-1" type="submit" value=""><i class="fas fa-sync-alt"></i></button>                  
                 </form>
                 
               </td>
               <td data-th="Subtotal" class="text-center"> $ {{ $items->cant * $items->price }} </td>
               <td class="actions" data-th="">
-                <form class="" action="/cart/{{$items->id}}" method="post">
+                <form class="text-center" action="/cart/{{$items->id}}" method="post">
                   @csrf
                   <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                </form>
-                
-                
-                
+                </form>              
               </td>
             </tr>
           </tbody>

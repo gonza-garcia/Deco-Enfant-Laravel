@@ -13,7 +13,7 @@ $factory->define(Product::class, function (Faker $faker) {
     // $path = public_path('img\products');
 
     //traer lista de nombres de archivos de imagenes
-    $files = File::files(public_path('img\products'));
+    $files = File::files(public_path('img/products'));
     $images_list = [];
     foreach ($files as $file)
     {

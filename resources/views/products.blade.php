@@ -59,7 +59,7 @@
 @section("links")
 <div class="container"> 
     {{-- <nav> --}}
-        <div class="d-flex">{{$products->links()}}</div>
+        <div class="d-flex justify-content-center">{{$products->links()}}</div>
     {{-- </nav> --}}
 </div> 
 @endsection

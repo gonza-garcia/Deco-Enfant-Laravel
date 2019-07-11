@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 // agregado para soft delete
-use Illuminate\Database\Eloquent\softDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Color extends Model
 {
-    use softDeletes;  // agregado por borrado logico
+    use SoftDeletes;  // agregado por borrado logico
     // public $table = "products"; // si la tabla se llamaba PLURAL DE LA CLASE no es obligatorio
     // public $primaryKey = "id"; // si es id, no es necesario escribirla
     // public $timestamps = false;
