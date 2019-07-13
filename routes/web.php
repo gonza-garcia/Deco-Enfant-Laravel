@@ -50,7 +50,9 @@ Route::get('/productos/search/{buscado}', 'ProductController@search');
 Route::get('/producto/{prod}', 'ProductController@show');
 
 // Carrito
-Route::get('producto/{id}/cart','CartController@store')->middleware('auth');
+// Route::get('producto/{id}/cart','CartController@store')->middleware('auth');
+    Route::get('/addToCart','CartController@store')->middleware('auth');
+    Route::post('/addToCart','CartController@store')->middleware('auth');
 
 Route::get('/cart', 'CartController@index')->middleware('auth');
 Route::post('/cart/{id}', 'CartController@destroy')->middleware('auth');
