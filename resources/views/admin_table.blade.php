@@ -5,7 +5,7 @@
 @endphp
 
 @section("titulo_objeto")
-    Productos
+    Productoshjnnmjhn
 @endsection
 
 

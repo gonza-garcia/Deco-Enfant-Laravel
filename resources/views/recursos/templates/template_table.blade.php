@@ -141,13 +141,13 @@
                 <div class="show-entries">
                     <span>Mostrando</span>
                     <select class="p-0">
-                      <?php foreach ($limit_options as $value) : ?>
-                        <option value=<?=$value?> <?php if ($value==$limit) echo 'selected';?>>
-                            <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$value"?>>
-                                <?=$value?>
-                            </a>
-                        </option>
-                      <?php endforeach; ?>
+                        @foreach ($limit_options as $value)
+                            <option value={{$value}} <?php if ($value==$limit) echo 'selected';?>>
+                                <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$value"?>>
+                                    <?=$value?>
+                                </a>
+                            </option>
+                        @endforeach
                     </select>
                     <span>de <b><?=$total_rows["cantidad"]?></b> entradas</span>
                 </div>
@@ -184,5 +184,13 @@
 
 
 @section("modals")
-    @yield("template_modals");
+    <div id="modal_popup" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                @yield('modal-content')
+
+            </div>
+        </div>
+    </div>
 @endsection
