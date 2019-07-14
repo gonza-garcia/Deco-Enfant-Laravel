@@ -47,7 +47,7 @@ Dèco Enfant - Detalle del carrito
       </div> --}}
       
       <div class="container">
-        <div class="historial d-flex justify-content-end">
+        <div class="historial float-right mb-2">
             <a href="/history" class="btn btn-secondary">Ver historial de compras <i class="far fa-list-alt"></i></a>
         </div>
         <table id="cart" class="table table-hover">

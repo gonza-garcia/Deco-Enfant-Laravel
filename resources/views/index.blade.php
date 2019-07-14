@@ -69,7 +69,7 @@
                 
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
                     <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2">
-                        <a class="text-decoration-none text-dark" href="/producto/{{$product->id}}">{{$product->name}}</a>
+                        <a class="text-decoration-none text-dark  pt-3" href="/producto/{{$product->id}}">{{$product->name}}</a>
                     </div>
                     <div class="col-12 col-lg-4 p-1">
                         <a href="/producto/{{$product->id}}" id="btn-destacados" class="btn text-uppercase p-0 w-100 py-2">ver más</a>
