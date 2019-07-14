@@ -74,9 +74,9 @@ Dèco Enfant - Detalle del carrito
                 </div>
               </td>
               @if($items->discount > 0)
-              <td data-th="Price" class="text-danger">$ {{ number_format($items->price - ($items->discount/100*$items->price),2) }}</td>
+              <td data-th="Price" class="text-danger">$ {{ str_replace('.', ',', (number_format($items->price - ($items->discount/100*$items->price),2))) }}</td>
               @else
-              <td data-th="Price">$ {{$items->price}}</td>
+              <td data-th="Price">$ {{ str_replace('.', ',', (number_format($items->price))) }}</td>
               @endif
               
               <td data-th="Quantity">
@@ -89,7 +89,7 @@ Dèco Enfant - Detalle del carrito
                 </form>
                 
               </td>
-              <td data-th="Subtotal" class="text-center"> $ {{ number_format($subtotal,2) }} </td>
+              <td data-th="Subtotal" class="text-center"> $ {{ str_replace('.', ',', (number_format($subtotal, 2))) }} </td>
               <td class="actions" data-th="">
                 <form class="text-center" action="/cart/{{$items->id}}" method="post">
                   @csrf
@@ -104,12 +104,12 @@ Dèco Enfant - Detalle del carrito
           
           <tfoot>
             <tr class="d-sm-none">
-              <td class="text-center"><strong> Total $ {{ number_format($totalPrice, 2) }}</strong></td>
+              <td class="text-center"><strong> Total $ {{ str_replace('.', ',', (number_format($totalPrice, 2))) }}</strong></td>
             </tr>
             <tr>
               <td><a href="/productos" class="btn btn-seguir"><i class="fa fa-angle-left"></i> Seguir Comprando</a></td>
               <td colspan="2" class="hidden-xs"></td>
-              <td class="d-none d-sm-block text-center"><strong> Total $ {{ number_format($totalPrice, 2) }}</strong></td>
+              <td class="d-none d-sm-block text-center"><strong> Total $ {{ str_replace('.', ',', (number_format($totalPrice, 2))) }}</strong></td>
               
               <td class="px-0">
                 @if ($cart->isNotEmpty())
