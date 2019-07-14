@@ -143,8 +143,15 @@ class ProductController extends Controller
         $products = Product::where('discount', '>', '25')->paginate(8);
         // dd($products);
         $categories = Category::orderBy('name')->get();
+
+        foreach($products as $product){
+            if($product->discount > 0){
+                $discountCalc = $product->price - ($product->discount / 100 * $product->price); 
+        }
+        // dd($discountCalc);
+    }
         
-        $vac = compact('products', 'categories');
+        $vac = compact('products', 'categories', 'product', 'discountCalc');
         return view('/sale', $vac);
     }
 }

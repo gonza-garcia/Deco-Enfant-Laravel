@@ -146,12 +146,22 @@ class CartController extends Controller
     public function totalPrice() {
         
         $totalPrice = 0;
+        // $subtotal = 0;
         $openCart = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 0);
-        foreach ($openCart as $item) {            
-           $totalPrice += $item->cant * $item->price;
+        
+        foreach($openCart as $item){
+            if($item->discount > 0){
+                $subtotal = $item->cant * ($item->price - ($item->discount / 100 * $item->price)); 
+            } else{
+                $subtotal = $item->price * $item->cant;
+            }
+            
         }
-            // $vac = compact("totalPrice", "openCart");
-            return view("/cart")->with('cart', $openCart)->with('totalPrice', $totalPrice);
+        foreach ($openCart as $item) {
+            $totalPrice += $subtotal;
+        }
+        // $vac = compact("totalPrice", "openCart");
+        return view("/cart")->with('cart', $openCart)->with('totalPrice', $totalPrice)->with('subtotal', $subtotal);
     }
 
 
