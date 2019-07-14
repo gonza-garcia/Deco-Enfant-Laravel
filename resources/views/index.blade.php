@@ -5,6 +5,8 @@
 @endsection
 
 
+
+
 @section('principal')
 
   <!--SECCION LANDING---------------------------------------------------------------------------------------------------------->
@@ -34,8 +36,8 @@
               </div>
 
               <div id="feature-two">
-                  <img class="img-fluid pl-2 pl-lg-0 pt-lg-1" src="./img/landing-feature-02.jpg" alt="sale">
-                  <h2 class="p-0 m-0 text-center">sale<br>25 &#37 off</h2>
+                  <a href="/sale" class="sale"><img class="img-fluid pl-2 pl-lg-0 pt-lg-1" src="./img/landing-feature-02.jpg" alt="sale">
+                  <h2 class="p-0 m-0 text-center">sale<br>25 &#37 off</h2></a>
               </div>
           </div>
 

@@ -47,6 +47,7 @@ Route::get('/productos', 'ProductController@index');
 Route::get('/productos/buscar/{buscado}', 'ProductController@search');
 Route::get('/productos/{myCategory}', 'CategoryController@show');
 Route::get('/producto/{prod}', 'ProductController@show');
+Route::get('/sale', 'ProductController@sale');
 
 // Carrito
 // Route::get('producto/{id}/cart','CartController@store')->middleware('auth');

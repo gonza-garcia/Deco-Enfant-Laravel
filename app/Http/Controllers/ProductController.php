@@ -137,4 +137,14 @@ class ProductController extends Controller
     public function api() {
         return Product::all();
     }
+
+    public function sale(){
+
+        $products = Product::where('discount', '>', '25')->paginate(8);
+        // dd($products);
+        $categories = Category::orderBy('name')->get();
+        
+        $vac = compact('products', 'categories');
+        return view('/sale', $vac);
+    }
 }

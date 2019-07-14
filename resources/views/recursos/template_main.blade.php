@@ -133,7 +133,11 @@
                   </li>
 
                   <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-0" href="#novedades">novedades</a>
+                      <a class="nav-link py-0" href="/novedades">novedades</a>
+                  </li>
+
+                  <li class="nav-item d-none d-md-block px-3">
+                      <a class="nav-link py-0" href="/sale">sale</a>
                   </li>
 
                   <li class="nav-item d-none d-md-block px-3">
@@ -217,7 +221,7 @@
         <ul class="p-none pt-2">
           <li><a href="/">Inicio</a></li>
           <li><a href="/productos">Productos</a></li>
-          <li><a href="#novedades">Novedades</a></li>
+          <li><a href="/sale">Sale</a></li>
           {{-- <li><a href="#contacto">Contacto</a></li> --}}
         </ul>
       </div>

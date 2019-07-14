@@ -39,16 +39,15 @@ Dèco Enfant - Contacto
                     <form>
                         <h6 class="pl-2 mb-1">Contactanos:</h6>
                         <input type="email" class="form-control mb-1" placeholder="tuEmail@email.com" required>
-                        <textarea  class="form-control w-100 border mb-2" placeholder="dejanos tu consulta..." required></textarea>
+                        <textarea  class="form-control w-100 border mb-2" rows="3" placeholder="dejanos tu consulta..." required></textarea>
                         <button class="btn btn-secondary float-right" type="submit">Enviar</button>
+                        <p class="d-none msg-consulta text-primary">Consultar enviada</p>
                     </form>
+                    
                 </div>
             </div>            
         </div>
-        
-        
-        
-        
+
         <div class="col-md-6 col-sm-12">
             <div class="w-100 mt-">
                 <iframe class="border" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3142.936098548566!2d-57.57021148471669!3d-38.025269179714684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9584de8e2f2eaacb%3A0xeebd0912be6a7ab5!2sEl+Cano+5859%2C+B7608FQW+Mar+del+Plata%2C+Buenos+Aires!5e0!3m2!1sen!2sar!4v1563109175655!5m2!1sen!2sar" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
