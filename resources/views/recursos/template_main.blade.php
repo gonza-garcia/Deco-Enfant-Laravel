@@ -137,7 +137,7 @@
                   </li>
 
                   <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-0" href="#contacto">contacto</a>
+                      <a class="nav-link py-0" href="/contacto">contacto</a>
                   </li>
                   @auth
                       @if (Auth::user()->role_id == 1)

@@ -115,3 +115,6 @@ Route::get('/categoria/{myCategory}', 'CategoryController@show');
 Route::get('/categorias/add', 'CategoryController@create')->middleware('auth');
 Route::post('/categorias/add', 'CategoryController@store');
 Route::get("/DELETE/categoria/{id}","CategoryController@delete")->middleware('auth');
+
+// contacto
+Route::get('/contacto', 'IndexController@contacto');

@@ -137,5 +137,4 @@ class ProductController extends Controller
     public function api() {
         return Product::all();
     }
-
 }
