@@ -25,7 +25,6 @@ $factory->define(Product::class, function (Faker $faker) {
       'short_desc' => $faker->sentence(5),
       'long_desc'  => $faker->sentence(8),
       'price'      => $faker->randomFloat(2, 300, 4000),
-      // 'thumbnail'  => $faker->image($path, 480, 600,'cats', false),
       'thumbnail'  => $faker->randomElement($images_list),
       'stock'      => $faker->numberBetween($min = 0, $max = 1000),
       'discount'   => $faker->randomFloat(2, 10, 40),

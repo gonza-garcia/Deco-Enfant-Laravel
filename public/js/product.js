@@ -2,7 +2,7 @@ $(document).ready(function(){
     
     // contador de cantidad de producto
     
-    $('.count').prop('disabled', true);
+    // $('.count').prop('disabled', true);
     $(document).on('click','.plus',function(){
         $('.count').val(parseInt($('.count').val()) + 1 );
     });

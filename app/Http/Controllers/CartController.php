@@ -41,10 +41,11 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id)
+    public function store(Request $req)
     {
+      //dd($req->cant);
       // dd($id);
-      $product = Product::find($id);
+      $product = Product::find($req->prodId);
       // dd($product);
       // dd($product->price);
       $newItem = new Cart();
@@ -58,8 +59,7 @@ class CartController extends Controller
       $newItem->size_id = $product->size_id;
       $newItem->color_id = $product->color_id;
       $newItem->subcategory_id = $product->subcategory_id;
-      // $newItem->cant = $cant;
-      $newItem->cant =  1; //Vamos a hardcodear el número pero debería venir de un form o del array.
+      $newItem->cant =  $req->cant; //Vamos a hardcodear el número pero debería venir de un form o del array.
       $newItem->user_id = Auth::User()->id;
 
       // dd($newItem);

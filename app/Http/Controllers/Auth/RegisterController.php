@@ -108,7 +108,7 @@ class RegisterController extends Controller
        // dd($sexes);
 
       // return view('\auth\register')->with('sexes',$sexes);
-      return view('\auth\register',compact('sexes','roles','user_statuses'));
+      return view('/auth/register',compact('sexes','roles','user_statuses'));
 
     }
 }
