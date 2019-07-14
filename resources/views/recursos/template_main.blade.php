@@ -32,9 +32,9 @@
       <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 
-      <link rel="stylesheet" href="/css/style.css">
+      <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
-      <script src="js/buscarProd.js"></script>
+      <script src="{{asset('js/buscarProd.js')}}"></script>
 
       @yield('custom_css')
 
@@ -50,18 +50,14 @@
               <div class='container'>
                   <!-- FILA única ----------------------------------------->
                   <div class="row justify-content-between align-items-center">
-                      <!-- Columna Busqueda ----------------------------------->
-                      {{-- <form id='formBuscar' class="col-5 col-md-3 form-inline justify-content-center pl-0" action="./tabla.php" method="GET">
-                          <input class="form-control w-100 pr-4 py-0" type="search" placeholder="Buscar" aria-label="Buscar">
-                          <a type="submit" href="#"><i class="fas fa-search"></i></a>
-                      </form> --}}
 
-                      {{-- <p>Buscar Productos</p> --}}
-                      <form class="buscador" class="col-5 col-md-3 form-inline justify-content-center pl-0" action="" method='GET'>
-                          <input type="text" class="buscar">
-                          <button>Buscar</button>
+                      <!-- Columna Busqueda ----------------------------------->
+                      <form id='formBuscar' class="col-5 col-md-3 form-inline justify-content-center pl-0" action="/productos/buscar" method='GET'>
+                          <input class='d-none' type="text">
+                          <input id='buscador' class="form-control w-100 pr-4 py-0" type="search" placeholder="Buscar" aria-label="Buscar" name='palabra'>
+
+                          <a id='submit_buscador' type="submit" href="#"><i class="fas fa-search"></i></a>
                       </form>
-                      {{-- <ul class="resultados"></ul> --}}
 
                       <!-- Columna CARRITO Y AUTENTICACION --------------------->
                       <div class="col-7 col-md-3 justify-content-end d-flex d-md-block order-md-last pr-0">
@@ -77,7 +73,6 @@
                             @if (Route::has('login'))
                                 <div class="top-right links">
                                     @auth
-                                        {{-- {{ Auth::user()->name }} | <a href="{{ url('/home') }}">Home</a> --}}
                                         <li class="nav-item dropdown">
                                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                                 {{ Auth::user()->name }} <span class="caret"></span>
@@ -103,13 +98,6 @@
                                     @endauth
                                 </div>
                             @endif
-                              {{-- @if ($auth->usuarioLogueado())
-                                  <a class="pr-1 border-right border-white text-right" href="#">{{$_SESSION["user_name"]}}</a>
-                                  <a class="pl-1 border-left border-white text-left" href="{{route('logout')}}">Salir</a>
-                              @else
-                                  <a class="pr-1 border-right border-white text-right" href="{{route('login')}}">Iniciar Sesión</a>
-                                  <a class="pl-1 border-left border-white text-left" href="{{route('registro')}}">Crear Cuenta</a>
-                              @endif --}}
                           </div>
 
                       </div>
@@ -128,7 +116,8 @@
 
           </header>
 
-          <ul class="resultados"></ul>
+          <h1 id='error'></h1>
+          <ul id='resultados'></ul>
       <!-- NAVBAR De Menus --------------------------------------------->
 
       <nav id='navMenu' class="navbar navbar-expand-md p-1 mb-4">
@@ -139,32 +128,9 @@
                       <a class="nav-link py-0" href="/">inicio</a>
                   </li>
 
-                  {{-- <li class="nav-item px-3">
-                      <a class="nav-link py-3" href="#dropCats" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">productos</a>
-                      <div class="collapse py-2" id="dropCats" data-parent="#navMenu">
-                          {{-- @foreach ($categories as $cat)
-                            <div class="dropdown dropright">
-
-                                <a id={{$cat->id}} class="dropdown-item dropdown-toggle px-2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{$cat->name}} </a>
-
-                          <!-- lista subcategorias de la categoria actual -->
-                                {{-- @php $sub_categories = Category::where('id_parent','=',$cat->id)->get();
-                                @endphp --}}
-
-                                {{-- <div id="dropSubCats" class="dropdown-menu" aria-labelledby={{$cat->id}}>
-                                    @foreach ($sub_categories as $sub_cat)
-                                        <a class="dropdown-item px-2" href="#"> {{$sub_cat->name}} </a>
-                                    @endforeach
-                                </div> --}}
-                            {{-- </div>
-                          @endforeach --}}
-                      {{-- </div>
-                  </li> --}}
-
                   <li class="nav-item d-none d-md-block px-3">
                       <a class="nav-link py-0" href="/productos">productos</a>
                   </li>
-
 
                   <li class="nav-item d-none d-md-block px-3">
                       <a class="nav-link py-0" href="#novedades">novedades</a>
@@ -173,42 +139,49 @@
                   <li class="nav-item d-none d-md-block px-3">
                       <a class="nav-link py-0" href="#contacto">contacto</a>
                   </li>
-                      <li class="nav-item px-3">
-                          <a class="nav-link py-0" href="#dropCats" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">listar</a>
-                          <div class="collapse py-2" id="dropCats" data-parent="#navMenu">
-                              <div class="dropdown dropright">
-                                  <a class="dropdown-item px-2" href="/cart" aria-haspopup="true" aria-expanded="false"> carrito </a>
-                                  <a class="dropdown-item px-2" href="/history" aria-haspopup="true" aria-expanded="false"> historial de compras </a>
-                                  <a class="dropdown-item px-2" href="/colores" aria-haspopup="true" aria-expanded="false"> colores </a>
-                                  <a class="dropdown-item px-2" href="/roles" aria-haspopup="true" aria-expanded="false"> roles </a>
-                                  <a class="dropdown-item px-2" href="/categorias" aria-haspopup="true" aria-expanded="false"> categorias </a>
-                                  <a class="dropdown-item px-2" href="/sexos" aria-haspopup="true" aria-expanded="false"> sexos </a>
-                                  <a class="dropdown-item px-2" href="/userStatuses" aria-haspopup="true" aria-expanded="false"> estados de usuarios </a>
-                                  <a class="dropdown-item px-2" href="/orderStatuses" aria-haspopup="true" aria-expanded="false"> estados de ordenes </a>
-                                  <a class="dropdown-item px-2" href="/shippingStatuses" aria-haspopup="true" aria-expanded="false"> estados de despachos </a>
+                  @auth
+                      @if (Auth::user()->role_id == 1)
+                          <li class="nav-item d-none d-md-block px-3   ">
+                              <a class="nav-link py-0" href="#admin" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">Administrar</a>
+                              <div class="collapse py-2" id="admin" data-parent="#navMenu">
+                                  <div class="dropdown dropright">
+                                      <a class="dropdown-item px-2" href="admin/products" aria-haspopup="true" aria-expanded="false"> Productos </a>
+                                      <a class="dropdown-item px-2" href="admin/users" aria-haspopup="true" aria-expanded="false"> Usuarios</a>
+                                      <a class="dropdown-item px-2" href="admin/carts" aria-haspopup="true" aria-expanded="false"> Carritos </a>
+                                      <a class="dropdown-item px-2" href="admin/categories" aria-haspopup="true" aria-expanded="false"> Categorías </a>
+                                      <a class="dropdown-item px-2" href="admin/subcategories" aria-haspopup="true" aria-expanded="false"> Subcategorías </a>
+                                      <a class="dropdown-item px-2" href="admin/countries" aria-haspopup="true" aria-expanded="false"> Países </a>
+                                      <a class="dropdown-item px-2" href="admin/provinces" aria-haspopup="true" aria-expanded="false"> Provincias </a>
+                                      <a class="dropdown-item px-2" href="admin/colors" aria-haspopup="true" aria-expanded="false"> Colores</a>
+                                      <a class="dropdown-item px-2" href="admin/sizes" aria-haspopup="true" aria-expanded="false"> Tamaños </a>
+                                      <a class="dropdown-item px-2" href="admin/roles" aria-haspopup="true" aria-expanded="false"> Roles </a>
+                                      <a class="dropdown-item px-2" href="admin/sexes" aria-haspopup="true" aria-expanded="false"> Sexos </a>
+                                      <a class="dropdown-item px-2" href="admin/user_statuses" aria-haspopup="true" aria-expanded="false"> Estados De Usuario </a>
+                                      <a class="dropdown-item px-2" href="admin/order_statuses" aria-haspopup="true" aria-expanded="false"> Estados De Carrito</a>
+                                      <a class="dropdown-item px-2" href="admin/shipping_statuses" aria-haspopup="true" aria-expanded="false"> Estados De Envío </a>
+                                  </div>
                               </div>
-                          </div>
-                      </li>
-                  <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-0" href="#admin" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">Administrar</a>
-                      <div class="collapse py-2" id="admin" data-parent="#navMenu">
-                        <div class="dropdown dropright">
-                            <a class="dropdown-item px-2" href="/colores/add" aria-haspopup="true" aria-expanded="false"> color </a>
-                            <a class="dropdown-item px-2" href="/roles/add" aria-haspopup="true" aria-expanded="false"> rol </a>
-                            <a class="dropdown-item px-2" href="/categorias/add" aria-haspopup="true" aria-expanded="false"> categoria </a>
-                            <a class="dropdown-item px-2" href="/sexos/add" aria-haspopup="true" aria-expanded="false"> sexo </a>
-                            <a class="dropdown-item px-2" href="/userStatuses/add" aria-haspopup="true" aria-expanded="false"> estado de usuario </a>
-                            <a class="dropdown-item px-2" href="/orderStatuses/add" aria-haspopup="true" aria-expanded="false"> estado de orden </a>
-                            <a class="dropdown-item px-2" href="/shippingStatuses/add" aria-haspopup="true" aria-expanded="false"> estado de despacho </a>
-                        </div>
-                     </div>
-                      </div>
-                  </li>
-                  {{-- <li class="nav-item d-none d-md-block px-3">
-                      <a class="nav-link py-3" href="#contacto">administrar</a>
-                  </li> --}}
+                          </li>
+                      @endif
+                  @endauth
+
                   <li class="nav-item d-block d-md-none px-3">
-                      <a class="nav-link py-3" href="#menu"><i class="fas fa-bars"></i></a>
+                      <a class="nav-link py-3" href="#menu" data-toggle="collapse" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></a>
+
+
+                      <div class="collapse py-2" id='menu' data-parent="#navMenu">
+                          <div class="dropdown dropright">
+                              <a class="dropdown-item px-2" href="/" aria-haspopup="true" aria-expanded="false"> Inicio</a>
+                              <a class="dropdown-item px-2" href="/productos" aria-haspopup="true" aria-expanded="false"> Productos </a>
+                              <a class="dropdown-item px-2" href="#novedades" aria-haspopup="true" aria-expanded="false"> Novedades </a>
+                              <a class="dropdown-item px-2" href="#contacto" aria-haspopup="true" aria-expanded="false"> Contacto </a>
+                              @auth
+                                  @if (Auth::user()->role_id == 1)
+                                      <a class="dropdown-item px-2" href="admin/products" aria-haspopup="true" aria-expanded="false"> Administrar </a>
+                                  @endif
+                              @endauth
+                          </div>
+                      </div>
                   </li>
 
               </ul>
@@ -350,9 +323,6 @@
       <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
       <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
       <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-
-      <script src="/js/productDetail.js"></script>
 
 
       @yield("custom_js")

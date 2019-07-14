@@ -38,14 +38,14 @@ Route::get('/', 'ProductController@destacados');
 
 // Route::get("/register",'Auth\RegisterController@load');
 
-Route::get("/buscarProd", "ProductController@buscar");
+// Route::get("/buscarProd", "ProductController@buscar");
 
 Route::get('/admin/{table}', 'HomeController@admin');
 
 
 Route::get('/productos', 'ProductController@index');
+Route::get('/productos/buscar/{buscado}', 'ProductController@search');
 Route::get('/productos/{myCategory}', 'CategoryController@show');
-Route::get('/productos/search/{buscado}', 'ProductController@search');
 Route::get('/producto/{prod}', 'ProductController@show');
 
 // Carrito

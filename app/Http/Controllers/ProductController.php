@@ -59,17 +59,17 @@ class ProductController extends Controller
      */
     public function show(Product $prod)
     {
-      $product = Product::find($prod->id);
-      // dd($product->subcategory);
+        $product = Product::find($prod->id);
+        // dd($product->subcategory);
 
-      $subcategory = Subcategory::select('subcategories.name')
-      ->join('products', 'subcategory_id', '=', 'subcategories.id')
-      ->where('subcategory_id', $prod->subcategory_id)
-      ->first();
-    //   dd($subcategory->name);
+        $subcategory = Subcategory::select('subcategories.name')
+        ->join('products', 'subcategory_id', '=', 'subcategories.id')
+        ->where('subcategory_id', $prod->subcategory_id)
+        ->first();
+      //   dd($subcategory->name);
 
-      $vac = compact("product", "subcategory");
-      return view("product",$vac);
+        $vac = compact("product", "subcategory");
+        return view("product",$vac);
     }
 
     /**
@@ -107,20 +107,27 @@ class ProductController extends Controller
         //
     }
 
-    public function search($buscado){
+    public function search($buscado)
+    {
+        $products = Product::where('name', 'like', '%'.$buscado.'%')->get();
+        $categories = Category::orderBy('name')->get();
 
+      //   dd($products);
+
+        $vac = compact("products", "categories");
+        return view ("products",$vac);
     }
 
     public function destacados()
     {
-      $products = Product::orderBy('created_at', 'desc')
-      ->limit(8)
-      ->get();
+        $products = Product::orderBy('created_at', 'desc')
+        ->limit(8)
+        ->get();
 
-      // dd($products);
+        // dd($products);
 
-      $vac = compact("products");
-      return view ("/index",$vac);
+        $vac = compact("products");
+        return view ("/index",$vac);
     }
 
     public function buscar() {

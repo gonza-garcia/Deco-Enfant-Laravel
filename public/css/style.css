@@ -93,7 +93,7 @@ section {
 
 .pagination li {
   display: inline-block;
-  
+
 }
 
 .pagination ul {
@@ -171,16 +171,17 @@ nav li.nav-item:hover a.nav-link {
   border-radius: 5px;
 }
 
-#dropCats, #dropSubCats, #admin {
+#admin, #menu {
   border-top: solid 1.5px white;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-#dropCats a, #dropSubCats a, #admin a {
+#admin a, #menu a {
   color: #fff;
 }
 
-#dropCats a:hover, #dropSubCats a:hover, #admin a:hover #dropCats a:focus, #dropSubCats a:focus, #admin a:focus {
+#admin a:hover, #menu a:hover,
+#admin a:focus, #menu a:focus {
   background-color: #d39eae;
 }
 

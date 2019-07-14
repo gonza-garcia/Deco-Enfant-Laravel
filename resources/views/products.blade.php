@@ -10,7 +10,7 @@
 
   <!-- PRODUCTOS ---------------------------------------------------------------------------------------------------------->
   <section class="container">
-    
+
     <div class="text-center pt-4">
         <h2 class="my-0 mx-auto w-100 text-uppercase"><img src="/img/icon-paper-plane.png">  Productos</h2>
         <hr>
@@ -18,18 +18,18 @@
 
     <div class="">
         <div class="d-flex flex-row justify-content-around">
-            @forelse ($categories as $cat) 
-            <a href="/productos/{{ $cat->id }}" class="flex-item text-muted text-decoration-none" > {{ $cat->name }}</a>
+            @forelse ($categories as $cat)
+                <a href="/productos/{{ $cat->id }}" class="flex-item text-muted text-decoration-none" > {{ $cat->name }}</a>
             @empty
             @endforelse
         </div>
         <hr>
-        
+
     </div>
 
-    
+
     <div class="row px-2">
-        
+
         <!--- Generar Articulos ------------->
         @forelse ($products as $product)
         {{-- @dd($product); --}}
@@ -37,7 +37,7 @@
             <a href="/producto/{{$product->id}}">
                 <img class="img-fluid img-thumbnail destacados-img"
                 src={{ url($product->thumbnail)}} alt={{$product->name}}>
-                
+
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
                     <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2"><a class="text-decoration-none text-dark" href="/producto/{{$product->id}}">{{$product->name}}</a></div>
                     <div class="col-12 col-lg-4 p-1">
@@ -50,16 +50,16 @@
         </article>
         @empty
         @endforelse
-        
+
     </div>
-   
+
 </section>
 @endsection
 
 @section("links")
-<div class="container"> 
-    {{-- <nav> --}}
-        <div class="d-flex justify-content-center">{{$products->links()}}</div>
-    {{-- </nav> --}}
-</div> 
+    <div class="container">
+        @if (method_exists($products,'links'))
+          <div class="d-flex justify-content-center">{{$products->links()}}</div>
+        @endif
+    </div>
 @endsection
