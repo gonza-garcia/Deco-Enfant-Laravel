@@ -171,17 +171,21 @@ nav li.nav-item:hover a.nav-link {
   border-radius: 5px;
 }
 
-#admin, #menu {
+#admin, #menu, #resultados {
   border-top: solid 1.5px white;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-#admin a, #menu a {
+#resultados {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#admin a, #menu a, #resultados a {
   color: #fff;
 }
 
-#admin a:hover, #menu a:hover,
-#admin a:focus, #menu a:focus {
+#admin a:hover, #menu a:hover, #resultados a:hover,
+#admin a:focus, #menu a:focus, #resultados a:focus{
   background-color: #d39eae;
 }
 

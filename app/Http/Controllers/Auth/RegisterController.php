@@ -54,25 +54,26 @@ class RegisterController extends Controller
     {
 
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'first_name' => ['required', 'string', 'max:50'],
-            'last_name' => ['required', 'string', 'max:50'],
+            'name'          => ['required', 'string', 'max:255'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'      => ['required', 'string', 'min:8', 'confirmed'],
+            'first_name'    => ['required', 'alpha', 'max:50'],
+            'last_name'     => ['required', 'alpha', 'max:50'],
             'date_of_birth' => ['date'],
-            'phone' => ['numeric'],
+            'phone'         => ['numeric'],
         ];
 
         $messages = [
-            'required' => 'El campo :attribute es obligatorio.',
-            'string' => ':El campo attribute debe ser una cadena de texto.',
-            'max' => 'El campo :attribute no debe superar :max caracteres.',
-            'min' => 'El campo :attribute debe tener al menos :min caracteres.',
-            'confirmed' => ':attribute no coinciden.',
-            'email' => 'El campo :attribute debe tener formato de mail.',
-            'unique' => 'El campo :attribute ya se encuentra en la base.',
-            'date' => 'El campo :attribute no corresponde a una fecha.',
-            'numeric' => 'El campo :attribute no corresponde a un numero.',
+            'required'  => 'El campo :attribute es obligatorio.',
+            'string'    => ':El campo :attribute debe ser una cadena de texto.',
+            'alpha'    => ':El campo :attribute no puede contener números.',
+            'max'       => 'El campo :attribute no debe superar :max caracteres.',
+            'min'       => 'El campo :attribute debe tener al menos :min caracteres.',
+            'confirmed' => 'El :attribute no coincide.',
+            'email'     => 'El campo :attribute debe tener formato de mail.',
+            'unique'    => 'El campo :attribute ya se encuentra en la base.',
+            'date'      => 'El campo :attribute no corresponde a una fecha.',
+            'numeric'   => 'El campo :attribute no corresponde a un numero.',
         ];
 
         return Validator::make($data, $rules, $messages);
@@ -86,17 +87,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if (isset($data['user_status_id']))
+            $status = $data['user_status_id'];
+        else
+            $status = 1;
+
+        if (isset($data['role_id']))
+            $rol = $data['role_id'];
+        else
+            $rol = 2;
+
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'phone' => $data['phone'],
-            'date_of_birth' => $data['date_of_birth'],
-            'sex_id' => $data['sex_id'],
-            'user_status_id' => $data['user_status_id'],
-            'role_id' => $data['role_id'],
+            'name'           => $data['name'],
+            'email'          => $data['email'],
+            'password'       => Hash::make($data['password']),
+            'first_name'     => $data['first_name'],
+            'last_name'      => $data['last_name'],
+            'phone'          => $data['phone'],
+            'date_of_birth'  => $data['date_of_birth'],
+            'sex_id'         => $data['sex_id'],
+            'user_status_id' => $status,
+            'role_id'        => $rol,
         ]);
     }
 

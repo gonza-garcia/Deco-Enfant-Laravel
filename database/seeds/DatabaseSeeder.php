@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
         $this->call(SizesTableSeeder::class);
 
         $this->call(Order_StatusesTableSeeder::class);
-        $this->call(Shipping_StatusesTableSeeder::class);
         $this->call(User_StatusesTableSeeder::class);
 
         $this->call(SubcategoriesTableSeeder::class);
         $this->call(ProvincesTableSeeder::class);
 
         $this->call(ProductsTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
 
         factory(\App\Product::class, 62)->create();
         factory(\App\User::class, 25)->create();
