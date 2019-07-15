@@ -11,10 +11,6 @@ class Cart extends Model
     use SoftDeletes;  // agregado por borrado logico
     protected $guarded = [];
 
-    public function order_status(){
-      return $this->belongsTo('App\Order_status', "order_status_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
-    }
-
     public function user(){
       return $this->belongsTo('App\User', "user_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
     }

@@ -21,7 +21,7 @@ $factory->define(Cart::class, function (Faker $faker) {
       'cant'            => $faker->numberBetween($min = 0, $max = 1000),
       'discount'        => $faker->randomFloat(2, 10, 40),
       'cart_number'     => $faker->numberBetween($min = 1000, $max = 15000),
-      'order_status_id' => \App\Order_status::inRandomOrder()->first()->id,
+      'status'          => $faker->randomElement([0,1]),
       'user_id'         => \App\User::inRandomOrder()->first()->id,
       'color_id'        => \App\Color::inRandomOrder()->first()->id,
       'size_id'         => \App\Size::inRandomOrder()->first()->id,
