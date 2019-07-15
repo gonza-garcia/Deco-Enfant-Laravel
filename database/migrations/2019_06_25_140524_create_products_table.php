@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price',6,2);
             $table->string('thumbnail');
             $table->integer('stock')->default(0);
-            $table->decimal('discount',8,2)->nullable()->default(0);
+            $table->integer('discount')->default(0);
             $table->unsignedBigInteger('color_id')->default(1);
             $table->unsignedBigInteger('size_id')->default(1);
             $table->unsignedBigInteger('subcategory_id')->default(1);

@@ -144,8 +144,8 @@
                   productos</a></li>
 
               <li class="nav-item d-none d-md-block px-3">
-                <a class="nav-link py-0" href="#novedades">
-                  novedades</a></li>
+                <a class="nav-link py-0" href="/sale">
+                  ofertas</a></li>
 
               <li class="nav-item d-none d-md-block px-3">
                 <a class="nav-link py-0" href="/contacto">
@@ -184,8 +184,6 @@
                                   Estados De Usuario </a>
                                 <a class="dropdown-item px-2" href="admin/order_statuses" aria-haspopup="true" aria-expanded="false">
                                   Estados De Carrito</a>
-                                <a class="dropdown-item px-2" href="admin/shipping_statuses" aria-haspopup="true" aria-expanded="false">
-                                  Estados De Envío </a>
                             </div>
                         </div>
                     </li>
@@ -199,8 +197,8 @@
                       <div class="dropdown dropright">
                           <a class="dropdown-item px-2" href="/" aria-haspopup="true" aria-expanded="false"> Inicio</a>
                           <a class="dropdown-item px-2" href="/productos" aria-haspopup="true" aria-expanded="false"> Productos </a>
-                          <a class="dropdown-item px-2" href="#novedades" aria-haspopup="true" aria-expanded="false"> Novedades </a>
-                          <a class="dropdown-item px-2" href="#contacto" aria-haspopup="true" aria-expanded="false"> Contacto </a>
+                          <a class="dropdown-item px-2" href="/sale" aria-haspopup="true" aria-expanded="false"> Ofertas </a>
+                          <a class="dropdown-item px-2" href="/contacto" aria-haspopup="true" aria-expanded="false"> Contacto </a>
                           @auth
                             @if (Auth::user()->role_id == 1)
                                 <a class="dropdown-item px-2" href="admin/products" aria-haspopup="true" aria-expanded="false"> Administrar </a>
@@ -231,42 +229,39 @@
       <div class='container'>
           <div class="row p-1 w-100">
 
-        <!-- COLUMNA 1   NAVEGACION::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-            <div class="footer-nav col-sm-3 p-0">
-                <div class="border-bottom border-light mr-5">
-                    <h5 class="footer-title m-0 pb-1">Navegación</h5>
-                </div>
-                <ul class="p-none pt-2">
-                    <li><a href="/">          Inicio</a></li>
-                    <li><a href="/productos"> Productos</a></li>
-                    <li><a href="#novedades"> Novedades</a></li>
-                    {{-- <li><a href="#contacto">Contacto</a></li> --}}
-                </ul>
-            </div>
-
-        <!-- COLUMNA 2   CONTACTO::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-            <div class="footer-nav col-sm-3 p-0">
-                <div class="border-bottom border-light mr-5">
-                    <h5 class="footer-title m-0 pb-1">Contacto</h5>
-                </div>
-                <ul class="p-none pt-2">
-                    <li><a href="#phone"><i class="fas fa-mobile-alt"></i>  +49 163 7325192</a></li>
-                    <li><a href="#direccion"><i class="fas fa-map-pin"></i> Elcano 5859 - Mar del Plata</a></li>
-                    <li><a href="#email"><i class="fa fa-envelope"></i>     gcostoya02@gmail.com</a></li>
-                </ul>
-            </div>
-
+          <!-- COLUMNA 1   NAVEGACION::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+              <div class="footer-nav col-sm-3 p-0">
+                  <div class="border-bottom border-light mr-5">
+                      <h5 class="footer-title m-0 pb-1">Navegación</h5>
+                  </div>
+                  <ul class="p-none pt-2">
+                      <li><a href="/">Inicio</a></li>
+                      <li><a href="/productos">Productos</a></li>
+                      <li><a href="/sale">Sale</a></li>
+                  </ul>
+              </div>
+          <!-- COLUMNA 2   CONTACTO::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+              <div class="footer-nav col-sm-3 p-0">
+                  <div class="border-bottom border-light mr-5">
+                      <h5 class="footer-title m-0 pb-1">Contacto</h5>
+                  </div>
+                  <ul class="p-none pt-2">
+                      <li><a href="#phone"><i class="fas fa-mobile-alt"></i> +49 163 7325192</a></li>
+                      <li><a href="#direccion"><i class="fas fa-map-pin"></i> Elcano 5859 - Mar del Plata</a></li>
+                      <li><a href="#email"><i class="fa fa-envelope"></i> gcostoya02@gmail.com</a></li>
+                  </ul>
+              </div>
         <!-- COLUMNA 3   SOCIAL:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-            <div class="footer-nav col-sm-3 p-0">
-                <div class="border-bottom border-light mr-5">
-                    <h5 class="footer-title m-0 pb-1">Social</h5>
-                </div>
-                <ul class="p-none pt-2">
-                    <li><a href="https://www.instagram.com/decoenfant_/"><i class="fab fa-instagram"></i> Instagram</a></li>
-                    <li><a href="https://www.facebook.com/decoenfant0/"><i class="fab fa-facebook"></i>   Facebook</a></li>
-                    <li><a href="#whatsapp"><i class="fab fa-whatsapp"></i>                               Whatsapp</a></li>
-                </ul>
-            </div>
+              <div class="footer-nav col-sm-3 p-0">
+                  <div class="border-bottom border-light mr-5">
+                      <h5 class="footer-title m-0 pb-1">Social</h5>
+                  </div>
+                  <ul class="p-none pt-2">
+                      <li><a href="https://www.instagram.com/decoenfant_/"><i class="fab fa-instagram"></i> Instagram</a></li>
+                      <li><a href="https://www.facebook.com/decoenfant0/"><i class="fab fa-facebook"></i> Facebook</a></li>
+                      <li><a href="#whatsapp"><i class="fab fa-whatsapp"></i> Whatsapp</a></li>
+                  </ul>
+              </div>
 
         <!-- COLUMNA 4   NEWSLETTER:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
               <div class="footer-nav col-sm-3 p-0">
