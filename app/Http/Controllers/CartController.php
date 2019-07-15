@@ -62,7 +62,7 @@ class CartController extends Controller
       $newItem->cant =  $req->cant; //Vamos a hardcodear el número pero debería venir de un form o del array.
       $newItem->user_id = Auth::User()->id;
 
-      // dd($newItem);
+
       $newItem->save();
       return redirect('/cart');
 
@@ -100,12 +100,12 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $item = Cart::find($id);
-        
+
         $item->cant = $request->cant;
         $item->save();
 
         return redirect('cart');
-        
+
         // if($cant<$stock){
     }
 
@@ -137,32 +137,33 @@ class CartController extends Controller
         }
         return view('thanks');
     }
+
     public function history()
     {
-      $history = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 1)->groupBy('cart_number'); //Agrupamos por nro de carrito para mostrarlo en la vista.
-      return view('history')->with('history', $history);
+        $history = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 1)->groupBy('cart_number'); //Agrupamos por nro de carrito para mostrarlo en la vista.
+        return view('history')->with('history', $history);
     }
 
     public function totalPrice() {
 
-    $totalPrice = 0;
-    $discTotal = 0;
-    $noDiscTotal = 0;
-    // $subtotal = 0;
-    $openCart = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 0);
+        $totalPrice = 0;
+        $discTotal = 0;
+        $noDiscTotal = 0;
+        // $subtotal = 0;
+        $openCart = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 0);
 
-    foreach ($openCart as $item) {
-        if($item->discount >= 25){
-            $discTotal += ($item->price - ($item->discount/100*$item->price)) * $item->cant;
+        foreach ($openCart as $item) {
+            if($item->discount >= 25){
+                $discTotal += ($item->price - ($item->discount/100*$item->price)) * $item->cant;
+            }
         }
-    }
-    foreach ($openCart as $item) {
-        if($item->discount < 25){
-            $noDiscTotal += $item->price * $item->cant;
+        foreach ($openCart as $item) {
+            if($item->discount < 25){
+                $noDiscTotal += $item->price * $item->cant;
+            }
         }
-    }
-    $totalPrice = $discTotal + $noDiscTotal;
-    // dd($totalPrice);
+        $totalPrice = $discTotal + $noDiscTotal;
+        // dd($totalPrice);
 
 
         // $vac = compact("totalPrice", "openCart");

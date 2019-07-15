@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SexesTableSeeder::class);
         $this->call(SizesTableSeeder::class);
 
-        $this->call(Order_StatusesTableSeeder::class);
         $this->call(User_StatusesTableSeeder::class);
 
         $this->call(SubcategoriesTableSeeder::class);
@@ -27,6 +26,6 @@ class DatabaseSeeder extends Seeder
 
         factory(\App\Product::class, 62)->create();
         factory(\App\User::class, 25)->create();
-        // factory(\App\Cart::class, 47)->create();
+        factory(\App\Cart::class, 47)->create();
     }
 }
