@@ -57,10 +57,10 @@ Dèco Enfant - Detalle producto
                 <p>{{$product->short_desc}}</p>
                 <p class="mb-3 text-justify">{{ $product->long_desc }}</p>
                 @if($product->discount > 0)
-                <p class="prod-price"><strong class="text-secondary h5"><del>$ {{ str_replace('.', ',', (number_format($product->price, 2))) }}</del></strong></p>
-                <p class="prod-price"><strong class="text-danger h4">$ {{ str_replace('.', ',', (number_format($product->price - ($product->discount/100*$product->price),2))) }}</strong></p>
+                <p class="prod-price"><strong class="text-secondary h5"><del>$ {{ number_format($product->price, 2, ',', '') }}</del></strong></p>
+                <p class="prod-price"><strong class="text-danger h4">$ {{ number_format($product->price - ($product->discount/100*$product->price),2, ',', '') }}</strong></p>
                 @else
-                <p class="prod-price"><strong class="text-secondary h4">$ {{ str_replace('.', ',', (number_format($product->price))) }}</strong></p>
+                <p class="prod-price"><strong class="text-secondary h4">$ {{ number_format($product->price, 2, ',', '') }}</strong></p>
                 @endif
 
                 <div class="mb-1 d-flex">
