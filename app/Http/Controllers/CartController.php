@@ -143,14 +143,14 @@ class CartController extends Controller
       return view('history')->with('history', $history);
     }
 
-    public function totalPrice() {
-
+public function totalPrice() {
+    
     $totalPrice = 0;
     $discTotal = 0;
     $noDiscTotal = 0;
     // $subtotal = 0;
     $openCart = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 0);
-
+    
     foreach ($openCart as $item) {
         if($item->discount >= 25){
             $discTotal += ($item->price - ($item->discount/100*$item->price)) * $item->cant;
@@ -163,11 +163,9 @@ class CartController extends Controller
     }
     $totalPrice = $discTotal + $noDiscTotal;
     // dd($totalPrice);
-
-
-        // $vac = compact("totalPrice", "openCart");
-        return view("/cart")->with('cart', $openCart)->with('totalPrice', $totalPrice);
-    }
-
+    
+    // $vac = compact("totalPrice", "openCart");
+    return view("/cart")->with('cart', $openCart)->with('totalPrice', $totalPrice);
+}
 
 }
