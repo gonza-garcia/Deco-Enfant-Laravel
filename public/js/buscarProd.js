@@ -53,7 +53,7 @@ window.addEventListener("load", function() {
 })
 
 function buscarProds(buscador) {
-    fetch("http://localhost:8000/api/productos")
+    fetch("http://localhost:8000/api/products")
     .then(function(respuesta) {
         return respuesta.json()
     })

@@ -40,6 +40,10 @@ class ProductController extends Controller
         //
     }
 
+
+
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -72,17 +76,6 @@ class ProductController extends Controller
         return view("product",$vac);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -91,9 +84,48 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $prod = \App\Product::findOrFail($id);
+
+        $newPath = 'public\img\products\\' . $request->thumbnail->getFilename() . '.jpg';
+        $success = \File::copy($request->thumbnail->getRealPath(), base_path($newPath));
+
+        $prod->update([ 'name'           => $request->name,
+                        'short_desc'     => $request->short_desc,
+                        'long_desc'      => $request->long_desc,
+                        'price'          => $request->price,
+                        'thumbnail'      => '.\img\products\\' . $request->thumbnail->getFileName() . '.jpg',
+                        'stock'          => $request->stock,
+                        'discount'       => $request->discount,
+                        'color_id'       => $request->color_id,
+                        'size_id'        => $request->size_id,
+                        'subcategory_id' => $request->subcategory_id,
+                      ]);
+
+        return redirect('/productos/admin?table=products&order_by=id&order_how=ASC&limit=20&page=1');
+    }
+
+    public function add(Request $request)
+    {
+        $newPath = 'public\img\products\\' . $request->thumbnail->getFilename() . '.jpg';
+        $success = \File::copy($request->thumbnail->getRealPath(), base_path($newPath));
+
+        $prod = ['name'           => $request->name,
+                 'short_desc'     => $request->short_desc,
+                 'long_desc'      => $request->long_desc,
+                 'price'          => $request->price,
+                 'thumbnail'      => '.\img\products\\' . $request->thumbnail->getFileName() . '.jpg',
+                 'stock'          => $request->stock,
+                 'discount'       => $request->discount,
+                 'color_id'       => $request->color_id,
+                 'size_id'        => $request->size_id,
+                 'subcategory_id' => $request->subcategory_id,
+               ];
+
+        \App\Product::create($prod);
+
+        return redirect('/productos/admin?table=products&order_by=id&order_how=ASC&limit=20&page=1');
     }
 
     /**
@@ -130,28 +162,100 @@ class ProductController extends Controller
         return view ("/index",$vac);
     }
 
-    public function buscar() {
-        return view("buscarProd");
-    }
 
     public function api() {
         return Product::all();
     }
 
+    public function single_product_api($id){
+        return Product::find($id);
+    }
+
     public function sale(){
 
-        $products = Product::where('discount', '>', '25')->paginate(8);
+        $products = Product::where('discount', '>', '15')->paginate(8);
         // dd($products);
         $categories = Category::orderBy('name')->get();
 
-        foreach($products as $product){
-            if($product->discount > 0){
-                $discountCalc = $product->price - ($product->discount / 100 * $product->price); 
+        foreach($products as $product)
+        {
+            if($product->discount > 0)
+            {
+                $discountCalc = $product->price - ($product->discount / 100 * $product->price);
+            }
         }
-        // dd($discountCalc);
-    }
-        
+
         $vac = compact('products', 'categories', 'product', 'discountCalc');
         return view('/sale', $vac);
+    }
+
+
+
+    public function admin()
+    {
+        $columns = ['id'             => ['width' => '2.00%', 'name' => 'Id'],
+                    'name'           => ['width' => '5.00%', 'name' => 'Nombre'],
+                    'short_desc'     => ['width' => '13.5%', 'name' => 'Descripción Corta'],
+                    'long_desc'      => ['width' => '13.5%', 'name' => 'Descripción Larga'],
+                    'price'          => ['width' => '4.00%', 'name' => 'Precio'],
+                    'thumbnail'      => ['width' => '4.00%', 'name' => 'Imagen'],
+                    'stock'          => ['width' => '4.00%', 'name' => 'Stock'],
+                    'discount'       => ['width' => '4.00%', 'name' => 'Descuento'],
+                    'color_id'       => ['width' => '5.00%', 'name' => 'Color'],
+                    'size_id'        => ['width' => '5.00%', 'name' => 'Tamaño'],
+                    'category_id'    => ['width' => '5.00%', 'name' => 'Categoría'],
+                    'subcategory_id' => ['width' => '5.00%', 'name' => 'Subcategoría'],
+                    'created_at'     => ['width' => '5.00%', 'name' => 'Creado'],
+                    'updated_at'     => ['width' => '5.00%', 'name' => 'Actualizado'],
+                    'deleted_at'     => ['width' => '5.00%', 'name' => 'Borrado'],
+                    ];
+
+        $order_how_options=["ASC", "DESC"];
+        $limit_options=["5", "10", "20", "50", "100", "200", "500"];
+
+        $order_by = "id";     //valores que va a tomar la tabla por defecto
+        $order_how = "ASC";
+        $limit = "20";
+        $page = 1;
+        $total_rows = DB::select("SELECT COUNT(*) as cantidad FROM products")[0]->cantidad;
+
+        // dd((isset($_GET['order_by'])),
+        //     (isset($_GET['order_how'])),
+        //     (isset($_GET['limit'])),
+        //     (isset($_GET['page'])),
+        //     (array_key_exists($_GET['order_by'], $columns)),
+        //     (in_array($_GET['order_how'], $order_how_options)),
+        //     (in_array($_GET['limit'], $limit_options)),
+        //     (is_numeric($_GET['page'])));
+
+        if ((isset($_GET['order_by'])) &&
+            (isset($_GET['order_how'])) &&
+            (isset($_GET['limit'])) &&
+            (isset($_GET['page'])) &&
+            (array_key_exists($_GET['order_by'], $columns)) &&
+            (in_array($_GET['order_how'], $order_how_options)) &&
+            (in_array($_GET['limit'], $limit_options)) &&
+            (is_numeric($_GET['page'])))
+        {
+            $order_by = $_GET["order_by"];
+            $order_how = $_GET["order_how"];
+            $limit = $_GET["limit"];
+            $page = round($_GET["page"]);
+
+        } else {
+             echo "Hubo un error.";
+             exit;
+        }
+
+        $all_products = \App\Product::orderBy($order_by, $order_how)->paginate($limit);
+
+        $all_colors = \App\Color::all();
+        $all_sizes = \App\Size::all();
+        $all_categories = \App\Category::all();
+        $all_subcategories = \App\Subcategory::all();
+
+        $all_products->withPath('?table=products&order_by='.$order_by.'&order_how='.$order_how. '&limit='.$limit);
+
+        return view("admin_products", compact("columns","order_by","order_how","limit","order_how_options","limit_options","page","total_rows","all_products","all_colors","all_sizes","all_categories","all_subcategories"));
     }
 }

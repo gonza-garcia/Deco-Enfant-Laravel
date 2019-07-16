@@ -37,7 +37,7 @@
 
               <div id="feature-two">
                   <a href="/sale" class="sale"><img class="img-fluid pl-2 pl-lg-0 pt-lg-1" src="./img/landing-feature-02.jpg" alt="sale">
-                  <h2 class="p-0 m-0 text-center">sale<br>25 &#37 off</h2></a>
+                  <h2 class="p-0 m-0 text-center">sale<br>25 & 37 off</h2></a>
               </div>
           </div>
 
@@ -54,21 +54,21 @@
 
   <!--SECCION DESTACADOS---------------------------------------------------------------------------------------------------------->
   <section class="container">
-    
+
     <div class="text-center pt-4">
         <h2 class="my-0 mx-auto w-100 text-uppercase"><img src="./img/icon-paper-plane.png">novedades</h2>
         <hr>
     </div>
-    
+
     <div class="row px-2">
-        
+
         <!--- Generar Articulos ------------->
         @forelse ($products as $product)
         <article class="col-6 col-md-4 col-lg-3 p-1">
             <a href="/producto/{{$product->id}}">
 
                 <img class="img-fluid img-thumbnail destacados-img" src={{$product->thumbnail}} alt={{$product->name}}>
-                
+
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
                     <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2">
                         <a class="text-decoration-none text-dark  pt-3" href="/producto/{{$product->id}}">{{$product->name}}</a>
@@ -77,15 +77,15 @@
                         <a href="/producto/{{$product->id}}" id="btn-destacados" class="btn text-uppercase p-0 w-100 py-2">ver más</a>
                     </div>
                 </div>
-                
+
             </a>
             <hr class="mr-2 w-85">
         </article>
         @empty
         @endforelse
-        
-    </div>    
-    
+
+    </div>
+
 </section>
 @endsection
 

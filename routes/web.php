@@ -40,8 +40,9 @@ Route::get('/', 'ProductController@destacados');
 
 // Route::get("/buscarProd", "ProductController@buscar");
 
-Route::get('/admin/{table}', 'HomeController@admin');
-
+Route::get('/productos/admin', 'ProductController@admin');
+Route::post('/producto/add', 'ProductController@add');
+Route::post('/producto/edit/{id}', 'ProductController@update');
 
 Route::get('/productos', 'ProductController@index');
 Route::get('/productos/buscar/{buscado}', 'ProductController@search');
@@ -119,3 +120,6 @@ Route::get("/DELETE/categoria/{id}","CategoryController@delete")->middleware('au
 
 // contacto
 Route::get('/contacto', 'IndexController@contacto');
+Route::post('/contacto', 'IndexController@mensaje');
+
+Route::get('/perfil/{id}', 'IndexController@perfil')->name('perfil');

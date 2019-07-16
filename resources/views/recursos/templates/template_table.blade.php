@@ -1,4 +1,4 @@
-@extends("template_main")
+@extends("recursos/template_main")
 
 
 @section("titulo")
@@ -11,32 +11,8 @@
     <link rel="stylesheet" href="/css/style_modals.css">
 @endsection
 
-@section('custom_js')
-    <script type="text/javascript">
-        $(document).ready(function(){
-          	// Activate tooltip
-          	$('[data-toggle="tooltip"]').tooltip();
-
-          	// Select/Deselect checkboxes
-          	var checkbox = $('table tbody input[type="checkbox"]');
-          	$("#selectAll").click(function(){
-            		if(this.checked){
-              			checkbox.each(function(){
-                				this.checked = true;
-              			});
-            		} else{
-              			checkbox.each(function(){
-                				this.checked = false;
-              			});
-            		}
-          	});
-          	checkbox.click(function(){
-            		if(!this.checked){
-              			$("#selectAll").prop("checked", false);
-            		}
-          	});
-        });
-    </script>
+@section('custom_scripts')
+  <script src="{{asset('js/table_scripts.js')}}"></script>
 @endsection
 
 
@@ -52,8 +28,8 @@
                         <h2>Administrar <b>@yield("titulo_objeto")</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#add_modal_form" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
-                        <a href="#delete_modal_form" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
+                        <a href="#add_modal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
+                        <a href="#delete_modal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
                     </div>
                 </div>
             </div>
@@ -78,15 +54,11 @@
                         <div class="filter-group">
                             <label>Orden</label>
                             <select class="form-control">
-                                <option value="ASC" <?php if ($order_how=="ASC") echo 'selected'; ?>>
-                                    <a href= <?="articulos.php?order_by=$order_by&order_how=ASC&limit=$limit"?>>
+                                <option value="ASC" @if ($order_how=="ASC") {{'selected'}}@endif>
                                         Ascendente
-                                    </a>
                                 </option>
-                                <option value="DESC" <?php if ($order_how=="DESC") echo 'selected'; ?>>
-                                    <a href= <?="articulos.php?order_by=$order_by&order_how=DESC&limit=$limit"?>>
+                                <option value="DESC" @if ($order_how=="DESC") {{'selected'}}@endif>
                                         Descendente
-                                    </a>
                                 </option>
                             </select>
                         </div>
@@ -142,39 +114,17 @@
                     <span>Mostrando</span>
                     <select class="p-0">
                         @foreach ($limit_options as $value)
-                            <option value={{$value}} <?php if ($value==$limit) echo 'selected';?>>
-                                <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$value"?>>
-                                    <?=$value?>
-                                </a>
+                            <option value={{$value}} @if ($value==$limit) {{'selected'}} @endif>
+                                    {{$value}}
                             </option>
                         @endforeach
                     </select>
-                    <span>de <b><?=$total_rows["cantidad"]?></b> entradas</span>
+                    <span>de <b>{{$total_rows}}</b> entradas</span>
                 </div>
 
     <!-- :::::::::::::::::::::::::::PAGINACIÓN:::::::::::::::::::::::::::::: -->
                 <ul class="pagination">
-                @php/*
-                  <li <?php if (($page-1)==0) echo "class='page-item disabled'";
-                                  else          echo "class='page-item'"; ?>>
-                        <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$limit&page=1"?> class="page-link"> Anterior
-                        </a>
-                    </li>
-
-                    <?php for ($i=1; $i <= $pages_qty; $i++) : ?>
-                        <li <?php if ($i==$page) echo "class='page-item active'";
-                                  else           echo "class='page-item'"; ?>>
-                            <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$limit&page=$i"?> class="page-link"> <?=$i?>
-                            </a>
-                        </li>
-                    <?php endfor; ?>
-
-                    <li <?php if (($page+1)>$pages_qty) echo "class='page-item disabled'";
-                                  else          echo "class='page-item'"; ?>>
-                        <a href=<?="./articulos.php?order_by=$order_by&order_how=$order_how&limit=$limit&page=".($page+1)?> class="page-link"> Siguiente
-                        </a>
-                    </li>*/
-                @endphp
+                    @yield('pagination')
                 </ul>
             </div>
         </div>
@@ -184,13 +134,43 @@
 
 
 @section("modals")
-    <div id="modal_popup" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
 
-                @yield('modal-content')
+  <!-- :::::::::::::::::::::::::::::::: ADD Modal HTML ::::::::::::::::::::::::::::::::::::-->
+  <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+  <div id="add_modal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
 
-            </div>
-        </div>
-    </div>
+              @yield('add_modal_content')
+
+          </div>
+      </div>
+  </div>
+
+  <!-- :::::::::::::::::::::::::::::::: EDIT Modal HTML :::::::::::::::::::::::::::::::::::-->
+  <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+  <div class="container">
+      <div id="edit_modal" class="modal fade">
+          <div class="modal-dialog">
+              <div class="modal-content">
+
+              @yield('edit_modal_content')
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- :::::::::::::::::::::::::::::::: DELETE Modal HTML :::::::::::::::::::::::::::::::::-->
+  <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+  <div id="delete_modal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+
+              @yield('delete_modal_content')
+
+          </div>
+      </div>
+  </div>
+
 @endsection

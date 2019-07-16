@@ -37,6 +37,8 @@
 
   <script src="{{asset('js/buscarProd.js')}}"></script>
 
+  @yield('custom_scripts')
+
   @yield('custom_css')
 
 </head>
@@ -84,6 +86,7 @@
                                                          document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
+                                        <a class="dropdown-item" href="/perfil/{{ Auth::user()->id }}">Perfil de usuario</a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
@@ -158,32 +161,30 @@
                           Administrar</a>
                         <div class="collapse py-2" id="admin" data-parent="#navMenu">
                             <div class="dropdown dropright">
-                                <a class="dropdown-item px-2" href="admin/products" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/productos/admin?table=products&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Productos</a>
-                                <a class="dropdown-item px-2" href="admin/users" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/usuarios/admin?table=users&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Usuarios</a>
-                                <a class="dropdown-item px-2" href="admin/carts" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/carritos/admin?table=carts&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Carritos</a>
-                                <a class="dropdown-item px-2" href="admin/categories" aria-haspopup="true" aria-expanded="false">
+                                {{-- <a class="dropdown-item px-2" href="/categorias/admin?table=categories&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Categorías</a>
-                                <a class="dropdown-item px-2" href="admin/subcategories" aria-haspopup="true" aria-expanded="false">
-                                  Subcategorías </a>
-                                <a class="dropdown-item px-2" href="admin/countries" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/subcategorias/admin?table=subcategories&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
+                                  Subcategorías </a> --}}
+                                {{-- <a class="dropdown-item px-2" href="/paises/admin?order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Países </a>
-                                <a class="dropdown-item px-2" href="admin/provinces" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/provincias/admin?table=provinces&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Provincias </a>
-                                <a class="dropdown-item px-2" href="admin/colors" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/colores/admin?order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Colores</a>
-                                <a class="dropdown-item px-2" href="admin/sizes" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/tamanos/admin?order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Tamaños </a>
-                                <a class="dropdown-item px-2" href="admin/roles" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/roles/admin?order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Roles </a>
-                                <a class="dropdown-item px-2" href="admin/sexes" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="/sexos/admin?order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Sexos </a>
-                                <a class="dropdown-item px-2" href="admin/user_statuses" aria-haspopup="true" aria-expanded="false">
-                                  Estados De Usuario </a>
-                                <a class="dropdown-item px-2" href="admin/order_statuses" aria-haspopup="true" aria-expanded="false">
-                                  Estados De Carrito</a>
+                                <a class="dropdown-item px-2" href="/estados_de_usuario/admin?order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
+                                  Estados De Usuario </a> --}}
                             </div>
                         </div>
                     </li>

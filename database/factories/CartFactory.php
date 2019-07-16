@@ -5,11 +5,11 @@
 use App\Cart;
 use Faker\Generator as Faker;
 $factory->define(Cart::class, function (Faker $faker) {
-  $files = File::files(public_path('img/products'));
+  $files = File::files(public_path('img\products'));
   $images_list = [];
   foreach ($files as $file)
   {
-      $images_list[] = './img/products/' . pathinfo($file)['basename'];
+      $images_list[] = '.\img\products\\' . pathinfo($file)['basename'];
   }
 
     return [
@@ -19,7 +19,7 @@ $factory->define(Cart::class, function (Faker $faker) {
       'price'           => $faker->randomFloat(2, 300, 4000),
       'thumbnail'       => $faker->randomElement($images_list),
       'cant'            => $faker->numberBetween($min = 0, $max = 1000),
-      'discount'        => $faker->randomFloat(2, 10, 40),
+      'discount'        => $faker->randomElement([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,15,20,25,30,35,40,45,50]),
       'cart_number'     => $faker->numberBetween($min = 1000, $max = 15000),
       'status'          => $faker->randomElement([0,1]),
       'user_id'         => \App\User::inRandomOrder()->first()->id,

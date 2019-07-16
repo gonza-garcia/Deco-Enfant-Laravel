@@ -170,5 +170,13 @@ class CartController extends Controller
         return view("/cart")->with('cart', $openCart)->with('totalPrice', $totalPrice);
     }
 
+    public function api() {
+        return Cart::all();
+    }
+
+    public function single_cart_api($id){
+        return Cart::find($id);
+    }
+
 
 }

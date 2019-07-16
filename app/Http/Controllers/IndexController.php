@@ -85,6 +85,18 @@ class IndexController extends Controller
     }
 
     public function contacto(){
-        return view('/contacto');
+        $mensaje = '';
+        return view('/contacto', compact('mensaje'));
+    }
+
+    public function mensaje(){
+        $mensaje = 'Su consulta ha sido enviada. Muchas gracias';
+        return view('/contacto', compact('mensaje'));
+    }
+
+    public function perfil($id){
+        $history = \App\Cart::all()->where('user_id', '=', $id)->where('status', '=', 1)->groupBy('cart_number'); //Agrupamos por nro de carrito para mostrarlo en la vista.
+
+        return view('perfil',compact('history'));
     }
 }

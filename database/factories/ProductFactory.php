@@ -17,7 +17,7 @@ $factory->define(Product::class, function (Faker $faker) {
     $images_list = [];
     foreach ($files as $file)
     {
-        $images_list[] = './img/products/' . pathinfo($file)['basename'];
+        $images_list[] = '.\img\products\\' . pathinfo($file)['basename'];
     }
 
     return [
@@ -27,7 +27,7 @@ $factory->define(Product::class, function (Faker $faker) {
       'price'      => $faker->randomFloat(2, 300, 4000),
       'thumbnail'  => $faker->randomElement($images_list),
       'stock'      => $faker->numberBetween($min = 0, $max = 1000),
-      'discount'   => $faker->randomElement([0,0,0,0,0,0,0,0,10,15,20,25,30,35,40,45,50]),
+      'discount'   => $faker->randomElement([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,15,20,25,30,35,40,45,50]),
       'color_id'   => function () {
             return \App\Color::inRandomOrder()->first()->id;
         },

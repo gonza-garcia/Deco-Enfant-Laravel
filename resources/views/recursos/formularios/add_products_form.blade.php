@@ -1,4 +1,5 @@
-<form action="" method="POST" enctype="multipart/form-data">
+<form id='add_products_form' action='/producto/add' method="POST" enctype="multipart/form-data">
+    @csrf
     <!-- :::::::::::::::::ADD MODAL HEADER::::::::::::::::::: -->
     <div class="modal-header">
         <h4 class="modal-title">Agregar Producto</h4>
@@ -42,8 +43,8 @@
                         <!-- Images -->
         <div class="form-group">
             <label class="mb-0 text-right justify-content-end" for="images">Imagen: </label>
-            <input class="form-control w-100 text-right" id="browse" type="file" name="images" onchange="previewFiles()" multiple><br>
-            <div id="preview"></div>
+            <input class="form-control w-100 text-right" id="browseForAdd" type="file" name="thumbnail" onchange="previewFileForAdd()" multiple><br>
+            <div><img id='previewForAdd' class="img-fluid" src="" height="200" alt="Image preview..."></div>
         </div>
 
                         <!-- Stock -->
@@ -52,23 +53,10 @@
             <input class="form-control w-100 text-right" id="stock" type="numeric" name="stock">
         </div>
 
-                        <!-- Discount_off -->
+                        <!-- Discount -->
         <div class="form-group">
             <label class="mb-0 text-right justify-content-end" for="discount">Descuento: </label>
             <input class="form-control w-100 text-right" id="discount" type="numeric" name="discount">
-        </div>
-
-                        <!-- Size_Id (Foránea)-->
-        <div class="form-group">
-            <label class="mb-0 text-right justify-content-end" for="size_id">Tamaño: </label>
-            <select class="form-control w-75" id='size_id' name='size_id'>
-                @foreach ($all_sizes as $size)
-                    <option value={{$size->id}}>
-                        {{$size->name}}
-                    </option>
-                @endforeach
-            </select>
-            <button>Nuevo</button>
         </div>
 
                         <!-- Color_id (Foránea)-->
@@ -81,50 +69,33 @@
                     </option>
                 @endforeach
             </select>
-            <button>Nuevo</button>
         </div>
 
-                        <!-- Category_id (Foránea) -->
+                        <!-- Size_Id (Foránea)-->
         <div class="form-group">
-            <label class="mb-0 text-right justify-content-end" for="category_id">Categoría: </label>
-            <select class="form-control w-75" id='category_id' name='category_id'>
-                @foreach ($all_categories as $cat)
-                    <option value={{$cat->id}}>
-                        {{$cat->name}}
+            <label class="mb-0 text-right justify-content-end" for="size_id">Tamaño: </label>
+            <select class="form-control w-75" id='size_id' name='size_id'>
+                @foreach ($all_sizes as $size)
+                    <option value={{$size->id}}>
+                        {{$size->name}}
                     </option>
                 @endforeach
             </select>
-            <button>Nuevo</button>
         </div>
 
-                        <!-- Sub-Category_id (No existe en la db como una tabla aparte, es creada de la misma tabla de Categorias)-->
+                        <!-- Sub-Category_id-->
         <div class="form-group">
-            <label class="mb-0 text-right justify-content-end" for="sub_category_id">Sub-Categoría: </label>
-            <select class="form-control w-75" id='sub_category_id' name='sub_category_id'>
-                @foreach ($all_sub_categories as $sub_cat)
+            <label class="mb-0 text-right justify-content-end" for="subcategory_id">Subcategoría: </label>
+            <select class="form-control w-75" id='subcategory_id' name='subcategory_id'>
+                @foreach ($all_subcategories as $sub_cat)
                     <option value={{$sub_cat->id}}>
                         {{$sub_cat->name}}
                     </option>
                 @endforeach
             </select>
-            <button>Nuevo</button>
         </div>
     </div>
 
-                <!-- Created_at -->
-    <div class="form-group">
-
-    </div>
-
-                <!-- Updated_at -->
-    <div class="form-group">
-
-    </div>
-
-                <!-- Deleted_at -->
-    <div class="form-group">
-
-    </div>
 
     <!-- :::::::::::::::::ADD MODAL FOOTER::::::::::::::::::: -->
     <div class="form-group modal-footer">

@@ -36,16 +36,17 @@ Dèco Enfant - Contacto
                         <li class="social list-inline-item"><a href="https://www.facebook.com/decoenfant0/"><i class="text-muted fab fa-facebook"></i></a></li>
                         <li class="social list-inline-item"><a href="#whatsapp"><i class="text-muted fab fa-whatsapp"></i></a></li>
                     </ul>
-                    <form>
+                    <form action='/contacto' method='post'>
+                        @csrf
                         <h6 class="pl-2 mb-1">Contactanos:</h6>
                         <input type="email" class="form-control mb-1" placeholder="tuEmail@email.com" required>
                         <textarea  class="form-control w-100 border mb-2" rows="3" placeholder="dejanos tu consulta..." required></textarea>
                         <button class="btn btn-secondary float-right" type="submit">Enviar</button>
-                        <p class="d-none msg-consulta text-primary">Consultar enviada</p>
+                        <p class="d-block msg-consulta text-primary">{{$mensaje}}</p>
                     </form>
-                    
+
                 </div>
-            </div>            
+            </div>
         </div>
 
         <div class="col-md-6 col-sm-12">
@@ -54,7 +55,7 @@ Dèco Enfant - Contacto
             </div>
         </div>
     </div>
-    
+
 </div>
 
 
