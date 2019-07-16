@@ -47,14 +47,18 @@ window.addEventListener("load", function() {
               .then(function(item)
               {
                   var campos_editables = edit_form.querySelectorAll('.campo_editable');
+                  var campos_no_editables = edit_form.querySelectorAll('.campo_no_editable')
 
                   for (var i=0; i < campos_editables.length; i++)
                   {
                       campos_editables[i].value = item[campos_editables[i].name];
                   }
+                  for (var i=0; i < campos_no_editables.length; i++)
+                  {
+                      campos_no_editables[i].value = item[campos_no_editables[i].name];
+                  }
 
                   edit_form.action = edit_form.action + item.id;
-                  console.log(edit_form.action)
 
 
               })
