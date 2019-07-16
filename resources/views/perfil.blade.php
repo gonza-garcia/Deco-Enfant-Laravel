@@ -12,8 +12,47 @@
 
 @section("principal")
 
+  <div class="container mt-0 mb-4" id='resultados'>
+      <h1 id='error'></h1>
+      <div class='row p-0'>
+          <ul class="d-flex flex-column justify-content-between col-6" id='resultados_1'>
+              <li class='p-3 mb-3'><h1>Historial De Compras</h1></li>
+              <li>
+                  @forelse ($history as $cart)
+                  <p class="text-dark m-0">Codigo de compra: <span class="text-muted"> {{$cart->first()->cart_number}}</span></p>
+                  <p class="text-dark my-1">Enviado el: <span class="text-muted"> {{$cart->first()->updated_at}} </span></p>
 
-<div class="container">
+                      @foreach ($cart as $items)
+                            <div class="card-deck my-2 h-100">
+                                <div class="card">
+                                    <img class="card-img-top" src="{{ url($items->thumbnail)}}" alt={{ $items->name }}>
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ $items->name }}</h6>
+                                        <p class="card-text"><small>{{ $items->short_desc }}</small></p>
+                                    </div>
+                                    <div class="card-footer btn">
+                                        <a href="/producto/{{$items->id}}" class="d-block text-decoration-none"><small class="text-muted">Volver a comprar</small></a>
+                                    </div>
+                                </div>
+                            </div>
+                      @endforeach
+
+                  @empty
+                  <p>Su historial de compra está vacío</p>
+                  @endforelse
+              </li>
+
+          </ul>
+          {{-- <ul class="d-flex flex-column justify-content-between col-4" id='resultados_2'>
+
+          </ul> --}}
+          <ul class="d-flex flex-column justify-content-between col-6" id='resultados_3'>
+
+          </ul>
+      </div>
+  </div>
+
+{{-- <div class="container">
 
   <h1>Historial De Compras</h1>
   @forelse ($history as $cart)
@@ -46,7 +85,7 @@
   <p>Su historial de compra está vacío</p>
   @endforelse
 
-</div>
+</div> --}}
 
 @endsection
 

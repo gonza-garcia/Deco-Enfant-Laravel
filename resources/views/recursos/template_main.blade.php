@@ -75,24 +75,31 @@
                     @if (Route::has('login'))
                         <div class="top-right links">
                             @auth
-                                <li class="nav-item dropdown">
+                                <a href="/perfil/{{ Auth::user()->id }}">{{ Auth::user()->name }}</a> |
+
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                              document.getElementById('logout-form').submit();">CERRAR SESIÓN</a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                                {{-- <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }} <span class="caret"></span>
                                     </a>
-
+                                    <a class="dropdown-item" href="/perfil/{{ Auth::user()->id }}">Perfil de usuario</a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
-                                        <a class="dropdown-item" href="/perfil/{{ Auth::user()->id }}">Perfil de usuario</a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
                                         </form>
                                     </div>
-                                </li>
+                                </li> --}}
                             @else
                                 <a href="{{ route('login') }}">INICIAR SESIÓN</a> |
                                 @if (Route::has('register'))
@@ -165,8 +172,8 @@
                                   Productos</a>
                                 <a class="dropdown-item px-2" href="/usuarios/admin?table=users&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Usuarios</a>
-                                <a class="dropdown-item px-2" href="/carritos/admin?table=carts&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
-                                  Carritos</a>
+                                {{-- <a class="dropdown-item px-2" href="/carritos/admin?table=carts&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
+                                  Carritos</a> --}}
                                 {{-- <a class="dropdown-item px-2" href="/categorias/admin?table=categories&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Categorías</a>
                                 <a class="dropdown-item px-2" href="/subcategorias/admin?table=subcategories&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
@@ -226,7 +233,7 @@
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 <!-- FOOTER :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-  
+
 <footer class="navbar navbar-expand-lg mt-4">
       <div class='container'>
           <div class="row p-1 w-100">
