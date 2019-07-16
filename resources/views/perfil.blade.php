@@ -126,11 +126,7 @@
   @endforelse
 
 </div> --}}
-<<<<<<< HEAD
-
-=======
->>>>>>> d3511fe430be296737f94aac8863e89dc377237c
-
+  
 @endsection
 
 
