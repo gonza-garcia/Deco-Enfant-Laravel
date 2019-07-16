@@ -139,7 +139,7 @@
                 <a class="nav-link py-0" href="/">
                   inicio</a></li>
 
-              <li class="nav-item d-block px-3">
+              <li class="nav-item d-none d-md-block px-3">
                 <a class="nav-link py-0" href="/productos">
                   productos</a></li>
 
@@ -190,8 +190,8 @@
                 @endif
               @endauth
 
-              <li class="nav-item d-block d-md-none px-3">
-                  <a class="nav-link py-3" href="#menu" data-toggle="collapse" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></a>
+              <li class="nav-item d-block d-md-none border rounded px-2">
+                  <a class="nav-link py-2" href="#menu" data-toggle="collapse" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></a>
 
                   <div class="collapse py-2" id='menu' data-parent="#navMenu">
                       <div class="dropdown dropright">
@@ -225,12 +225,13 @@
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 <!-- FOOTER :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-  <footer class="navbar navbar-expand-lg mt-4">
+  
+<footer class="navbar navbar-expand-lg mt-4">
       <div class='container'>
           <div class="row p-1 w-100">
 
           <!-- COLUMNA 1   NAVEGACION::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-              <div class="footer-nav col-sm-3 p-0">
+              <div class="footer-nav col-md-3 col-sm-6 col-xs-12 p-0">
                   <div class="border-bottom border-light mr-5">
                       <h5 class="footer-title m-0 pb-1">Navegación</h5>
                   </div>
@@ -241,7 +242,7 @@
                   </ul>
               </div>
           <!-- COLUMNA 2   CONTACTO::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-              <div class="footer-nav col-sm-3 p-0">
+              <div class="footer-nav col-md-3 col-sm-6 col-xs-12 p-0">
                   <div class="border-bottom border-light mr-5">
                       <h5 class="footer-title m-0 pb-1">Contacto</h5>
                   </div>
@@ -252,7 +253,7 @@
                   </ul>
               </div>
         <!-- COLUMNA 3   SOCIAL:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-              <div class="footer-nav col-sm-3 p-0">
+              <div class="footer-nav col-md-3 col-sm-6 col-xs-12 p-0">
                   <div class="border-bottom border-light mr-5">
                       <h5 class="footer-title m-0 pb-1">Social</h5>
                   </div>
@@ -264,14 +265,14 @@
               </div>
 
         <!-- COLUMNA 4   NEWSLETTER:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-              <div class="footer-nav col-sm-3 p-0">
+              <div class="footer-nav col-md-3 col-sm-6 col-xs-12 p-0">
                   <div class="border-bottom border-light mr-5">
                       <h5 class="footer-title m-0 pb-1">Newsletter</h5>
                   </div>
                   <form>
                       <p class="p-none pt-2 text-white mb-1">Suscribite a nuestra newsletter:</p>
                       <div class="input-group">
-                          <input class="form-control w-75 border-white" type="email" placeholder="Email" required>
+                          <input class="form-control w-75 border-white mr-1" type="email" placeholder="Email" required>
                           <button class="btn btn-sm text-white mt-2 border-white">Suscribirme</button>
                       </div>
                   </form>
@@ -280,7 +281,7 @@
       </div>
   </footer>
 
-  <div class="d-flex col-12 text-secondary bg-dark">
+  <div class="d-flex col-12 text-secondary bg-dark text-center">
       <p class="d-flex m-0 mx-auto">Dèco Enfant. Todos los derechos reservados. Mar del plata, Buenos Aires, Argentina.</p>
   </div>
 

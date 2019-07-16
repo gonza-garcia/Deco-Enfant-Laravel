@@ -49,16 +49,22 @@
         display: none; }
 
 	#cart tbody td { 
-        display: block; padding: .6rem; min-width:320px;
+        display: block; 
+        padding: .6rem; 
+        min-width:320px;
     }
 
-    #cart tbody tr td:first-child {             background: #333; 
+    /* #cart tbody tr td:first-child {            
+         background: #333; 
         color: #fff; 
-    }
+    } */
 
 	#cart tbody td:before {
-		content: attr(data-th); font-weight: bold;
-		display: inline-block; width: 8rem;
+        content: attr(data-th); 
+        font-weight: bold;
+        display: inline-block; 
+        width: 8rem;
+        margin-bottom: 3px;
 	}
 	
 	#cart tfoot td {

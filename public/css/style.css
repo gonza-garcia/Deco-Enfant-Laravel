@@ -225,7 +225,14 @@ footer a:hover {
 }
 
 /* MEDIA QUERY HASTA 992PX (LG) --------------------------------- */
-@media (max-width: 992px) {}
+@media (max-width: 992px) {
+  /* footer{
+    text-align: center;
+    }
+  footer h5{
+    text-align: center;
+  } */
+}
 
 /* MEDIA QUERY DESDE 450px  ------------------------------------*/
 @media (min-width: 450px) {}
