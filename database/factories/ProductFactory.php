@@ -17,7 +17,7 @@ $factory->define(Product::class, function (Faker $faker) {
     $images_list = [];
     foreach ($files as $file)
     {
-        $images_list[] = '.\img\products\\' . pathinfo($file)['basename'];
+        $images_list[] = './img/products\\' . pathinfo($file)['basename'];
     }
 
     return [

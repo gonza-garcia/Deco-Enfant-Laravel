@@ -88,14 +88,14 @@ class ProductController extends Controller
     {
         $prod = \App\Product::findOrFail($id);
 
-        $newPath = 'public\img\products\\' . $request->thumbnail->getFilename() . '.jpg';
+        $newPath = 'public/img/products\\' . $request->thumbnail->getFilename() . '.jpg';
         $success = \File::copy($request->thumbnail->getRealPath(), base_path($newPath));
 
         $prod->update([ 'name'           => $request->name,
                         'short_desc'     => $request->short_desc,
                         'long_desc'      => $request->long_desc,
                         'price'          => $request->price,
-                        'thumbnail'      => '.\img\products\\' . $request->thumbnail->getFileName() . '.jpg',
+                        'thumbnail'      => './img/products\\' . $request->thumbnail->getFileName() . '.jpg',
                         'stock'          => $request->stock,
                         'discount'       => $request->discount,
                         'color_id'       => $request->color_id,
@@ -108,14 +108,14 @@ class ProductController extends Controller
 
     public function add(Request $request)
     {
-        $newPath = 'public\img\products\\' . $request->thumbnail->getFilename() . '.jpg';
+        $newPath = 'public/img/products\\' . $request->thumbnail->getFilename() . '.jpg';
         $success = \File::copy($request->thumbnail->getRealPath(), base_path($newPath));
 
         $prod = ['name'           => $request->name,
                  'short_desc'     => $request->short_desc,
                  'long_desc'      => $request->long_desc,
                  'price'          => $request->price,
-                 'thumbnail'      => '.\img\products\\' . $request->thumbnail->getFileName() . '.jpg',
+                 'thumbnail'      => './img/products\\' . $request->thumbnail->getFileName() . '.jpg',
                  'stock'          => $request->stock,
                  'discount'       => $request->discount,
                  'color_id'       => $request->color_id,

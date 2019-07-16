@@ -2,7 +2,7 @@
 
 
 @section("titulo")
-    Dèco Enfant - Historial de compras
+    Dèco Enfant - Perfil de Ususario
 @endsection
 
 @section('custom_css')
@@ -15,6 +15,46 @@
 
 <div class="container">
 
+
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Mi Perfil</h5>
+              <p class="card-text">Username: {{ Auth::user()->name }}</p>
+              <p class="card-text">Nombre: {{ Auth::user()->first_name }}</p>
+              <p class="card-text">Apellido: {{ Auth::user()->last_name }}</p>
+              <p class="card-text">Email: {{ Auth::user()->email }}</p>
+              <p class="card-text">Usuario desde : {{ Auth::user()->created_at }}</p>
+              <a href="/" class="btn btn-warning">Editar Perfil</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Ultima compra</h5>
+              <img src="" alt="">
+              <p class="card-text">
+                  @forelse ($history as $cart)
+                  @if(!$cart->first() == null)
+                  <p class="card-text text-dark m-0">Codigo de compra: <span class="text-muted"> {{$cart->first()->cart_number}}</span></p>
+                  <p class="card-text text-dark my-1">Enviado el: <span class="text-muted"> {{$cart->first()->updated_at}} </span></p>
+                  @break
+                  @endIf
+                  @empty
+                  <p>Su historial de compra está vacío</p>
+                  @endforelse
+              </p>
+              <a href="/history" class="btn btn-secondary">Ver mi histrial de compras</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+{{-- 
   <h1>Historial De Compras</h1>
   @forelse ($history as $cart)
   <p class="text-dark m-0">Codigo de compra: <span class="text-muted"> {{$cart->first()->cart_number}}</span></p>
@@ -46,7 +86,8 @@
   <p>Su historial de compra está vacío</p>
   @endforelse
 
-</div>
+</div> --}}
+
 
 @endsection
 

@@ -5,11 +5,11 @@
 use App\Cart;
 use Faker\Generator as Faker;
 $factory->define(Cart::class, function (Faker $faker) {
-  $files = File::files(public_path('img\products'));
+  $files = File::files(public_path('/img/products'));
   $images_list = [];
   foreach ($files as $file)
   {
-      $images_list[] = '.\img\products\\' . pathinfo($file)['basename'];
+      $images_list[] = './img/products\\' . pathinfo($file)['basename'];
   }
 
     return [

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Cart;
+use Auth;
+
+
 
 class IndexController extends Controller
 {
@@ -95,8 +100,9 @@ class IndexController extends Controller
     }
 
     public function perfil($id){
-        $history = \App\Cart::all()->where('user_id', '=', $id)->where('status', '=', 1)->groupBy('cart_number'); //Agrupamos por nro de carrito para mostrarlo en la vista.
-
+        // $history = \App\Cart::all()->where('user_id', '=', $id)->where('status', '=', 1)->groupBy('cart_number'); //Agrupamos por nro de carrito para mostrarlo en la vista.
+        $history = Cart::all()->where('user_id', '=', Auth::User()->id)->where('status', '=', 1)->groupBy('cart_number'); 
+        // dd($history[0]);//Agrupamos por nro de carrito para mostrarlo en la vista.
         return view('perfil',compact('history'));
     }
 }
