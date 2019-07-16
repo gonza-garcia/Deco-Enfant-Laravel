@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="/css/style_contacto.css">
 @endsection
 
-@section('custom_js')
-{{-- <script src="/js/product.js"></script> --}}
-@endsection
+{{-- @section('custom_js')
+<script src="/js/contacto.js"></script>
+@endsection --}}
 
 @section("titulo")
 Dèco Enfant - Contacto
@@ -41,7 +41,7 @@ Dèco Enfant - Contacto
                         <h6 class="pl-2 mb-1">Contactanos:</h6>
                         <input type="email" class="form-control mb-1" placeholder="tuEmail@email.com" required>
                         <textarea  class="form-control w-100 border mb-2" rows="3" placeholder="dejanos tu consulta..." required></textarea>
-                        <button class="btn btn-secondary float-right" type="submit">Enviar</button>
+                        <button class="btn btn-secondary float-right btn-enviar" type="submit">Enviar</button>
                         <p class="d-block msg-consulta text-primary">{{$mensaje}}</p>
                     </form>
 

@@ -1,5 +1,12 @@
 @extends("recursos/template_main")
 
+@section('custom_css')
+<link rel="stylesheet" href="/css/style_products.css">
+@endsection
+
+@section('custom_js')
+<script src="/js/products.js"></script>
+@endsection
 
 @section("titulo")
     Dèco Enfant - Productos
@@ -37,6 +44,10 @@
             <a href="/producto/{{$product->id}}">
                 <img class="img-fluid img-thumbnail destacados-img"
                 src={{ url($product->thumbnail)}} alt={{$product->name}}>
+                @if($product->discount > 25)
+                <h5 class="sale-off text-danger display-inline-block">{{ (number_format($product->discount)) }}% Off</h5>
+                @endif
+
 
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
                     <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2"><a class="text-decoration-none text-dark pt-2" href="/producto/{{$product->id}}">{{$product->name}}</a></div>

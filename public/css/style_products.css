@@ -1,0 +1,15 @@
+.sale-off{
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1rem;
+    position: absolute;
+    transform: translate(-50%, -60%);
+    top: 8%;
+    left: 77%;
+    background-color: white;
+    width: 105px;
+    text-align: -webkit-center;
+    height: 26px;
+    border-radius: 3%;
+    padding-top: 3px;
+}

@@ -63,7 +63,7 @@ Dèco Enfant - Detalle del carrito
           @forelse ($cart as $items)
           <tbody>
             <tr>
-              <td data-th="Product">
+              <td data-th="Producto">
                 <div class="row">
                   <div class="col-sm-3 d-sm-block"><img src="{{$items->thumbnail}}" alt={{ $items->name }} class="img-fluid img-thumbnail"/></div>
                   <div class="col-sm-9">
@@ -74,12 +74,12 @@ Dèco Enfant - Detalle del carrito
                 </div>
               </td>
               @if($items->discount > 25)
-              <td data-th="Price" class="text-danger">$ {{ (number_format($items->price - ($items->discount/100*$items->price),2, ',', '')) }}</td>
+              <td data-th="Precio" class="text-danger">$ {{ (number_format($items->price - ($items->discount/100*$items->price),2, ',', '')) }}</td>
               @else
-              <td data-th="Price">$ {{ (number_format($items->price, 2, ',', '')) }}</td>
+              <td data-th="Precio">$ {{ (number_format($items->price, 2, ',', '')) }}</td>
               @endif
               
-              <td data-th="Quantity">
+              <td data-th="Cantidad">
                 <form class="input-group" action="/cart/update/{{$items->id}}" method="post">
                   {{ csrf_field() }}     
                   {{ method_field('PUT') }}

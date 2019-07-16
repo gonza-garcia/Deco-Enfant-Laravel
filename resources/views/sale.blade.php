@@ -14,7 +14,7 @@
 <section class="container">
 
         <div class="text-center pt-4">
-            <h2 class="my-0 mx-auto w-100 text-uppercase"><img src="/img/icon-paper-plane.png"> sale</h2>
+            <h2 class="my-0 mx-auto w-100 text-uppercase"><img src="/img/icon-paper-plane.png"> ofertas</h2>
             <hr>
         </div>
     
@@ -40,7 +40,7 @@
                     <div class="sale-img">
                         <img class="img-fluid img-thumbnail destacados-img"
                     src={{ url($product->thumbnail)}} alt={{$product->name}}>
-                        <h5 class="sale-off text-danger display-inline-block">{{ (number_format($product->discount , 2, ',', '')) }}% Off</h5>
+                        <h5 class="sale-off text-danger display-inline-block">{{ (number_format($product->discount)) }}% Off</h5>
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-between">
                         <div id="descrip-item" class="col-12 col-lg-8 d-flex align-items-center p-2"><a class="text-decoration-none text-dark pt-2" href="/producto/{{$product->id}}">{{$product->name}}</a></div>

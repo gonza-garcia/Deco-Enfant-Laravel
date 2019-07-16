@@ -27,7 +27,7 @@ Dèco Enfant - Detalle producto
 
 <div class="container py-3">
   <div class="row">
-    <div class="col-md-12 mb-0 pl-0 mb-2">
+    <div class="col-md-12 mb-0 mb-2">
       <a class="menu-esc" href="/">Inicio</a><span class="mx-2 mb-0">/</span>
       <a class="menu-esc" href="/productos">Productos</a> <span class="mx-2 mb-0">/</span>
       <a class="menu-esc" href="/productos/{{ $product->subcategory->category->id }}">{{ $product->subcategory->category->name }}</a><span class="mx-2 mb-0">/</span>
@@ -38,7 +38,7 @@ Dèco Enfant - Detalle producto
 
 
 <div class="detalle-producto">  
-  <div class="container pl-0">    
+  <div class="container">    
     <div class="row">
 
       {{-- COLUMNA IZQUIERDA - IMAGEN DEL PRODUCTO --}}
@@ -75,21 +75,21 @@ Dèco Enfant - Detalle producto
                         <span class="d-inline-block mr-2 position-relative">
                           <input type="radio" id="option-md" name="shop-sizes">
                         </span>
-                        <span class="d-inline-block text-black">Medium</span>
+                        <span class="d-inline-block text-black">Chico</span>
                     </label>
         
                     <label for="option-lg" class="d-flex mr-3 mb-3">
                         <span class="d-inline-block mr-2 position-relative">
                           <input type="radio" id="option-lg" name="shop-sizes">
                         </span>
-                        <span class="d-inline-block text-black">Large</span>
+                        <span class="d-inline-block text-black">Mediano</span>
                     </label>
         
                     <label for="option-xl" class="d-flex mr-3 mb-3">
                         <span class="d-inline-block mr-2 position-relative">
                           <input type="radio" id="option-xl" name="shop-sizes">
                         </span>
-                        <span class="d-inline-block text-black">Extra Large</span>
+                        <span class="d-inline-block text-black">Grande</span>
                     </label>
                 </div>
 
