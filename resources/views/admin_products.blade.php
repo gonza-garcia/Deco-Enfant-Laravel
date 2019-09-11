@@ -28,7 +28,14 @@
         @endif
 
         <th style="width: {{$column['width']}};">
-            <a href="/productos/admin?table=products&order_by={{$key}}&order_how={{$new_order}}&limit={{$limit}}&page={{$page}}">
+            {{-- <a href="/productos/admin?table=products&order_by={{$key}}&order_how={{$new_order}}&limit={{$limit}}&page={{$page}}">
+                {{$column['name']}}
+            </a> --}}
+            <a href="{{route('products.admin', ['table'     => 'products',
+                                                'order_by'  => $key,
+                                                'order_how' => $new_order,
+                                                'limit'     => $limit,
+                                                'page'      => $page])}}">
                 {{$column['name']}}
             </a>
         </th>
@@ -76,7 +83,7 @@
   <!-- Celda Sub_Categoría -->
             <td> {{$product->subcategory->name}} </td>
   <!-- Celda Creado -->
-            <td> {{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $product->created_at)->format('d-m-Y')}} </td>
+            <td> {{$product->created_at->format('d-m-y')}} </td>
 
   <!-- Celda Acciones -->
             <td id="acciones">

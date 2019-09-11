@@ -8,23 +8,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes;  // agregado por borrado logico
-    // public $table = "products"; // si la tabla se llamaba PLURAL DE LA CLASE no es obligatorio
-    // public $primaryKey = "id"; // si es id, no es necesario escribirla
-    // public $timestamps = false;
-    public $guarded = []; // se pueden escribir todo lo que no este mencionado
-    // public $fillable = [];  // Los campos que si se pueden escribir en la base
+    use SoftDeletes;
 
+    public $timestamps = true;
+    protected $guarded = [];
+
+    protected $casts = [
+      'created_at' => 'datetime',
+      'updated_at' => 'datetime',
+      'deleted_at' => 'datetime',
+  ];
+
+    //::::::::::::::::::belongs to:::::::::::::::::::::
     public function color(){
-      return $this->belongsTo('App\Color', "color_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
+      return $this->belongsTo('App\Color', "color_id");
     }
-
     public function size(){
-      return $this->belongsTo('App\Size', "size_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
+      return $this->belongsTo('App\Size', "size_id");
     }
-
     public function subcategory(){
-      return $this->belongsTo('App\Subcategory', "subcategory_id"); //Modelo que quiero retornarn (tabla de destino) y columna de FK local
+      return $this->belongsTo('App\Subcategory', "subcategory_id");
     }
 
 }

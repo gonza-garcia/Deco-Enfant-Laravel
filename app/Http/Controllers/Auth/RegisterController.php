@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use App\Sex;
-use App\Role;
-use App\User_status;
+use Illuminate\Auth\Events\Registered;
+use App\Http\Requests\SaveUserRequest;
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use PhpParser\Node\Expr\Ternary;
 
 class RegisterController extends Controller
 {
@@ -27,99 +27,91 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    //Where to redirect users after registration. @var string
+    protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
+    //Create a new controller instance. @return void
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+
+
+   //Handle a registration request for the application. @param  \Illuminate\Http\Request  $request
+   //                                                   @return \Illuminate\Http\Response
+    public function register(SaveUserRequest $request)
     {
+        event(new Registered($user = $this->create($request)));
 
-        $rules = [
-            'name'          => ['required', 'string', 'max:255'],
-            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'      => ['required', 'string', 'min:8', 'confirmed'],
-            'first_name'    => ['required', 'alpha', 'max:50'],
-            'last_name'     => ['required', 'alpha', 'max:50'],
-            'date_of_birth' => ['date'],
-            'phone'         => ['numeric'],
-        ];
+        $this->guard()->login($user);
 
-        $messages = [
-            'required'  => 'El campo :attribute es obligatorio.',
-            'string'    => ':El campo :attribute debe ser una cadena de texto.',
-            'alpha'    => ':El campo :attribute no puede contener números.',
-            'max'       => 'El campo :attribute no debe superar :max caracteres.',
-            'min'       => 'El campo :attribute debe tener al menos :min caracteres.',
-            'confirmed' => 'El :attribute no coincide.',
-            'email'     => 'El campo :attribute debe tener formato de mail.',
-            'unique'    => 'El campo :attribute ya se encuentra en la base.',
-            'date'      => 'El campo :attribute no corresponde a una fecha.',
-            'numeric'   => 'El campo :attribute no corresponde a un numero.',
-        ];
-
-        return Validator::make($data, $rules, $messages);
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
+
+
+    //Get a validator for an incoming registration request. @param  array  $data @return \Illuminate\Contracts\Validation\Validator
+    // protected function validator(array $data)
+    // {
+
+    //     $rules = [
+    //         'name'          => ['required', 'string', 'max:255'],
+    //         'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
+    //         'password'      => ['required', 'string', 'min:8', 'confirmed'],
+    //         'first_name'    => ['required', 'alpha', 'max:50'],
+    //         'last_name'     => ['required', 'alpha', 'max:50'],
+    //         'date_of_birth' => ['date'],
+    //         'phone'         => ['numeric'],
+    //     ];
+
+    //     $messages = [
+    //         'required'  => 'El campo :attribute es obligatorio.',
+    //         'string'    => 'El campo :attribute debe ser una cadena de texto.',
+    //         'alpha'     => 'El campo :attribute no puede contener números.',
+    //         'max'       => 'El campo :attribute no debe superar :max caracteres.',
+    //         'min'       => 'El campo :attribute debe tener al menos :min caracteres.',
+    //         'confirmed' => 'El :attribute no coincide.',
+    //         'email'     => 'El campo :attribute debe tener formato de mail.',
+    //         'unique'    => 'El campo :attribute ya se encuentra en la base.',
+    //         'date'      => 'El campo :attribute no corresponde a una fecha.',
+    //         'numeric'   => 'El campo :attribute no corresponde a un numero.',
+    //     ];
+
+    //     return Validator::make($data, $rules, $messages);
+    // }
+
+
+
+    //Create a new user instance after a valid registration. @param  array  $data @return \App\User
+    protected function create(SaveUserRequest $data)
     {
-        if (isset($data['user_status_id']))
-            $status = $data['user_status_id'];
-        else
-            $status = 1;
-
-        if (isset($data['role_id']))
-            $rol = $data['role_id'];
-        else
-            $rol = 2;
-
-        return User::create([
-            'name'           => $data['name'],
-            'email'          => $data['email'],
-            'password'       => Hash::make($data['password']),
+        return \App\User::create([
+            'username'       => $data['username'],
             'first_name'     => $data['first_name'],
             'last_name'      => $data['last_name'],
+            'email'          => $data['email'],
+            'password'       => bcrypt($data['password']), //Hash::make($data['password']),
             'phone'          => $data['phone'],
             'date_of_birth'  => $data['date_of_birth'],
+            'province_id'    => $data['province_id'],
             'sex_id'         => $data['sex_id'],
-            'user_status_id' => $status,
-            'role_id'        => $rol,
+            'user_status_id' => 1,
+            'role_id'        => 2,
         ]);
     }
 
+
+
     protected function showRegistrationForm() {
 
-      $sexes = Sex::all();
-      $roles = Role::all();
-      $user_statuses = user_status::all();
-       // dd($sexes);
+      $sexes = \App\Sex::all();
+      $provinces = \App\Province::all();
+      $countries = \App\Country::all();
 
-      // return view('\auth\register')->with('sexes',$sexes);
-      return view('/auth/register',compact('sexes','roles','user_statuses'));
+      return view('/auth/register', compact('sexes','provinces','countries'));
 
     }
 }

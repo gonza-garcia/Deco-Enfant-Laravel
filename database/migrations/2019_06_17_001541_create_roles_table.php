@@ -14,10 +14,8 @@ class CreateRolesTable extends Migration
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->BigIncrements('id');
-            $table->string('name',30);
-            $table->timestamps();
-            $table->softDeletes(); // tambien debo indicarlo en el modelo
+            $table->tinyIncrements  ('id');
+            $table->string          ('name', 30)->nullable(false)->unique();
         });
     }
 

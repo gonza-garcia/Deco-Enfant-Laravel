@@ -16,10 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-      $categories = Category::orderBy('name')->get();
 
-      $vac = compact("categories");
-      return view ("categories",$vac);
     }
 
     /**
@@ -29,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view("Categoryadd");
+
     }
 
     /**
@@ -73,26 +70,14 @@ class CategoryController extends Controller
      */
     public function show(Category $myCategory)
     {
-      
-      $category = Category::find($myCategory->id);
-      // dd($category);
+        $categories = Category::orderBy('name')->get();
 
-      $subcats = Subcategory::where("category_id", $myCategory->id)
-      ->get();
-      // dd($subcats);
+        $products = Product::join('subcategories', 'subcategories.id', '=', 'subcategory_id')
+        ->join('categories', 'categories.id', '=', 'category_id')
+        ->where('category_id', '=', $myCategory->id)
+        ->paginate(8);
 
-      $categories = Category::orderBy('name')->get();
-
-      $products = Product::join('subcategories', 'subcategories.id', '=', 'subcategory_id')
-      ->join('categories', 'categories.id', '=', 'category_id')
-      ->where('category_id', '=', $myCategory->id)
-      ->select('products.*')
-      ->paginate(8);
-
-      // dd($products);
-
-      $vac = compact("category", "subcats", "categories", "products");
-      return view("products", $vac);
+        return view('products', compact('categories', 'products'));
     }
 
     /**

@@ -14,13 +14,11 @@ class CreateProvincesTable extends Migration
     public function up()
     {
         Schema::create('provinces', function (Blueprint $table) {
-            $table->BigIncrements('id');
-            $table->string('name',50);
-            $table->unsignedBigInteger('country_id');
-            $table->timestamps();
-            $table->softDeletes(); // tambien debo indicarlo en el modelo
+            $table->smallIncrements     ('id');
+            $table->string              ('name', 60)    ->nullable(false);
+            $table->unsignedTinyInteger ('country_id')  ->nullable(false);
 
-            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign             ('country_id')  ->references('id')->on('countries');
         });
     }
 

@@ -14,23 +14,24 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->BigIncrements('id');
-            $table->string('name',100)->nullable();
-            $table->string('short_desc',150)->nullable();
-            $table->string('long_desc',250)->nullable();
-            $table->decimal('price',6,2)->nullable();
-            $table->string('thumbnail')->nullable();
-            $table->integer('stock')->nullable()->default(0);
-            $table->integer('discount')->nullable()->default(0);
-            $table->unsignedBigInteger('color_id')->nullable()->default(1);
-            $table->unsignedBigInteger('size_id')->nullable()->default(1);
-            $table->unsignedBigInteger('subcategory_id')->nullable()->default(1);
+            $table->smallIncrements     ('id');
+            $table->string              ('name',        100)->nullable(false);
+            $table->string              ('short_desc',  150)->nullable(false);
+            $table->string              ('long_desc',   250)->nullable();
+            $table->string              ('thumbnail')       ->nullable(false);
+            $table->unsignedDecimal     ('price',       8,2)->nullable(false);
+            $table->unsignedTinyInteger ('discount')        ->nullable(false)   ->default(0);
+            $table->unsignedSmallInteger('stock')           ->nullable(false)   ->default(0);
+            $table->unsignedTinyInteger ('color_id')        ->nullable()        ->default(1);
+            $table->unsignedTinyInteger ('size_id')         ->nullable()        ->default(1);
+            $table->unsignedSmallInteger('subcategory_id')  ->nullable(false)   ->default(1);
+
             $table->timestamps();
             $table->softDeletes(); // tambien debo indicarlo en el modelo
 
-            $table->foreign('color_id')->references('id')->on('colors');
-            $table->foreign('size_id')->references('id')->on('sizes');
-            $table->foreign('subcategory_id')->references('id')->on('subcategories');
+            $table->foreign             ('color_id')        ->references('id')->on('colors');
+            $table->foreign             ('size_id')         ->references('id')->on('sizes');
+            $table->foreign             ('subcategory_id')  ->references('id')->on('subcategories');
 
         });
     }

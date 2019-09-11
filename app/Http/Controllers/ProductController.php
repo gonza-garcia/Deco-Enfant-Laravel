@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\SaveProductRequest;
+use App\Http\Resources\Product as ProductResource;
 
 use Illuminate\Support\Facades\DB;
 use App\Product;
-use App\Size;
-use App\Color;
 use App\Category;
 use App\Subcategory;
 
@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')       ->except('index','show');
+        $this->middleware('checkRole:1')->except('index','show');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -20,14 +28,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $products = Product::paginate(8);
-      $categories = Category::orderBy('name')->get();
+      $products     = Product::paginate(8);
+      $categories   = Category::orderBy('name')->get();
 
-    //   dd($products);
-
-      $vac = compact("products", "categories");
-      return view ("products",$vac);
-
+      return view ('products', compact('products','categories'));
     }
 
     /**
@@ -50,10 +54,34 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveProductRequest $request)
     {
-        //
+        // $product = Product::create($request->validated());
+
+        // return ProductResource::make($product);
+
+        $newPath = 'public/img/products\\' . $request->thumbnail->getFilename() . '.jpg';
+        $success = \File::copy($request->thumbnail->getRealPath(), base_path($newPath));
+
+        $prod = ['name'           => $request->name,
+                 'short_desc'     => $request->short_desc,
+                 'long_desc'      => $request->long_desc,
+                 'price'          => $request->price,
+                 'thumbnail'      => './img/products\\' . $request->thumbnail->getFileName() . '.jpg',
+                 'stock'          => $request->stock,
+                 'discount'       => $request->discount,
+                 'color_id'       => $request->color_id,
+                 'size_id'        => $request->size_id,
+                 'subcategory_id' => $request->subcategory_id,
+               ];
+
+        \App\Product::create($prod);
+
+        return redirect('/productos/admin?table=products&order_by=id&order_how=ASC&limit=20&page=1');
     }
+
+
+
 
     /**
      * Display the specified resource.
@@ -61,19 +89,9 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $prod)
+    public function show(Product $product)
     {
-        $product = Product::find($prod->id);
-        // dd($product->subcategory);
-
-        $subcategory = Subcategory::select('subcategories.name')
-        ->join('products', 'subcategory_id', '=', 'subcategories.id')
-        ->where('subcategory_id', $prod->subcategory_id)
-        ->first();
-      //   dd($subcategory->name);
-
-        $vac = compact("product", "subcategory");
-        return view("product",$vac);
+        return view('product', compact('product'));
     }
 
 
@@ -106,27 +124,6 @@ class ProductController extends Controller
         return redirect('/productos/admin?table=products&order_by=id&order_how=ASC&limit=20&page=1');
     }
 
-    public function add(Request $request)
-    {
-        $newPath = 'public/img/products\\' . $request->thumbnail->getFilename() . '.jpg';
-        $success = \File::copy($request->thumbnail->getRealPath(), base_path($newPath));
-
-        $prod = ['name'           => $request->name,
-                 'short_desc'     => $request->short_desc,
-                 'long_desc'      => $request->long_desc,
-                 'price'          => $request->price,
-                 'thumbnail'      => './img/products\\' . $request->thumbnail->getFileName() . '.jpg',
-                 'stock'          => $request->stock,
-                 'discount'       => $request->discount,
-                 'color_id'       => $request->color_id,
-                 'size_id'        => $request->size_id,
-                 'subcategory_id' => $request->subcategory_id,
-               ];
-
-        \App\Product::create($prod);
-
-        return redirect('/productos/admin?table=products&order_by=id&order_how=ASC&limit=20&page=1');
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -144,10 +141,7 @@ class ProductController extends Controller
         $products = Product::where('name', 'like', '%'.$buscado.'%')->get();
         $categories = Category::orderBy('name')->get();
 
-      //   dd($products);
-
-        $vac = compact("products", "categories");
-        return view ("products",$vac);
+        return view ('products', compact('products', 'categories'));
     }
 
     public function destacados()
@@ -156,25 +150,13 @@ class ProductController extends Controller
         ->limit(8)
         ->get();
 
-        // dd($products);
-
-        $vac = compact("products");
-        return view ("/index",$vac);
+        return view ("/index", compact('products'));
     }
 
 
-    public function api() {
-        return Product::all();
-    }
-
-    public function single_product_api($id){
-        return Product::find($id);
-    }
-
-    public function sale(){
-
-        $products = Product::where('discount', '>', '15')->paginate(8);
-        // dd($products);
+    public function sale()
+    {
+        $products = Product::where('discount', '!=', '0')->paginate(8);
         $categories = Category::orderBy('name')->get();
 
         foreach($products as $product)
@@ -205,7 +187,7 @@ class ProductController extends Controller
                     'size_id'        => ['width' => '5.00%', 'name' => 'Tamaño'],
                     'category_id'    => ['width' => '5.00%', 'name' => 'Categoría'],
                     'subcategory_id' => ['width' => '5.00%', 'name' => 'Subcategoría'],
-                    'created_at'     => ['width' => '5.00%', 'name' => 'Creado'],
+                    'created_at'     => ['width' => '10.0%', 'name' => 'Creado'],
                     'updated_at'     => ['width' => '5.00%', 'name' => 'Actualizado'],
                     'deleted_at'     => ['width' => '5.00%', 'name' => 'Borrado'],
                     ];
@@ -218,15 +200,6 @@ class ProductController extends Controller
         $limit = "20";
         $page = 1;
         $total_rows = DB::select("SELECT COUNT(*) as cantidad FROM products")[0]->cantidad;
-
-        // dd((isset($_GET['order_by'])),
-        //     (isset($_GET['order_how'])),
-        //     (isset($_GET['limit'])),
-        //     (isset($_GET['page'])),
-        //     (array_key_exists($_GET['order_by'], $columns)),
-        //     (in_array($_GET['order_how'], $order_how_options)),
-        //     (in_array($_GET['limit'], $limit_options)),
-        //     (is_numeric($_GET['page'])));
 
         if ((isset($_GET['order_by'])) &&
             (isset($_GET['order_how'])) &&

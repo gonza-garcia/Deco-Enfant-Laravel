@@ -15,8 +15,8 @@ class ProvincesTableSeeder extends Seeder
         $argentina  = \App\Country::firstOrCreate(['name'=>'Argentina']);
         $bolivia    = \App\Country::firstOrCreate(['name'=>'Bolivia']);
         $brasil     = \App\Country::firstOrCreate(['name'=>'Brasil']);
-        $colombia   = \App\Country::firstOrCreate(['name'=>'Colombia']);
         $chile      = \App\Country::firstOrCreate(['name'=>'Chile']);
+        $colombia   = \App\Country::firstOrCreate(['name'=>'Colombia']);
         $ecuador    = \App\Country::firstOrCreate(['name'=>'Ecuador']);
         $paraguay   = \App\Country::firstOrCreate(['name'=>'Paraguay']);
         $peru       = \App\Country::firstOrCreate(['name'=>'Perú']);
@@ -29,8 +29,8 @@ class ProvincesTableSeeder extends Seeder
                                'Santa Fe','Santiago Del Estero','Tierra Del Fuego','Tucumán'],
             $bolivia->id   => ['Abel Iturralde','Abuná','Alonso De Ibañez'],
             $brasil->id    => ['Acre','Bahia','Sao Paulo'],
-            $colombia->id  => ['Caldas','Magdalena','Santander'],
             $chile->id     => ['Atacama','Coquimbo','Valparaíso'],
+            $colombia->id  => ['Caldas','Magdalena','Santander'],
             $ecuador->id   => ['Bolívar','Chimborazo','Esmeraldas'],
             $paraguay->id  => ['Alto Paraná','Boquerón','Central'],
             $peru->id      => ['Amazonas','Arequipa','Callao'],

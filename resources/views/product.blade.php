@@ -29,16 +29,16 @@ Dèco Enfant - Detalle producto
   <div class="row">
     <div class="col-md-12 mb-0 mb-2">
       <a class="menu-esc" href="/">Inicio</a><span class="mx-2 mb-0">/</span>
-      <a class="menu-esc" href="/productos">Productos</a> <span class="mx-2 mb-0">/</span>
-      <a class="menu-esc" href="/productos/{{ $product->subcategory->category->id }}">{{ $product->subcategory->category->name }}</a><span class="mx-2 mb-0">/</span>
+      <a class="menu-esc" href="/products">Productos</a> <span class="mx-2 mb-0">/</span>
+      <a class="menu-esc" href="/products/{{ $product->subcategory->category->id }}">{{ $product->subcategory->category->name }}</a><span class="mx-2 mb-0">/</span>
       <span class="text-black">{{ $product->subcategory->name }}</span>
     </div>
   </div>
 </div>
 
 
-<div class="detalle-producto">  
-  <div class="container">    
+<div class="detalle-producto">
+  <div class="container">
     <div class="row">
 
       {{-- COLUMNA IZQUIERDA - IMAGEN DEL PRODUCTO --}}
@@ -70,21 +70,21 @@ Dèco Enfant - Detalle producto
                         </span>
                         <span class="d-inline-block text-black">{{ $product->size->name }}</span>
                     </label>
-        
+
                     <label for="option-md" class="d-flex mr-3 mb-3">
                         <span class="d-inline-block mr-2 position-relative">
                           <input type="radio" id="option-md" name="shop-sizes">
                         </span>
                         <span class="d-inline-block text-black">Chico</span>
                     </label>
-        
+
                     <label for="option-lg" class="d-flex mr-3 mb-3">
                         <span class="d-inline-block mr-2 position-relative">
                           <input type="radio" id="option-lg" name="shop-sizes">
                         </span>
                         <span class="d-inline-block text-black">Mediano</span>
                     </label>
-        
+
                     <label for="option-xl" class="d-flex mr-3 mb-3">
                         <span class="d-inline-block mr-2 position-relative">
                           <input type="radio" id="option-xl" name="shop-sizes">
@@ -99,15 +99,15 @@ Dèco Enfant - Detalle producto
                       <div>
                         <input data-image="color1" type="radio" id="color1" name="color" value="color1" checked>
                         <label for="color1"><span></span></label>
-                      </div>                      
+                      </div>
                       <div>
                         <input data-image="color2" type="radio" id="color2" name="color" value="color2">
                         <label for="color2"><span></span></label>
-                      </div>                      
+                      </div>
                       <div>
                         <input data-image="color3" type="radio" id="color3" name="color" value="color3">
                         <label for="color3"><span></span></label>
-                      </div>                      
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -122,7 +122,7 @@ Dèco Enfant - Detalle producto
                       <input type="hidden" name="prodId" value="{{ $product->id }}">
                     </div>
                   </div>
-                  
+
                   <p>
                     <button type="submit" class="btn-cart btn btn-sm height-auto px-3 py-2 float-left"> Agregar  <i class="mr-1 fas fa-shopping-cart"></i>
                     </button>
@@ -145,6 +145,6 @@ Dèco Enfant - Detalle producto
     </div>
   </div>
 </div>
-         
-    
+
+
 @endsection

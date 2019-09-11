@@ -54,6 +54,11 @@ window.addEventListener("load", function() {
 
 function buscarProds(buscador) {
     fetch("http://localhost:8000/api/products")
+    // fetch("http://deco-enfant.dhalumnos.com/api/products", {
+    //     headers: {
+    //       'Access-Control-Allow-Origin': '*'
+    //     },
+    //   })
     .then(function(respuesta) {
         return respuesta.json()
     })
@@ -114,3 +119,23 @@ function buscarProds(buscador) {
         console.log(e);
     })
 }
+
+// window.addEventListener("load", function() {
+
+
+
+//     get_api_data(masters_url).then(function(json_data){         //obtengo todos los países (masters)
+//         fill_select(select_masters, json_data, master_val);})   //relleno el select de países
+
+// })
+
+
+
+// //recibe una url de una api, espera la respuesta y la devuelve en formato json
+// async function get_api_data(url)
+// {
+//     const response  = await fetch(url, {});
+//     const json_data = await response.json();
+
+//     return json_data;
+// }

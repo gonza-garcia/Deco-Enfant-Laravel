@@ -21,21 +21,15 @@ $factory->define(Product::class, function (Faker $faker) {
     }
 
     return [
-      'name'       => $faker->sentence(3),
-      'short_desc' => $faker->sentence(5),
-      'long_desc'  => $faker->sentence(8),
-      'price'      => $faker->randomFloat(2, 300, 4000),
-      'thumbnail'  => $faker->randomElement($images_list),
-      'stock'      => $faker->numberBetween($min = 0, $max = 1000),
-      'discount'   => $faker->randomElement([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,15,20,25,30,35,40,45,50]),
-      'color_id'   => function () {
-            return \App\Color::inRandomOrder()->first()->id;
-        },
-      'size_id'    => function () {
-            return \App\Size::inRandomOrder()->first()->id;
-        },
-      'subcategory_id'  => function () {
-            return \App\Subcategory::inRandomOrder()->first()->id;
-        },
+      'name'            => $faker->sentence(3),
+      'short_desc'      => $faker->sentence(5),
+      'long_desc'       => $faker->sentence(8),
+      'thumbnail'       => $faker->randomElement($images_list),
+      'price'           => $faker->randomFloat(2, 300, 4000),
+      'discount'        => $faker->randomElement([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,15,20,25,30,35,40,45,50]),
+      'stock'           => $faker->numberBetween($min = 0, $max = 1000),
+      'color_id'        => \App\Color::inRandomOrder()->first()->id,
+      'size_id'         => \App\Size::inRandomOrder()->first()->id,
+      'subcategory_id'  => \App\Subcategory::inRandomOrder()->first()->id,
     ];
 });

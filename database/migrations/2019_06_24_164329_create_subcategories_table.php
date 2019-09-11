@@ -14,13 +14,11 @@ class CreateSubcategoriesTable extends Migration
     public function up()
     {
         Schema::create('subcategories', function (Blueprint $table) {
-            $table->BigIncrements('id');
-            $table->string('name',100);
-            $table->unsignedBigInteger('category_id');
-            $table->timestamps();
-            $table->softDeletes(); // tambien debo indicarlo en el modelo
+            $table->smallIncrements     ('id');
+            $table->string              ('name', 100)   ->nullable(false);
+            $table->unsignedTinyInteger ('category_id') ->nullable(false)->default(1);
 
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign             ('category_id') ->references('id')->on('categories');
         });
     }
 

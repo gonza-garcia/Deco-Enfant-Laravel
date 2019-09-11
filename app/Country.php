@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Country extends Model
 {
-    use SoftDeletes;  // agregado por borrado logico
+    public $timestamps = false;
+    protected $guarded = [];
 
-    public $guarded = []; // se pueden escribir todo lo que no este mencionado
-    // public $fillable = [];  // Los campos que si se pueden escribir en la base
+    //::::::::::::::::::has many::::::::::::::::::::
+    public function provinces(){
+        return $this->hasMany('App\Province', "country_id");
+    }
 }

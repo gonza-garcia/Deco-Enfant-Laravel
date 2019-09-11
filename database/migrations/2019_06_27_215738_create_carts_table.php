@@ -14,27 +14,28 @@ class CreateCartsTable extends Migration
     public function up()
     {
         Schema::create('carts', function (Blueprint $table) {
-            $table->BigIncrements('id');
-            $table->string('name',100)->nullable();
-            $table->string('short_desc',150)->nullable();
-            $table->text('long_desc')->nullable();
-            $table->decimal('price',8,2)->nullable();
-            $table->string('thumbnail')->nullable();
-            $table->integer('cant')->nullable()->default(0);
-            $table->decimal('discount',8,2)->nullable();
-            $table->bigInteger('cart_number')->nullable();
-            $table->integer('status')->nullable()->default(0);
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('color_id')->nullable();
-            $table->unsignedBigInteger('size_id')->nullable();
-            $table->unsignedBigInteger('subcategory_id')->nullable();
+            $table->smallIncrements     ('id');
+            $table->unsignedSmallInteger('cart_number')     ->nullable(false)->unique();
+            $table->string              ('name',        100)->nullable(false);
+            $table->string              ('short_desc',  150)->nullable(false);
+            $table->string              ('long_desc',   250)->nullable();
+            $table->string              ('thumbnail')       ->nullable(false);
+            $table->unsignedDecimal     ('price',       8,2)->nullable(false);
+            $table->unsignedTinyInteger ('discount')        ->nullable(false);
+            $table->unsignedSmallinteger('cant')            ->nullable(false);
+            $table->unsignedTinyInteger ('status')          ->nullable()->default(0);
+            $table->unsignedTinyInteger ('color_id')        ->nullable();
+            $table->unsignedTinyInteger ('size_id')         ->nullable();
+            $table->unsignedSmallInteger('subcategory_id')  ->nullable(false);
+            $table->unsignedSmallInteger('user_id')         ->nullable(false);
+
             $table->timestamps();
             $table->softDeletes(); // tambien debo indicarlo en el modelo
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('color_id')->references('id')->on('colors');
-            $table->foreign('size_id')->references('id')->on('sizes');
-            $table->foreign('subcategory_id')->references('id')->on('subcategories');
+            $table->foreign('color_id')         ->references('id')->on('colors');
+            $table->foreign('size_id')          ->references('id')->on('sizes');
+            $table->foreign('subcategory_id')   ->references('id')->on('subcategories');
+            $table->foreign('user_id')          ->references('id')->on('users');
         });
     }
 

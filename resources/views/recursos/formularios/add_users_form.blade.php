@@ -36,26 +36,32 @@
         <div class="form-group">
 
         </div>
-                    <!-- Phone -->
-        <div class="form-group">
-
-        </div>
 
                     <!-- Password -->
         <div class="form-group">
 
         </div>
 
-                    <!-- Sex_id (Foránea) -->
+                    <!-- Phone -->
         <div class="form-group">
 
         </div>
-                    <!-- User_status_id (Foránea) -->
+
+                    <!-- Province_id (Foránea) -->
+        <div class="form-group">
+
+        </div>
+                    <!-- Sex_id (Foránea) -->
         <div class="form-group">
 
         </div>
 
                     <!-- Role_id (Foránea) -->
+        <div class="form-group">
+
+        </div>
+
+        <!-- User_status_id (Foránea) -->
         <div class="form-group">
 
         </div>

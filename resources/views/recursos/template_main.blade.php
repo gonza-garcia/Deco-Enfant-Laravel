@@ -28,10 +28,10 @@
   <!-- Hojas de Estilo-------------------------------------------->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
@@ -75,7 +75,7 @@
                     @if (Route::has('login'))
                         <div class="top-right links">
                             @auth
-                                <a href="/perfil/{{ Auth::user()->id }}">{{ Auth::user()->name }}</a> |
+                                <a href="/perfil/{{ Auth::user()->id }}">{{ Auth::user()->username }}</a> |
 
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();">CERRAR SESIÓN</a>
@@ -85,7 +85,7 @@
                                 </form>
                                 {{-- <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                        {{ Auth::user()->username }} <span class="caret"></span>
                                     </a>
                                     <a class="dropdown-item" href="/perfil/{{ Auth::user()->id }}">Perfil de usuario</a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -146,11 +146,11 @@
                 <a id='link_resultados' class="nav-link py-0" href="#resultados" data-toggle="collapse" aria-haspopup="true" aria-expanded="false"></a></li> --}}
 
               <li class="nav-item d-none d-md-block px-3">
-                <a class="nav-link py-0" href="/">
+                <a class="nav-link py-0" href="{{route('home')}}">
                   inicio</a></li>
 
               <li class="nav-item d-none d-md-block px-3">
-                <a class="nav-link py-0" href="/productos">
+                <a class="nav-link py-0" href="{{route('products.index')}}">
                   productos</a></li>
 
               <li class="nav-item d-none d-md-block px-3">
@@ -168,7 +168,11 @@
                           Administrar</a>
                         <div class="collapse py-2" id="admin" data-parent="#navMenu">
                             <div class="dropdown dropright">
-                                <a class="dropdown-item px-2" href="/productos/admin?table=products&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item px-2" href="{{route('products.admin', [
+                                    'table'     => 'products',                                                  'order_by'  => 'id',
+                                    'order_how' => 'ASC',
+                                    'limit'     => '20',
+                                    'page'      => '1'])}}" aria-haspopup="true" aria-expanded="false">
                                   Productos</a>
                                 <a class="dropdown-item px-2" href="/usuarios/admin?table=users&order_by=id&order_how=ASC&limit=20&page=1" aria-haspopup="true" aria-expanded="false">
                                   Usuarios</a>
@@ -203,13 +207,17 @@
 
                   <div class="collapse py-2" id='menu' data-parent="#navMenu">
                       <div class="dropdown dropright">
-                          <a class="dropdown-item px-2" href="/" aria-haspopup="true" aria-expanded="false"> Inicio</a>
-                          <a class="dropdown-item px-2" href="/productos" aria-haspopup="true" aria-expanded="false"> Productos </a>
+                          <a class="dropdown-item px-2" href="{{route('home')}}" aria-haspopup="true" aria-expanded="false"> Inicio</a>
+                          <a class="dropdown-item px-2" href="{{route('products.index')}}" aria-haspopup="true" aria-expanded="false"> Productos </a>
                           <a class="dropdown-item px-2" href="/sale" aria-haspopup="true" aria-expanded="false"> Ofertas </a>
                           <a class="dropdown-item px-2" href="/contacto" aria-haspopup="true" aria-expanded="false"> Contacto </a>
                           @auth
                             @if (Auth::user()->role_id == 1)
-                                <a class="dropdown-item px-2" href="admin/products" aria-haspopup="true" aria-expanded="false"> Administrar </a>
+                                <a class="dropdown-item px-2" href="{{route('products.admin', [
+                                    'table'     => 'products',                                                  'order_by'  => 'id',
+                                    'order_how' => 'ASC',
+                                    'limit'     => '20',
+                                    'page'      => '1'])}}" aria-haspopup="true" aria-expanded="false"> Administrar </a>
                             @endif
                           @endauth
                       </div>
@@ -244,8 +252,8 @@
                       <h5 class="footer-title m-0 pb-1">Navegación</h5>
                   </div>
                   <ul class="p-none pt-2">
-                      <li><a href="/">Inicio</a></li>
-                      <li><a href="/productos">Productos</a></li>
+                      <li><a href="{{route('home')}}">Inicio</a></li>
+                      <li><a href="{{route('products.index')}}">Productos</a></li>
                       <li><a href="/sale">Sale</a></li>
                   </ul>
               </div>
@@ -349,7 +357,6 @@
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
 
   @yield("custom_js")
 

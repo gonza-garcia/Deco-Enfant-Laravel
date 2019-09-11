@@ -14,27 +14,28 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->BigIncrements('id');
-            $table->string('name')->nullable();
-            $table->string('first_name',50)->nullable(false);
-            $table->string('last_name',50)->nullable(false);
-            $table->string('email')->unique();
-            $table->string('password')->nullable();
-            $table->string('phone')->nullable();
-            $table->date('date_of_birth')->nullable();
-            $table->unsignedBigInteger('province_id')->nullable();
-            $table->unsignedBigInteger('sex_id')->nullable();
-            $table->unsignedBigInteger('role_id')->nullable()->default(2);
-            $table->unsignedBigInteger('user_status_id')->nullable()->default(1);
-            $table->timestamps();
-            $table->softDeletes(); // tambien debo indicarlo en el modelo
-            $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
+            $table->smallIncrements     ('id');
+            $table->string              ('username')         ->nullable(false);
+            $table->string              ('first_name',  50)  ->nullable(false);
+            $table->string              ('last_name',   50)  ->nullable(false);
+            $table->string              ('email')            ->nullable(false)->unique();
+            $table->string              ('password')         ->nullable(false);
+            $table->string              ('phone')            ->nullable();
+            $table->datetime            ('date_of_birth')    ->nullable(false);
+            $table->unsignedSmallInteger('province_id')      ->nullable(false);
+            $table->unsignedTinyInteger ('sex_id')           ->nullable(false);
+            $table->unsignedTinyInteger ('role_id')          ->nullable(false)->default(2);
+            $table->unsignedTinyInteger ('user_status_id')   ->nullable(false)->default(1);
+            $table->timestamp           ('email_verified_at')->nullable();
 
-            $table->foreign('province_id')->references('id')->on('provinces');
-            $table->foreign('sex_id')->references('id')->on('sexes');
-            $table->foreign('role_id')->references('id')->on('roles');
-            $table->foreign('user_status_id')->references('id')->on('user_statuses');
+            $table->rememberToken();
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign             ('province_id')      ->references('id')->on('provinces');
+            $table->foreign             ('sex_id')           ->references('id')->on('sexes');
+            $table->foreign             ('role_id')          ->references('id')->on('roles');
+            $table->foreign             ('user_status_id')   ->references('id')->on('user_statuses');
 
         });
     }

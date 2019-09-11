@@ -78,9 +78,9 @@ class UserController extends Controller
     public function admin()
     {
         $columns = ['id'             => ['width' => '2.00%', 'name' => 'Id'],
-                    'name'           => ['width' => '6.00%', 'name' => 'Nombre'],
-                    'first_name'     => ['width' => '6.5%', 'name' => 'Primer Nombre'],
-                    'last_name'      => ['width' => '6.5%', 'name' => 'Apellido'],
+                    'username'       => ['width' => '6.00%', 'name' => 'Nombre de Usuario'],
+                    'first_name'     => ['width' => '6.50%', 'name' => 'Primer Nombre'],
+                    'last_name'      => ['width' => '6.50%', 'name' => 'Apellido'],
                     'email'          => ['width' => '6.00%', 'name' => 'Email'],
                     'password'       => ['width' => '6.00%', 'name' => 'Pass'],
                     'phone'          => ['width' => '4.00%', 'name' => 'Telefono'],

@@ -16,8 +16,8 @@
 
                     <!-- User_name -->
         <div class="form-group">
-            <label class='mb-0 text-right justify-content-end' for='name'>Username</label>
-            <input type='text' name='name' value="" class='campo_editable form-control w-100 text-right'>
+            <label class='mb-0 text-right justify-content-end' for='username'>Nombre de usuario</label>
+            <input type='text' name='username' value="" class='campo_editable form-control w-100 text-right'>
         </div>
 
                     <!-- First_name -->

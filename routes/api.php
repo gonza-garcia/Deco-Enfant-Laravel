@@ -17,11 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/products', 'ProductController@api');
-Route::get('/products/{id}', 'ProductController@single_product_api');
+Route::get('/products',                      'ApiController@all_products');
+Route::get('/products/{id}',                 'ApiController@single_product');
 
-Route::get('/users',    'UserController@api');
-Route::get('/users/{id}', 'UserController@single_user_api');
+Route::get('/users',                         'ApiController@all_users');
+Route::get('/users/{id}',                    'ApiController@single_user');
 
-Route::get('/carts',    'CartController@api');
-Route::get('/carts/{id}', 'CartController@single_cart_api');
+Route::get('/countries',                     'ApiController@all_countries');
+
+Route::get('/provinces',                     'ApiController@all_provinces');
+
+Route::get('/country/{country}/provinces',   'ApiController@all_provinces_from');
+

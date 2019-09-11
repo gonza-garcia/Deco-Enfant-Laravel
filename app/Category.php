@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use SoftDeletes;  // agregado por borrado logico
+    public $timestamps = false;
     protected $guarded = [];
 
+    //::::::::::::::::::has many::::::::::::::::::::
     public function subcategories(){
-        return $this->hasMany('App\Subcategory', "category_id"); //tabla de destino y columna de FK local
+        return $this->hasMany('App\Subcategory', "category_id");
     }
 }

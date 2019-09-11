@@ -16,34 +16,58 @@
 // });
 
 Route::get("/install", function(){
-  Artisan::call("migrate:fresh");
-  Artisan::call("db:seed");
+    Artisan::call("migrate:fresh");
+    Artisan::call("db:seed");
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'SiteController@home')->name('home');
+
+// contacto
+Route::get('/contacto', 'SiteController@contacto')->name('contact');
+Route::post('/contacto', 'SiteController@mensaje')->name('contact.mensaje');
+
+Route::get('/perfil/{id}', 'SiteController@perfil')->name('profile');
+
+//mensaje
+Route::get('/message', 'SiteController@message')->name('message');
 
 
-// Aca comienzan los cambios
-
-Route::get('/', 'IndexController@index');
-Route::get('/', 'ProductController@destacados');
+// Route::get   ('/products',                'ProductController@index') ->name('products.index');
+// Route::get   ('/products/{product}',      'ProductController@show')  ->name('products.show');
 
 
-Route::get('/productos/admin', 'ProductController@admin');
-Route::post('/producto/add', 'ProductController@add');
-Route::post('/producto/edit/{id}', 'ProductController@update');
+// Route::group(['middleware' => ['auth','checkRole:1']], function () {
+
+//     Route::get   ('/products/admin',          'ProductController@admin') ->name('products.admin');
+
+//     Route::get   ('/products/create',         'ProductController@create')->name('products.create');
+//     Route::get   ('/products/{product}/edit', 'ProductController@edit')  ->name('products.edit');
+
+//     Route::post  ('/products',                'ProductController@store') ->name('products.store');
+
+//     Route::put   ('/products/{product}',      'ProductController@update')->name('products.update');
+//     Route::delete('/products/{product}',      'ProductController@delete')->name('products.delete');
+// });
+Route::get('/products/admin',               'ProductController@admin')->name('products.admin');
+Route::get('/products/search/{buscado}',    'ProductController@search')->name('products.search');
+
+Route::resources([
+    'products' => 'ProductController',
+]);
+
+// Route::apiResource('products', 'ProductController');
+
+
+// Route::get('/productos', 'ProductController@index');
+// Route::get('/producto/{prod}', 'ProductController@show');
+// Route::get('/sale', 'ProductController@sale');
 
 Route::get('/usuarios/admin', 'UserController@admin');
 Route::post('/usuario/add', 'UserController@add');
 Route::post('/usuario/edit/{id}', 'UserController@update');
 
-Route::get('/productos', 'ProductController@index');
-Route::get('/productos/buscar/{buscado}', 'ProductController@search');
-Route::get('/productos/{myCategory}', 'CategoryController@show');
-Route::get('/producto/{prod}', 'ProductController@show');
-Route::get('/sale', 'ProductController@sale');
 
 // Carrito
 Route::get('/addToCart','CartController@store')->middleware('auth');
@@ -56,22 +80,12 @@ Route::get('/cart/close', 'CartController@closeCart')->middleware('auth');
 
 Route::get('/history', 'CartController@history')->middleware('auth');
 Route::get('/thanks', function(){
-  view('thanks')->middleware('auth');
+  view('alerts/thanks')->middleware('auth');
 });
-Route::get('/cart', 'CartController@totalPrice')->middleware('auth');
+Route::get('/cart', 'CartController@totalPrice')->middleware('auth','checkRole:1');
 
 
 
 
 // category
-Route::get('/categorias', 'CategoryController@index');
-Route::get('/categoria/{myCategory}', 'CategoryController@show');
-Route::get('/categorias/add', 'CategoryController@create')->middleware('auth');
-Route::post('/categorias/add', 'CategoryController@store');
-Route::get("/DELETE/categoria/{id}","CategoryController@delete")->middleware('auth');
-
-// contacto
-Route::get('/contacto', 'IndexController@contacto');
-Route::post('/contacto', 'IndexController@mensaje');
-
-Route::get('/perfil/{id}', 'IndexController@perfil')->name('perfil');
+Route::get('/categories/{myCategory}', 'CategoryController@show')->name('categories.show');

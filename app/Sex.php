@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sex extends Model
 {
-    use SoftDeletes;  // agregado por borrado logico
+    public $timestamps = false;
     protected $guarded = [];
 
+    //::::::::::::::::::has many::::::::::::::::::::
     public function users(){
       return $this->hasMany('App\User', "sex_id");
     }

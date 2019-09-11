@@ -16,8 +16,7 @@ class ColorController extends Controller
     {
       $colors = Color::all();;
 
-      $vac = compact("colors");
-      return view ("colors",$vac);
+      return view ('colors', compact('colors'));
     }
 
     /**

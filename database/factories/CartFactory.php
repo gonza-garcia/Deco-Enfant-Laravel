@@ -4,23 +4,24 @@
 
 use App\Cart;
 use Faker\Generator as Faker;
+
 $factory->define(Cart::class, function (Faker $faker) {
-  $files = File::files(public_path('/img/products'));
-  $images_list = [];
-  foreach ($files as $file)
-  {
-      $images_list[] = './img/products\\' . pathinfo($file)['basename'];
-  }
+    $files = File::files(public_path('/img/products'));
+    $images_list = [];
+    foreach ($files as $file)
+    {
+        $images_list[] = './img/products\\' . pathinfo($file)['basename'];
+    }
 
     return [
-      'name'            => $faker->sentence(3),
+      'name'            => \App\Product::inRandomOrder()->first()->name,
       'short_desc'      => $faker->sentence(5),
       'long_desc'       => $faker->sentence(8),
-      'price'           => $faker->randomFloat(2, 300, 4000),
       'thumbnail'       => $faker->randomElement($images_list),
-      'cant'            => $faker->numberBetween($min = 0, $max = 1000),
+      'price'           => $faker->randomFloat(2, 300, 4000),
       'discount'        => $faker->randomElement([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,15,20,25,30,35,40,45,50]),
-      'cart_number'     => $faker->numberBetween($min = 1000, $max = 15000),
+      'cant'            => $faker->numberBetween($min = 0, $max = 1000),
+      'cart_number'     => $faker->unique()->numberBetween($min = 1000, $max = 15000),
       'status'          => $faker->randomElement([0,1]),
       'user_id'         => \App\User::inRandomOrder()->first()->id,
       'color_id'        => \App\Color::inRandomOrder()->first()->id,
